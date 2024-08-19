@@ -7,9 +7,9 @@ Engine::Engine()
     Global::LoadTextures();
 
     windows.emplace_back(GetScreenWidth() - 640, 40, 600, 450);
-    buttons.emplace_back(GetScreenWidth() - 72, 4, ButtonType::FULLSCREEN, 0, 2.0f);
-    buttons.emplace_back(GetScreenWidth() - 120, 4, ButtonType::BIGGER_WINDOW, 1, 2.0f);
-    buttons.emplace_back(GetScreenWidth() - 152, 4, ButtonType::SMALLER_WINDOW, 2, 2.0f);
+    buttons.emplace_back(GetScreenWidth() - 72, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f);
+    buttons.emplace_back(GetScreenWidth() - 120, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::CHECKBOX, 1, 2.0f);
+    buttons.emplace_back(GetScreenWidth() - 152, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::CHECKBOX, 2, 2.0f);
 }
 
 Engine::~Engine()
@@ -42,19 +42,19 @@ void Engine::Update()
 
     switch(Global::button_pressed)
     {
-        case ButtonType::FULLSCREEN: {
+        case ButtonTrigger::FULLSCREEN: {
             printf("test 1\n");
             Global::button_pressed = 0;
         }
         break;
 
-        case ButtonType::BIGGER_WINDOW: {
+        case ButtonTrigger::BIGGER_WINDOW: {
             printf("test 2\n");
             Global::button_pressed = 0;
         }
         break;
 
-        case ButtonType::SMALLER_WINDOW: {
+        case ButtonTrigger::SMALLER_WINDOW: {
             printf("test 3\n");
             Global::button_pressed = 0;
         }

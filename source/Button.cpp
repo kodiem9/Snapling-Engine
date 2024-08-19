@@ -2,7 +2,7 @@
 
 
 // PUBLIC
-Button::Button(uint16_t x, uint16_t y, uint8_t type, uint8_t frame, float scale) : x(x), y(y), type(type), frame(frame), scale(scale) {}
+Button::Button(uint16_t x, uint16_t y, uint8_t trigger, Type type, uint8_t frame, float scale) : x(x), y(y), trigger(trigger), type(type), frame(frame), scale(scale) {}
 
 void Button::Draw()
 {
@@ -13,7 +13,7 @@ void Button::Draw()
 void Button::Update()
 {
     if(GetMouseX() > x && GetMouseX() < x + BUTTON_SIZE && GetMouseY() > y && GetMouseY() < y + BUTTON_SIZE) {
-        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) Global::button_pressed = type;
+        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) Global::button_pressed = trigger;
     }
 }
 

@@ -2,7 +2,7 @@
 #include "Window.hpp"
 #include "Button.hpp"
 
-enum ButtonType
+enum ButtonTrigger
 {
     FULLSCREEN = 1,
     BIGGER_WINDOW,
