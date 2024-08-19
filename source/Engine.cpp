@@ -73,8 +73,8 @@ void Engine::WindowAndButtonOffsets()
                         }
                         break;
 
-                        case ButtonTrigger::SMALLER_WINDOW: button.visible = false; break;
-                        case ButtonTrigger::BIGGER_WINDOW: button.visible = false; break;
+                        case ButtonTrigger::SMALLER_WINDOW: button.attributes[Button::Attributes::VISIBLE] = false; break;
+                        case ButtonTrigger::BIGGER_WINDOW: button.attributes[Button::Attributes::VISIBLE] = false; break;
                     }
                 }
                 window_scale_mode = 2;
@@ -93,8 +93,8 @@ void Engine::WindowAndButtonOffsets()
                         }
                         break;
 
-                        case ButtonTrigger::SMALLER_WINDOW: button.visible = true; break;
-                        case ButtonTrigger::BIGGER_WINDOW: button.visible = true; break;
+                        case ButtonTrigger::SMALLER_WINDOW: button.attributes[Button::Attributes::VISIBLE] = true; break;
+                        case ButtonTrigger::BIGGER_WINDOW: button.attributes[Button::Attributes::VISIBLE] = true; break;
                     }
                 }
                 window_scale_mode = 0;
