@@ -12,7 +12,9 @@ void Button::Draw()
 
 void Button::Update()
 {
-
+    if(GetMouseX() > x && GetMouseX() < x + BUTTON_SIZE && GetMouseY() > y && GetMouseY() < y + BUTTON_SIZE) {
+        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) Global::button_pressed = type;
+    }
 }
 
 

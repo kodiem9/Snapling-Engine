@@ -2,6 +2,13 @@
 #include "Window.hpp"
 #include "Button.hpp"
 
+enum ButtonType
+{
+    FULLSCREEN = 1,
+    BIGGER_WINDOW,
+    SMALLER_WINDOW
+};
+
 class Engine
 {
     private:

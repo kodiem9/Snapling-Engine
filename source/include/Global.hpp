@@ -4,6 +4,7 @@
 namespace Global
 {
     inline Texture2D button_texture;
+    inline uint8_t button_pressed = 0;
 
     struct Spritesheet
     {
