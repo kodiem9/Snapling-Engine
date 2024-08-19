@@ -5,10 +5,10 @@ Engine::Engine()
     Window window;
 
     // Game window
-    window.width = 480;
-    window.height = 360;
-    window.x = GetScreenWidth() - window.width - 50;
-    window.y = 50;
+    window.width = 600;
+    window.height = 450;
+    window.x = GetScreenWidth() - window.width - 40;
+    window.y = 40;
 
     windows.push_back(window);
 }
@@ -21,8 +21,8 @@ Engine::~Engine()
 void Engine::Draw()
 {
     for(Window &window: windows) {
-        window.Draw([&](){
-            DrawRectangle(100, 100, 100, 100, RED);
+        window.Draw([&]() {
+            
         });
     }
 }

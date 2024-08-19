@@ -11,9 +11,9 @@ int main()
     while(!WindowShouldClose())
     {
         BeginDrawing();
-        engine.Draw();
-        ClearBackground(BLUE);
         engine.Update();
+        ClearBackground(BLUE);
+        engine.Draw();
         EndDrawing();
     }
 
