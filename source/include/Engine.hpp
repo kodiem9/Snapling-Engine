@@ -29,5 +29,5 @@ class Engine
 
         uint8_t window_scale_mode;
 
-        void GameWindowButtons();
+        void WindowAndButtonOffsets();
 };

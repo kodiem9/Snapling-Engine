@@ -42,12 +42,12 @@ void Engine::Update()
         button.Update();
     }
 
-    GameWindowButtons();
+    WindowAndButtonOffsets();
 }
 
 
 // PRIVATE
-void Engine::GameWindowButtons()
+void Engine::WindowAndButtonOffsets()
 {
     // All of this is just a bunch of offsets. You should probably not touch this ngl.
     switch(Global::button_pressed)
