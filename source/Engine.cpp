@@ -55,15 +55,44 @@ void Engine::GameWindowButtons()
         case ButtonTrigger::FULLSCREEN: {
             Window &game_window = windows[WindowType::GAME_WINDOW];
             if(window_scale_mode != 2) {
-                game_window.scale = 18;
-                game_window.y = (GetScreenHeight() - game_window.height * game_window.scale) / 4;
+                game_window.scale = 17;
+                game_window.y = (GetScreenHeight() - game_window.height * game_window.scale) / 2;
                 game_window.x = (GetScreenWidth() - game_window.width * game_window.scale) / 2;
+
+                for(Button &button: buttons) {
+                    switch(button.trigger)
+                    {
+                        case ButtonTrigger::FULLSCREEN: {
+                            button.scale = 3;
+                            button.x = game_window.x + (game_window.width * game_window.scale) - BUTTON_SIZE * button.scale;
+                            button.y += 6;
+                        }
+                        break;
+
+                        case ButtonTrigger::SMALLER_WINDOW: button.visible = false; break;
+                        case ButtonTrigger::BIGGER_WINDOW: button.visible = false; break;
+                    }
+                }
                 window_scale_mode = 2;
             }
             else {
                 game_window.scale = 10;
                 game_window.x = GetScreenWidth() - 640;
                 game_window.y = 40;
+                for(Button &button: buttons) {
+                    switch(button.trigger)
+                    {
+                        case ButtonTrigger::FULLSCREEN: {
+                            button.scale = 2;
+                            button.x = GetScreenWidth() - 72;
+                            button.y -= 6;
+                        }
+                        break;
+
+                        case ButtonTrigger::SMALLER_WINDOW: button.visible = true; break;
+                        case ButtonTrigger::BIGGER_WINDOW: button.visible = true; break;
+                    }
+                }
                 window_scale_mode = 0;
             }
             Global::button_pressed = 0;

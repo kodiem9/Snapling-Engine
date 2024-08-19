@@ -6,12 +6,15 @@ Button::Button(uint16_t x, uint16_t y, uint8_t trigger, Type type, uint8_t frame
 {
     selected = false;
     pressed = false;
+    visible = true;
 }
 
 void Button::Draw()
 {
-    Texture();
-    DrawTexturePro(Global::button_texture, spr.source, spr.dest, spr.origin, 0.0f, WHITE);
+    if(visible) {
+        Texture();
+        DrawTexturePro(Global::button_texture, spr.source, spr.dest, spr.origin, 0.0f, WHITE);
+    }
 }
 
 void Button::Update()

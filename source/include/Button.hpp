@@ -12,15 +12,8 @@ class Button
             CHECKBOX
         };
 
-        Button(uint16_t x = 0, uint16_t y = 0, uint8_t trigger = 0, Type type = Type::SINGLE_BUTTON, uint8_t frame = 0, float scale = 1.0f);
-        void Draw();
-        void Update();
-    
-    private:
-        Global::Spritesheet spr;
-
-        float scale;
         Type type;
+        float scale;
 
         uint16_t x;
         uint16_t y;
@@ -30,6 +23,14 @@ class Button
 
         bool selected;
         bool pressed;
+        bool visible;
+
+        Button(uint16_t x = 0, uint16_t y = 0, uint8_t trigger = 0, Type type = Type::SINGLE_BUTTON, uint8_t frame = 0, float scale = 1.0f);
+        void Draw();
+        void Update();
+    
+    private:
+        Global::Spritesheet spr;
 
         void Texture();
 };
