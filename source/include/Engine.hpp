@@ -28,4 +28,6 @@ class Engine
         std::vector<Button> buttons;
 
         uint8_t window_scale_mode;
+
+        void GameWindowButtons();
 };

@@ -42,6 +42,14 @@ void Engine::Update()
         button.Update();
     }
 
+    GameWindowButtons();
+}
+
+
+// PRIVATE
+void Engine::GameWindowButtons()
+{
+    // All of this is just a bunch of offsets. You should probably not touch this ngl.
     switch(Global::button_pressed)
     {
         case ButtonTrigger::FULLSCREEN: {
