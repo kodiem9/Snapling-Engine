@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+# Other
+game
+.DS_Store
+raylib

@@ -1,0 +1,9 @@
+{
+    "files.exclude": {
+        "raylib": true,
+        "game": true,
+        "LICENSE": true,
+        ".gitignore": true,
+        "*.md": true
+    }
+}
