@@ -30,6 +30,10 @@ void Engine::Draw()
     for(Button &button: buttons) {
         button.Draw();
     }
+
+    if(IsKeyDown(KeyboardKey::KEY_TAB)) {
+        DrawFPS(10, 10);
+    }
 }
 
 void Engine::Update()
