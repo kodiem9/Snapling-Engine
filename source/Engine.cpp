@@ -45,29 +45,41 @@ void Engine::Update()
     switch(Global::button_pressed)
     {
         case ButtonTrigger::FULLSCREEN: {
-            printf("test 1\n");
+            Window &game_window = windows[WindowType::GAME_WINDOW];
+            if(window_scale_mode != 2) {
+                game_window.scale = 18;
+                game_window.y = (GetScreenHeight() - game_window.height * game_window.scale) / 4;
+                game_window.x = (GetScreenWidth() - game_window.width * game_window.scale) / 2;
+                window_scale_mode = 2;
+            }
+            else {
+                game_window.scale = 10;
+                game_window.x = GetScreenWidth() - 640;
+                game_window.y = 40;
+                window_scale_mode = 0;
+            }
             Global::button_pressed = 0;
         }
         break;
 
         case ButtonTrigger::BIGGER_WINDOW: {
-            if(window_scale_mode != 0) {
+            if(window_scale_mode == 1) {
                 Window &game_window = windows[WindowType::GAME_WINDOW];
                 game_window.x -= game_window.width * game_window.scale;
                 game_window.scale = 10;
+                window_scale_mode = 0;
             }
-            window_scale_mode = 0;
             Global::button_pressed = 0;
         }
         break;
 
         case ButtonTrigger::SMALLER_WINDOW: {
-            if(window_scale_mode != 1) {
+            if(window_scale_mode == 0) {
                 Window &game_window = windows[WindowType::GAME_WINDOW];
                 game_window.scale = 5;
                 game_window.x += game_window.width * game_window.scale;
+                window_scale_mode = 1;
             }
-            window_scale_mode = 1;
             Global::button_pressed = 0;
 
         }
