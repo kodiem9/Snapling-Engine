@@ -2,28 +2,27 @@
 
 Engine::Engine()
 {
-    Window window;
+    Global::LoadTextures();
 
-    // Game window
-    window.width = 600;
-    window.height = 450;
-    window.x = GetScreenWidth() - window.width - 40;
-    window.y = 40;
-
-    windows.push_back(window);
+    windows.emplace_back(GetScreenWidth() - 640, 40, 600, 450);
+    buttons.emplace_back(GetScreenWidth() - 72, 4, 0, 0, 2.0f);
 }
 
 Engine::~Engine()
 {
-
+    Global::UnloadTextures();
 }
 
 void Engine::Draw()
 {
     for(Window &window: windows) {
         window.Draw([&]() {
-            
+
         });
+    }
+
+    for(Button &button: buttons) {
+        button.Draw();
     }
 }
 
@@ -31,5 +30,9 @@ void Engine::Update()
 {
     for(Window &window: windows) {
         window.Update();
+    }
+
+    for(Button &button: buttons) {
+        button.Update();
     }
 }

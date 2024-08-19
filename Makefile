@@ -4,7 +4,7 @@ SOURCE_FILES = main.cpp source/*.cpp
 ARGUMENTS =
 PRECOMPILED_HEADER_PATH = source/include/common
 PROGRAM_NAME = game
-CPP_VERSION = 11
+CPP_VERSION = 17
 
 default:
 	time g++ $(ARGUMENTS) -I $(INCLUDE_PATH) $(SOURCE_FILES) -std=c++$(CPP_VERSION)  -L $(INCLUDE_PATH) -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL $(INCLUDE_PATH)$(LIBRARY_PATH) -o $(PROGRAM_NAME)  &&  ./$(PROGRAM_NAME)

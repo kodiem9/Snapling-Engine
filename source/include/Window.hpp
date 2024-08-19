@@ -1,5 +1,5 @@
 #pragma once
-#include "common/PCH.hpp"
+#include "Global.hpp"
 
 #define WINDOW_OUTLINE_COLOR Color{ 195, 204, 217, 255 }
 
