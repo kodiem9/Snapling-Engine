@@ -30,6 +30,7 @@ class Button
         uint8_t frame;
 
         bool selected;
+        bool pressed;
 
         void Texture();
 };
