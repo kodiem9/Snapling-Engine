@@ -1,6 +1,5 @@
 #pragma once
 #include "Global.hpp"
-#include <stdio.h>
 
 constexpr uint8_t BUTTON_SIZE{16};
 
