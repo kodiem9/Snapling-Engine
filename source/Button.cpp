@@ -12,15 +12,17 @@ void Button::Draw()
 
 void Button::Update()
 {
-    if(GetMouseX() > x && GetMouseX() < x + BUTTON_SIZE && GetMouseY() > y && GetMouseY() < y + BUTTON_SIZE) {
+    if(GetMouseX() > x && GetMouseX() < x + BUTTON_SIZE * scale && GetMouseY() > y && GetMouseY() < y + BUTTON_SIZE * scale) {
         if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) Global::button_pressed = trigger;
     }
+
+    selected = (Global::button_pressed == trigger);
 }
 
 
 // PRIVATE
 void Button::Texture()
 {
-    spr.source = Rectangle{ (float)BUTTON_SIZE * frame, (float)BUTTON_SIZE * frame, BUTTON_SIZE, BUTTON_SIZE };
+    spr.source = Rectangle{ (float)BUTTON_SIZE * frame, (float)BUTTON_SIZE * selected, BUTTON_SIZE, BUTTON_SIZE };
     spr.dest = Rectangle{ (float)x, (float)y, spr.source.width * scale, spr.source.height * scale};
 }

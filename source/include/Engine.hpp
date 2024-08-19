@@ -11,13 +11,13 @@ enum ButtonTrigger
 
 class Engine
 {
-    private:
-        std::vector<Window> windows;
-        std::vector<Button> buttons;
-
     public:
         Engine();
         ~Engine();
         void Draw();
         void Update();
+    
+    private:
+        std::vector<Window> windows;
+        std::vector<Button> buttons;
 };

@@ -6,9 +6,18 @@ constexpr uint8_t BUTTON_SIZE{16};
 
 class Button
 {
-    private:
-        enum class Type;
+    public:
+        enum class Type
+        {
+            SINGLE_BUTTON,
+            CHECKBOX
+        };
 
+        Button(uint16_t x = 0, uint16_t y = 0, uint8_t trigger = 0, Type type = Type::SINGLE_BUTTON, uint8_t frame = 0, float scale = 1.0f);
+        void Draw();
+        void Update();
+    
+    private:
         Global::Spritesheet spr;
 
         float scale;
@@ -20,16 +29,7 @@ class Button
         uint8_t trigger;
         uint8_t frame;
 
-        void Texture();
-        
-    public:
-        enum class Type
-        {
-            SINGLE_BUTTON,
-            CHECKBOX
-        };
+        bool selected;
 
-        Button(uint16_t x = 0, uint16_t y = 0, uint8_t trigger = 0, Type type = Type::SINGLE_BUTTON, uint8_t frame = 0, float scale = 1.0f);
-        void Draw();
-        void Update();
+        void Texture();
 };
