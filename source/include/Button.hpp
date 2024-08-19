@@ -12,13 +12,6 @@ class Button
             CHECKBOX
         };
 
-        enum Attributes
-        {
-            SELECTED,
-            PRESSED,
-            VISIBLE
-        };
-
         Type type;
         float scale;
 
@@ -28,7 +21,9 @@ class Button
         uint8_t trigger;
         uint8_t frame;
 
-        std::bitset<8> attributes;
+        bool selected;
+        bool pressed;
+        bool visible;
 
         Button(uint16_t x = 0, uint16_t y = 0, uint8_t trigger = 0, Type type = Type::SINGLE_BUTTON, uint8_t frame = 0, float scale = 1.0f);
         void Draw();
