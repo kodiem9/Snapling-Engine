@@ -1,8 +1,10 @@
 #include "source/include/Engine.hpp"
 
+constexpr uint16_t BUILD_NUMBER = 0;
+
 int main()
 {
-    InitWindow(0, 0, "Fetch Engine - build 0");
+    InitWindow(0, 0, TextFormat("Fetch Engine - build %i", BUILD_NUMBER));
     SetTargetFPS(60);
     Engine engine;
 
@@ -10,7 +12,7 @@ int main()
     {
         BeginDrawing();
         engine.Draw();
-        ClearBackground(LIGHTGRAY);
+        ClearBackground(BLUE);
         engine.Update();
         EndDrawing();
     }
