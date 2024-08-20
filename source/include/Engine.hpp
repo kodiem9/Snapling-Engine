@@ -12,6 +12,7 @@ enum ButtonTrigger
 enum WindowType
 {
     GAME_WINDOW,
+    PROPERTIES_WINDOW,
     SPRITES_WINDOW
 };
 
@@ -28,6 +29,10 @@ class Engine
         std::vector<Button> buttons;
 
         uint8_t window_scale_mode;
+        uint8_t saved_window_scale_mode;
 
         void WindowAndButtonOffsets();
+        void FullscreenOffsets();
+        void BiggerWindowOffsets();
+        void SmallerWindowOffsets();
 };
