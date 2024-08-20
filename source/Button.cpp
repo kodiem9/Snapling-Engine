@@ -19,7 +19,7 @@ void Button::Draw()
 
 void Button::Update()
 {
-    if(GetMouseX() > x && GetMouseX() < x + BUTTON_SIZE * scale && GetMouseY() > y && GetMouseY() < y + BUTTON_SIZE * scale) {
+    if(Global::MouseCollision(x, y, BUTTON_SIZE * scale, BUTTON_SIZE * scale)) {
         if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
             pressed = true;
             selected = true;
