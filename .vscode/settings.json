@@ -61,6 +61,7 @@
         "algorithm": "cpp",
         "filesystem": "cpp",
         "functional": "cpp",
-        "*.m": "cpp"
+        "*.m": "cpp",
+        "iomanip": "cpp"
     }
 }
