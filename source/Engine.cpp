@@ -8,6 +8,12 @@ Engine::Engine()
     window_scale_mode = 0;
     saved_window_scale_mode = 0;
 
+    popup = false;
+    popup_x = GetScreenWidth() - 107;
+    popup_y = GetScreenHeight() - 167;
+    popup_width = 48;
+    popup_height = 56;
+
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
     windows.emplace_back(GetScreenWidth() - 640, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR);
     windows.emplace_back(GetScreenWidth() - 640, 500, 60, 15, WindowId::PROPERTIES_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR);
@@ -16,6 +22,7 @@ Engine::Engine()
     buttons.emplace_back(GetScreenWidth() - 72, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f);
     buttons.emplace_back(GetScreenWidth() - 120, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::SINGLE_BUTTON, 1, 2.0f);
     buttons.emplace_back(GetScreenWidth() - 152, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::SINGLE_BUTTON, 2, 2.0f);
+    buttons.emplace_back(GetScreenWidth() - 115, GetScreenHeight() - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 3, 4.0f);
 }
 
 Engine::~Engine()
@@ -29,6 +36,8 @@ void Engine::Draw()
         window.Draw([&]() {});
     }
 
+    DrawRectangle(popup_x, popup_y, popup_width, popup_height, RED);
+    
     for(Button &button: buttons) {
         button.Draw();
     }
@@ -36,12 +45,22 @@ void Engine::Draw()
     if(IsKeyDown(KeyboardKey::KEY_TAB)) {
         DrawFPS(10, 10);
     }
+
 }
 
 void Engine::Update()
 {
     for(Window &window: windows) {
         window.Update();
+    }
+
+    if(popup) {
+        popup_y += ((GetScreenHeight() - 371) - popup_y) / 7;
+        popup_height += (200 - popup_height) / 7;
+    }
+    else {
+        popup_y += ((GetScreenHeight() - 167) - popup_y) / 7;
+        popup_height += (56 - popup_height) / 7;
     }
 
     for(Button &button: buttons) {
@@ -61,6 +80,11 @@ void Engine::WindowAndButtonOffsets()
         case ButtonTrigger::FULLSCREEN: FullscreenOffsets(); break;
         case ButtonTrigger::BIGGER_WINDOW: BiggerWindowOffsets(); break;
         case ButtonTrigger::SMALLER_WINDOW: SmallerWindowOffsets(); break;
+        case ButtonTrigger::NEW_SPRITE: {
+            popup = !popup;
+            Global::button_pressed = 0;
+        }
+        break;
 
         default: break;
     }
