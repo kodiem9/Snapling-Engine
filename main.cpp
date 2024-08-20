@@ -1,10 +1,11 @@
 #include "source/include/Engine.hpp"
 
+#define BACKGROUND_COLOR Color{ 229, 240, 255, 255 }
 constexpr uint16_t BUILD_NUMBER = 270;
 
 int main()
 {
-    InitWindow(0, 0, TextFormat("Fetch Engine - build %i", BUILD_NUMBER));
+    InitWindow(0, 0, TextFormat("Snapling - build %i", BUILD_NUMBER));
     SetTargetFPS(60);
     Engine engine;
 
@@ -12,7 +13,7 @@ int main()
     {
         BeginDrawing();
         engine.Update();
-        ClearBackground(BLUE);
+        ClearBackground(BACKGROUND_COLOR);
         engine.Draw();
         EndDrawing();
     }
