@@ -6,12 +6,9 @@ Window::Window(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t 
     visible = true;
     holding = false;
 
-    wheel_color = outline_color;
-    wheel_color.r -= 40;
-    wheel_color.g -= 40;
-    wheel_color.b -= 40;
-
     wheel_y = y;
+
+    wheel_length = 0;
 }
 
 void Window::Draw(const std::function<void()>& Render)
@@ -26,7 +23,8 @@ void Window::Draw(const std::function<void()>& Render)
         EndScissorMode();
 
         if(type == Type::SCROLL_WINDOW) {
-            DrawRectangle(x + (width * scale) - 13, wheel_y + 3, 10, 10, wheel_color);
+            DrawRectangle(x + (width * scale) - 13, y + 3, 10, height * scale - 6, Color{ 255, 255, 255, 200 });
+            DrawRectangle(x + (width * scale) - 13, wheel_y + 3, 10, 10, Color{uint8_t(outline_color.r - 40), uint8_t(outline_color.g - 40), uint8_t(outline_color.b - 40), 255});
         }
     }
 }

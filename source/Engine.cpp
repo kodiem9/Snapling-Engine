@@ -7,6 +7,8 @@ Engine::Engine()
     Global::LoadTextures();
     window_scale_mode = 0;
     saved_window_scale_mode = 0;
+    temporary_value = 0;
+    tween_timer = 0.0f;
 
     new_sprite_popup = new PopUp(GetScreenWidth() - 109, GetScreenHeight() - 167, 48, 56, POPUP_COLOR);
 
@@ -15,9 +17,11 @@ Engine::Engine()
     windows.emplace_back(GetScreenWidth() - 640, 500, 60, 15, WindowId::PROPERTIES_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR);
     windows.emplace_back(GetScreenWidth() - 640, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR);
 
+    // Buttons are random lol.
     buttons.emplace_back(GetScreenWidth() - 72, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f);
     buttons.emplace_back(GetScreenWidth() - 120, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::SINGLE_BUTTON, 1, 2.0f);
     buttons.emplace_back(GetScreenWidth() - 152, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::SINGLE_BUTTON, 2, 2.0f);
+    buttons.emplace_back(GetScreenWidth() - 109, GetScreenHeight() - 159, ButtonTrigger::EMPTY_SPRITE, Button::Type::SINGLE_BUTTON, 4, 3.0f);
     buttons.emplace_back(GetScreenWidth() - 117, GetScreenHeight() - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 3, 4.0f);
 }
 
@@ -29,7 +33,19 @@ Engine::~Engine()
 void Engine::Draw()
 {
     for(Window &window: windows) {
-        window.Draw([&]() {});
+        switch(window.type)
+        {
+            case Window::Type::SCROLL_WINDOW: {
+                window.Draw([&]() {
+                    DrawRectangle(window.x, window.y, 50, 50, RED);
+                });
+            }
+            break;
+
+            case Window::Type::NORMAL_WINDOW: window.Draw([&](){}); break;
+
+            default: break;
+        }
     }
 
     new_sprite_popup->Draw();
@@ -42,6 +58,7 @@ void Engine::Draw()
         DrawFPS(10, 10);
     }
 
+    DrawText(TextFormat("Sprites: %i", temporary_value), 10, 50, 40, BLACK);
 }
 
 void Engine::Update()
@@ -57,19 +74,54 @@ void Engine::Update()
     }
 
     ButtonUpdate();
+
+    if(tween_timer > 0.0f) {
+        tween_timer -= GetFrameTime();
+        if(tween_timer < 0.0f) tween_timer = 0.0f;
+    }
 }
 
 
 // PRIVATE
 inline void Engine::PopUpUpdate()
 {
-    if(new_sprite_popup->enabled) {
-        new_sprite_popup->Scroll(new_sprite_popup->y, GetScreenHeight() - 371, 7);
-        new_sprite_popup->Scroll(new_sprite_popup->height, 200, 7);
-    }
-    else {
-        new_sprite_popup->Scroll(new_sprite_popup->y, GetScreenHeight() - 167, 7);
-        new_sprite_popup->Scroll(new_sprite_popup->height, 56, 7);
+    if(tween_timer > 0.0f) {
+        if(new_sprite_popup->enabled) {
+            new_sprite_popup->Scroll(new_sprite_popup->y, GetScreenHeight() - 371, 6);
+            new_sprite_popup->Scroll(new_sprite_popup->height, 200, 6);
+
+            // Button offsets on pop up
+            for(Button &button: buttons)
+            {
+                switch(button.trigger)
+                {
+                    case ButtonTrigger::EMPTY_SPRITE: {
+                        button.y += ((GetScreenHeight() - 239) - button.y) / 7;
+                    }
+                    break;
+
+                    default: break;
+                }
+            }
+        }
+        else {
+            new_sprite_popup->Scroll(new_sprite_popup->y, GetScreenHeight() - 167, 6);
+            new_sprite_popup->Scroll(new_sprite_popup->height, 56, 6);
+
+            // Button offsets on pop up
+            for(Button &button: buttons)
+            {
+                switch(button.trigger)
+                {
+                    case ButtonTrigger::EMPTY_SPRITE: {
+                        button.y += ((GetScreenHeight() - 159) - button.y) / 7;
+                    }
+                    break;
+
+                    default: break;
+                }
+            }
+        }
     }
 }
 
@@ -80,8 +132,16 @@ void Engine::ButtonUpdate()
         case ButtonTrigger::FULLSCREEN: FullscreenOffsets(); break;
         case ButtonTrigger::BIGGER_WINDOW: BiggerWindowOffsets(); break;
         case ButtonTrigger::SMALLER_WINDOW: SmallerWindowOffsets(); break;
+
         case ButtonTrigger::NEW_SPRITE: {
+            tween_timer = 1.0f;
             new_sprite_popup->enabled = !new_sprite_popup->enabled;
+            Global::button_pressed = 0;
+        }
+        break;
+
+        case ButtonTrigger::EMPTY_SPRITE: {
+            temporary_value++;
             Global::button_pressed = 0;
         }
         break;
@@ -127,6 +187,7 @@ void Engine::FullscreenOffsets()
                 case ButtonTrigger::SMALLER_WINDOW: button.visible = false; break;
                 case ButtonTrigger::BIGGER_WINDOW: button.visible = false; break;
                 case ButtonTrigger::NEW_SPRITE: button.visible = false; break;
+                case ButtonTrigger::EMPTY_SPRITE: button.visible = false; break;
             }
         }
         new_sprite_popup->visible = false;
@@ -164,6 +225,7 @@ void Engine::FullscreenOffsets()
                 case ButtonTrigger::SMALLER_WINDOW: button.visible = true; break;
                 case ButtonTrigger::BIGGER_WINDOW: button.visible = true; break;
                 case ButtonTrigger::NEW_SPRITE: button.visible = true; break;
+                case ButtonTrigger::EMPTY_SPRITE: button.visible = true; break;
             }
         }
         window_scale_mode = saved_window_scale_mode;

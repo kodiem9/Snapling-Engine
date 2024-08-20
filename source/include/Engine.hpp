@@ -8,7 +8,8 @@ enum ButtonTrigger
     FULLSCREEN = 1,
     BIGGER_WINDOW,
     SMALLER_WINDOW,
-    NEW_SPRITE
+    NEW_SPRITE,
+    EMPTY_SPRITE
 };
 
 enum WindowId
@@ -37,8 +38,11 @@ class Engine
         
         PopUp *new_sprite_popup;
 
+        float tween_timer;
+
         uint8_t window_scale_mode;
         uint8_t saved_window_scale_mode;
+        uint8_t temporary_value;
 
         inline void PopUpUpdate();
         void ButtonUpdate();

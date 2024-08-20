@@ -12,7 +12,6 @@ class Window
 
         Color bg_color;
         Color outline_color;
-        Color wheel_color;
 
         Type type;
 
@@ -21,6 +20,7 @@ class Window
         uint16_t wheel_y;
         uint16_t width;
         uint16_t height;
+        uint16_t wheel_length;
 
         uint8_t id;
         uint8_t scale;
