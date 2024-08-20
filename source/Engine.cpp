@@ -79,7 +79,7 @@ void Engine::FullscreenOffsets()
             {
                 case WindowId::GAME_WINDOW: {
                     window.scale = 17;
-                    window.y = (GetScreenHeight() - window.height * window.scale) / 2;
+                    window.y = (GetScreenHeight() - window.height * window.scale) / 2 - 28;
                     window.x = (GetScreenWidth() - window.width * window.scale) / 2;
                 }
                 break;
@@ -95,9 +95,7 @@ void Engine::FullscreenOffsets()
             switch(button.trigger)
             {
                 case ButtonTrigger::FULLSCREEN: {
-                    button.scale = 3;
                     button.x = game_window.x + (game_window.width * game_window.scale) - BUTTON_SIZE * button.scale;
-                    button.y += 6;
                 }
                 break;
 
@@ -132,9 +130,7 @@ void Engine::FullscreenOffsets()
             switch(button.trigger)
             {
                 case ButtonTrigger::FULLSCREEN: {
-                    button.scale = 2;
                     button.x = GetScreenWidth() - 72;
-                    button.y -= 6;
                 }
                 break;
 
@@ -214,7 +210,7 @@ void Engine::SmallerWindowOffsets()
                     window.x += window.width * window.scale;
                     window.y -= 300; // difference between big and small game window PLUS half the height * scale of properties window 
                     window.height = (GetScreenHeight() - window.y) / 5 - 20; // some weird math idk why this works
-                    
+
                     window.UpdateCursor(old_y, old_height);
                 }
                 break;
