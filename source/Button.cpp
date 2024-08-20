@@ -19,16 +19,18 @@ void Button::Draw()
 
 void Button::Update()
 {
-    if(Global::MouseCollision(x, y, BUTTON_SIZE * scale, BUTTON_SIZE * scale)) {
-        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
-            pressed = true;
-            selected = true;
-        }
-        if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
-            if(pressed) {
-                pressed = false;
-                selected = false;
-                Global::button_pressed = trigger;
+    if(visible) {
+        if(Global::MouseCollision(x, y, BUTTON_SIZE * scale, BUTTON_SIZE * scale)) {
+            if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
+                pressed = true;
+                selected = true;
+            }
+            if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
+                if(pressed) {
+                    pressed = false;
+                    selected = false;
+                    Global::button_pressed = trigger;
+                }
             }
         }
     }
