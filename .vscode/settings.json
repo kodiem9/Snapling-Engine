@@ -60,6 +60,7 @@
         "vector": "cpp",
         "algorithm": "cpp",
         "filesystem": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "*.m": "cpp"
     }
 }
