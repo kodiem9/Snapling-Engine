@@ -1,4 +1,4 @@
-# Fetch Engine (name will be changed) #
+# Snapling Engine #
 A scratch inspired game engine made with C++ using the Raylib game library.
 
 # App is damaged. What should I do?
