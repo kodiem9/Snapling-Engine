@@ -26,6 +26,7 @@ class Window
         uint8_t scale;
 
         bool visible;
+        bool holding;
 
         Window(uint16_t x = 0, uint16_t y = 0, uint16_t width = 0, uint16_t height = 0, uint8_t id = 0, Type type = Type::NORMAL_WINDOW, uint8_t scale = 1, Color bg_color = WHITE, Color outline_color = BLACK);
         void Draw(const std::function<void()>& Render);

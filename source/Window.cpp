@@ -4,6 +4,7 @@ Window::Window(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t 
 : x(x), y(y), width(width), height(height), id(id), type(type), scale(scale), bg_color(bg_color), outline_color(outline_color)
 {
     visible = true;
+    holding = false;
 
     wheel_color = outline_color;
     wheel_color.r -= 40;
@@ -34,10 +35,18 @@ void Window::Update()
 {
     if(type == Type::SCROLL_WINDOW) {
         if(Global::MouseCollision(x, y, width * scale, height * scale)) {
+            if(IsMouseButtonDown(MouseButton::MOUSE_BUTTON_LEFT)) holding = true;
             wheel_y += (int)(GetMouseWheelMove() * 5);
-            if(wheel_y < y) wheel_y = y;
-            if(wheel_y > y + (height * scale) - 16) wheel_y = y + (height * scale) - 16;
         }
+
+        if(holding) {
+            wheel_y = GetMouseY();
+        }
+        
+        if(wheel_y < y) wheel_y = y;
+        if(wheel_y > y + (height * scale) - 16) wheel_y = y + (height * scale) - 16;
+
+        if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) holding = false;
     }
 }
 
