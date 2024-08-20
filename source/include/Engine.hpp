@@ -1,6 +1,7 @@
 #pragma once
 #include "Window.hpp"
 #include "Button.hpp"
+#include "PopUp.hpp"
 
 enum ButtonTrigger
 {
@@ -32,15 +33,10 @@ class Engine
         std::vector<Window> windows;
         std::vector<Button> buttons;
         
-        uint16_t popup_x;
-        uint16_t popup_y;
-        uint16_t popup_width;
-        uint16_t popup_height;
+        PopUp *new_sprite_popup;
 
         uint8_t window_scale_mode;
         uint8_t saved_window_scale_mode;
-
-        bool popup;
 
         void WindowAndButtonOffsets();
         void FullscreenOffsets();

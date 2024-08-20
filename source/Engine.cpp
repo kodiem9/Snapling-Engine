@@ -8,11 +8,7 @@ Engine::Engine()
     window_scale_mode = 0;
     saved_window_scale_mode = 0;
 
-    popup = false;
-    popup_x = GetScreenWidth() - 107;
-    popup_y = GetScreenHeight() - 167;
-    popup_width = 48;
-    popup_height = 56;
+    new_sprite_popup = new PopUp(GetScreenWidth() - 107, GetScreenHeight() - 167, 48, 56, RED);
 
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
     windows.emplace_back(GetScreenWidth() - 640, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR);
@@ -36,7 +32,7 @@ void Engine::Draw()
         window.Draw([&]() {});
     }
 
-    DrawRectangle(popup_x, popup_y, popup_width, popup_height, RED);
+    new_sprite_popup->Draw();
     
     for(Button &button: buttons) {
         button.Draw();
@@ -54,13 +50,13 @@ void Engine::Update()
         window.Update();
     }
 
-    if(popup) {
-        popup_y += ((GetScreenHeight() - 371) - popup_y) / 7;
-        popup_height += (200 - popup_height) / 7;
+    if(new_sprite_popup->enabled) {
+        new_sprite_popup->Scroll(new_sprite_popup->y, GetScreenHeight() - 371, 7);
+        new_sprite_popup->Scroll(new_sprite_popup->height, 200, 7);
     }
     else {
-        popup_y += ((GetScreenHeight() - 167) - popup_y) / 7;
-        popup_height += (56 - popup_height) / 7;
+        new_sprite_popup->Scroll(new_sprite_popup->y, GetScreenHeight() - 167, 7);
+        new_sprite_popup->Scroll(new_sprite_popup->height, 56, 7);
     }
 
     for(Button &button: buttons) {
@@ -81,7 +77,7 @@ void Engine::WindowAndButtonOffsets()
         case ButtonTrigger::BIGGER_WINDOW: BiggerWindowOffsets(); break;
         case ButtonTrigger::SMALLER_WINDOW: SmallerWindowOffsets(); break;
         case ButtonTrigger::NEW_SPRITE: {
-            popup = !popup;
+            new_sprite_popup->enabled = !new_sprite_popup->enabled;
             Global::button_pressed = 0;
         }
         break;
