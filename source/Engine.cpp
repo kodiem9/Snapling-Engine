@@ -167,11 +167,15 @@ void Engine::BiggerWindowOffsets()
                 break;
 
                 case WindowId::SPRITES_WINDOW: {
+                    uint16_t old_y = window.y;
+                    uint16_t old_height = window.height * window.scale;
+                    
                     window.x -= window.width * window.scale;
                     window.y += 300; // difference between big and small game window PLUS half the height * scale of properties window 
                     window.scale = 10;
                     window.height = (GetScreenHeight() - window.y) / 10 - 10; // some weird math idk why this works
-                    window.UpdateData();
+
+                    window.UpdateCursor(old_y, old_height);
                 }
                 break;
 
@@ -203,11 +207,15 @@ void Engine::SmallerWindowOffsets()
                 break;
 
                 case WindowId::SPRITES_WINDOW: {
+                    uint16_t old_y = window.y;
+                    uint16_t old_height = window.height * window.scale;
+
                     window.scale = 5;
                     window.x += window.width * window.scale;
                     window.y -= 300; // difference between big and small game window PLUS half the height * scale of properties window 
                     window.height = (GetScreenHeight() - window.y) / 5 - 20; // some weird math idk why this works
-                    window.UpdateData();
+                    
+                    window.UpdateCursor(old_y, old_height);
                 }
                 break;
 

@@ -41,7 +41,10 @@ void Window::Update()
     }
 }
 
-void Window::UpdateData()
+void Window::UpdateCursor(uint16_t old_y, uint16_t old_height)
 {
-    wheel_y = y;
+    if(type == Type::SCROLL_WINDOW) {
+         float multiplier = ((float)wheel_y - (float)old_y) / (float)old_height + 1.0f;
+         wheel_y = ((height * scale) * multiplier) - (height * scale) + y;
+    }
 }
