@@ -16,6 +16,9 @@ enum WindowType
     SPRITES_WINDOW
 };
 
+#define WINDOW_OUTLINE_COLOR Color{ 195, 204, 217, 255 }
+#define WINDOWS_UNIQUE_BG_COLOR Color{ 231, 240, 252, 255 }
+
 class Engine
 {
     public:

@@ -1,11 +1,12 @@
 #pragma once
 #include "Global.hpp"
 
-#define WINDOW_OUTLINE_COLOR Color{ 195, 204, 217, 255 }
-
 class Window
 {
     public:
+        Color bg_color;
+        Color outline_color;
+
         uint16_t x;
         uint16_t y;
         uint16_t width;
@@ -16,7 +17,7 @@ class Window
 
         bool visible;
 
-        Window(uint16_t x = 0, uint16_t y = 0, uint16_t width = 0, uint16_t height = 0, uint8_t type = 0, uint8_t scale = 1);
+        Window(uint16_t x = 0, uint16_t y = 0, uint16_t width = 0, uint16_t height = 0, uint8_t type = 0, uint8_t scale = 1, Color bg_color = WHITE, Color outline_color = BLACK);
         void Draw(const std::function<void()>& Render);
         void Update();
 };
