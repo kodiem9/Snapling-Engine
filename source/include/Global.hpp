@@ -13,6 +13,11 @@ namespace Global
         Vector2 origin;
     };
 
+    inline bool MouseCollision(int x, int y, int width, int height)
+    {
+        return GetMouseX() > x && GetMouseX() < x + width && GetMouseY() > y && GetMouseY() < y + height;
+    }
+
     inline void LoadTextures()
     {
         button_texture = LoadTexture("assets/images/buttons.png");
