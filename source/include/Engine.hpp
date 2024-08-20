@@ -2,6 +2,7 @@
 #include "Window.hpp"
 #include "Button.hpp"
 #include "PopUp.hpp"
+#include "Sprite.hpp"
 
 enum ButtonTrigger
 {
@@ -35,6 +36,7 @@ class Engine
     private:
         std::vector<Window> windows;
         std::vector<Button> buttons;
+        std::vector<Sprite> sprites;
         
         PopUp *new_sprite_popup;
 
@@ -42,7 +44,6 @@ class Engine
 
         uint8_t window_scale_mode;
         uint8_t saved_window_scale_mode;
-        uint8_t temporary_value;
 
         inline void PopUpUpdate();
         void ButtonUpdate();

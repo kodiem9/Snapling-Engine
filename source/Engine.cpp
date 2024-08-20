@@ -7,7 +7,6 @@ Engine::Engine()
     Global::LoadTextures();
     window_scale_mode = 0;
     saved_window_scale_mode = 0;
-    temporary_value = 0;
     tween_timer = 0.0f;
 
     new_sprite_popup = new PopUp(GetScreenWidth() - 109, GetScreenHeight() - 167, 48, 56, POPUP_COLOR);
@@ -37,7 +36,9 @@ void Engine::Draw()
         {
             case Window::Type::SCROLL_WINDOW: {
                 window.Draw([&]() {
-                    DrawRectangle(window.x, window.y, 50, 50, RED);
+                    for(Sprite &sprite: sprites) {
+                        sprite.Draw();
+                    }
                 });
             }
             break;
@@ -54,11 +55,13 @@ void Engine::Draw()
         button.Draw();
     }
 
+    for(Sprite &sprite: sprites) {
+        sprite.Draw();
+    }
+
     if(IsKeyDown(KeyboardKey::KEY_TAB)) {
         DrawFPS(10, 10);
     }
-
-    DrawText(TextFormat("Sprites: %i", temporary_value), 10, 50, 40, BLACK);
 }
 
 void Engine::Update()
@@ -71,6 +74,10 @@ void Engine::Update()
 
     for(Button &button: buttons) {
         button.Update();
+    }
+
+    for(Sprite &sprite: sprites) {
+        sprite.Update();
     }
 
     ButtonUpdate();
@@ -141,7 +148,10 @@ void Engine::ButtonUpdate()
         break;
 
         case ButtonTrigger::EMPTY_SPRITE: {
-            temporary_value++;
+            uint16_t fixed_x_offset = (Global::sprites_amount % 5) * 100;
+            uint16_t fixed_y_offset = (Global::sprites_amount / 5) * 100; 
+            sprites.emplace_back(GetScreenWidth() - 620 + fixed_x_offset, GetScreenHeight() - 230 + fixed_y_offset, 80, 80, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR);
+            Global::sprites_amount++;
             Global::button_pressed = 0;
         }
         break;
