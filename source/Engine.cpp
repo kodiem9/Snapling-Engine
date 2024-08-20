@@ -9,9 +9,9 @@ Engine::Engine()
     saved_window_scale_mode = 0;
 
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
-    windows.emplace_back(GetScreenWidth() - 640, 40, 60, 45, WindowType::GAME_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR);
-    windows.emplace_back(GetScreenWidth() - 640, 500, 60, 15, WindowType::PROPERTIES_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR);
-    windows.emplace_back(GetScreenWidth() - 640, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowType::SPRITES_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR);
+    windows.emplace_back(GetScreenWidth() - 640, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR);
+    windows.emplace_back(GetScreenWidth() - 640, 500, 60, 15, WindowId::PROPERTIES_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR);
+    windows.emplace_back(GetScreenWidth() - 640, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR);
 
     buttons.emplace_back(GetScreenWidth() - 72, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f);
     buttons.emplace_back(GetScreenWidth() - 120, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::SINGLE_BUTTON, 1, 2.0f);
@@ -70,22 +70,22 @@ void Engine::WindowAndButtonOffsets()
 // OFFSETS
 void Engine::FullscreenOffsets()
 {
-    Window &game_window = windows[WindowType::GAME_WINDOW];
+    Window &game_window = windows[WindowId::GAME_WINDOW];
 
     if(window_scale_mode != 2) {
         saved_window_scale_mode = window_scale_mode;
         for(Window &window: windows) {
-            switch(window.type)
+            switch(window.id)
             {
-                case WindowType::GAME_WINDOW: {
+                case WindowId::GAME_WINDOW: {
                     window.scale = 17;
                     window.y = (GetScreenHeight() - window.height * window.scale) / 2;
                     window.x = (GetScreenWidth() - window.width * window.scale) / 2;
                 }
                 break;
 
-                case WindowType::PROPERTIES_WINDOW: window.visible = false; break;
-                case WindowType::SPRITES_WINDOW: window.visible = false; break;
+                case WindowId::PROPERTIES_WINDOW: window.visible = false; break;
+                case WindowId::SPRITES_WINDOW: window.visible = false; break;
 
                 default: break;
             }
@@ -109,9 +109,9 @@ void Engine::FullscreenOffsets()
     }
     else {
         for(Window &window: windows) {
-            switch(window.type)
+            switch(window.id)
             {
-                case WindowType::GAME_WINDOW: {
+                case WindowId::GAME_WINDOW: {
                     if(saved_window_scale_mode == 0)
                         window.scale = 10;
                     else
@@ -122,8 +122,8 @@ void Engine::FullscreenOffsets()
                 }
                 break;
 
-                case WindowType::PROPERTIES_WINDOW: window.visible = true; break;
-                case WindowType::SPRITES_WINDOW: window.visible = true; break;
+                case WindowId::PROPERTIES_WINDOW: window.visible = true; break;
+                case WindowId::SPRITES_WINDOW: window.visible = true; break;
 
                 default: break;
             }
@@ -151,26 +151,27 @@ void Engine::BiggerWindowOffsets()
 {
     if(window_scale_mode == 1) {
         for(Window &window: windows) {
-            switch(window.type)
+            switch(window.id)
             {
-                case WindowType::GAME_WINDOW: {
+                case WindowId::GAME_WINDOW: {
                     window.x -= window.width * window.scale;
                     window.scale = 10;
                 }
                 break;
 
-                case WindowType::PROPERTIES_WINDOW: {
+                case WindowId::PROPERTIES_WINDOW: {
                     window.x -= window.width * window.scale;
                     window.y += 225; // difference between big and small game window
                     window.scale = 10;
                 }
                 break;
 
-                case WindowType::SPRITES_WINDOW: {
+                case WindowId::SPRITES_WINDOW: {
                     window.x -= window.width * window.scale;
                     window.y += 300; // difference between big and small game window PLUS half the height * scale of properties window 
                     window.scale = 10;
                     window.height = (GetScreenHeight() - window.y) / 10 - 10; // some weird math idk why this works
+                    window.UpdateData();
                 }
                 break;
 
@@ -186,26 +187,27 @@ void Engine::SmallerWindowOffsets()
 {
     if(window_scale_mode == 0) {
         for(Window &window: windows) {
-            switch(window.type)
+            switch(window.id)
             {
-                case WindowType::GAME_WINDOW: {
+                case WindowId::GAME_WINDOW: {
                     window.scale = 5;
                     window.x += window.width * window.scale;
                 }
                 break;
 
-                case WindowType::PROPERTIES_WINDOW: {
+                case WindowId::PROPERTIES_WINDOW: {
                     window.scale = 5;
                     window.x += window.width * window.scale;
                     window.y -= 225; // difference between big and small game window
                 }
                 break;
 
-                case WindowType::SPRITES_WINDOW: {
+                case WindowId::SPRITES_WINDOW: {
                     window.scale = 5;
                     window.x += window.width * window.scale;
                     window.y -= 300; // difference between big and small game window PLUS half the height * scale of properties window 
                     window.height = (GetScreenHeight() - window.y) / 5 - 20; // some weird math idk why this works
+                    window.UpdateData();
                 }
                 break;
 

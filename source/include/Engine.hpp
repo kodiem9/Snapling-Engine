@@ -9,7 +9,7 @@ enum ButtonTrigger
     SMALLER_WINDOW
 };
 
-enum WindowType
+enum WindowId
 {
     GAME_WINDOW,
     PROPERTIES_WINDOW,
