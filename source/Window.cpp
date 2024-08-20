@@ -35,8 +35,11 @@ void Window::Update()
 {
     if(type == Type::SCROLL_WINDOW) {
         if(Global::MouseCollision(x, y, width * scale, height * scale)) {
-            if(IsMouseButtonDown(MouseButton::MOUSE_BUTTON_LEFT)) holding = true;
             wheel_y += (int)(GetMouseWheelMove() * 5);
+        }
+
+        if(Global::MouseCollision(x + width * scale - 23, wheel_y - 7, 20, 20)) {
+            if(IsMouseButtonDown(MouseButton::MOUSE_BUTTON_LEFT)) holding = true;
         }
 
         if(holding) {
