@@ -50,6 +50,19 @@ void Engine::Update()
         window.Update();
     }
 
+    PopUpUpdate();
+
+    for(Button &button: buttons) {
+        button.Update();
+    }
+
+    ButtonUpdate();
+}
+
+
+// PRIVATE
+inline void Engine::PopUpUpdate()
+{
     if(new_sprite_popup->enabled) {
         new_sprite_popup->Scroll(new_sprite_popup->y, GetScreenHeight() - 371, 7);
         new_sprite_popup->Scroll(new_sprite_popup->height, 200, 7);
@@ -58,19 +71,10 @@ void Engine::Update()
         new_sprite_popup->Scroll(new_sprite_popup->y, GetScreenHeight() - 167, 7);
         new_sprite_popup->Scroll(new_sprite_popup->height, 56, 7);
     }
-
-    for(Button &button: buttons) {
-        button.Update();
-    }
-
-    WindowAndButtonOffsets();
 }
 
-
-// PRIVATE
-void Engine::WindowAndButtonOffsets()
+void Engine::ButtonUpdate()
 {
-    // All of this is just a bunch of offsets. You should probably not touch this ngl.
     switch(Global::button_pressed)
     {
         case ButtonTrigger::FULLSCREEN: FullscreenOffsets(); break;
@@ -88,6 +92,7 @@ void Engine::WindowAndButtonOffsets()
 
 
 // OFFSETS
+// All of this is just a bunch of offsets. You should probably not touch this ngl.
 void Engine::FullscreenOffsets()
 {
     Window &game_window = windows[WindowId::GAME_WINDOW];
@@ -121,8 +126,10 @@ void Engine::FullscreenOffsets()
 
                 case ButtonTrigger::SMALLER_WINDOW: button.visible = false; break;
                 case ButtonTrigger::BIGGER_WINDOW: button.visible = false; break;
+                case ButtonTrigger::NEW_SPRITE: button.visible = false; break;
             }
         }
+        new_sprite_popup->visible = false;
         window_scale_mode = 2;
     }
     else {
@@ -156,9 +163,11 @@ void Engine::FullscreenOffsets()
 
                 case ButtonTrigger::SMALLER_WINDOW: button.visible = true; break;
                 case ButtonTrigger::BIGGER_WINDOW: button.visible = true; break;
+                case ButtonTrigger::NEW_SPRITE: button.visible = true; break;
             }
         }
         window_scale_mode = saved_window_scale_mode;
+        new_sprite_popup->visible = true;
     }
     Global::button_pressed = 0;
 }

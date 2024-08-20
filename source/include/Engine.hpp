@@ -21,7 +21,7 @@ enum WindowId
 #define WINDOW_OUTLINE_COLOR Color{ 195, 204, 217, 255 }
 #define WINDOWS_UNIQUE_BG_COLOR Color{ 231, 240, 252, 255 }
 
-#define POPUP_COLOR Color{ 177, 62, 83, 125 }
+#define POPUP_COLOR Color{ 177, 62, 83, 180 }
 
 class Engine
 {
@@ -40,7 +40,8 @@ class Engine
         uint8_t window_scale_mode;
         uint8_t saved_window_scale_mode;
 
-        void WindowAndButtonOffsets();
+        inline void PopUpUpdate();
+        void ButtonUpdate();
         void FullscreenOffsets();
         void BiggerWindowOffsets();
         void SmallerWindowOffsets();
