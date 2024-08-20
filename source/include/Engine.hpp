@@ -21,6 +21,8 @@ enum WindowId
 #define WINDOW_OUTLINE_COLOR Color{ 195, 204, 217, 255 }
 #define WINDOWS_UNIQUE_BG_COLOR Color{ 231, 240, 252, 255 }
 
+#define POPUP_COLOR Color{ 177, 62, 83, 125 }
+
 class Engine
 {
     public:

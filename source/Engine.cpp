@@ -8,7 +8,7 @@ Engine::Engine()
     window_scale_mode = 0;
     saved_window_scale_mode = 0;
 
-    new_sprite_popup = new PopUp(GetScreenWidth() - 107, GetScreenHeight() - 167, 48, 56, RED);
+    new_sprite_popup = new PopUp(GetScreenWidth() - 109, GetScreenHeight() - 167, 48, 56, POPUP_COLOR);
 
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
     windows.emplace_back(GetScreenWidth() - 640, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR);
@@ -18,7 +18,7 @@ Engine::Engine()
     buttons.emplace_back(GetScreenWidth() - 72, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f);
     buttons.emplace_back(GetScreenWidth() - 120, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::SINGLE_BUTTON, 1, 2.0f);
     buttons.emplace_back(GetScreenWidth() - 152, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::SINGLE_BUTTON, 2, 2.0f);
-    buttons.emplace_back(GetScreenWidth() - 115, GetScreenHeight() - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 3, 4.0f);
+    buttons.emplace_back(GetScreenWidth() - 117, GetScreenHeight() - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 3, 4.0f);
 }
 
 Engine::~Engine()
