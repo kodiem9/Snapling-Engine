@@ -21,13 +21,24 @@ void TypeBox::Draw(uint16_t window_x, uint16_t window_y)
 void TypeBox::Update()
 {
     if(Global::MouseCollision(fixed_x, fixed_y, width, height)) {
-        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
-            selected = true;
-        }
+        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) selected = true;
     }
     else {
-        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
-            selected = false;
+        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) selected = false;
+    }
+    
+    if(selected) {
+        key = GetCharPressed();
+        if(key != 0) {
+            if(MeasureText(Global::selected_sprite_data.name.c_str(), 20) + 20 < width) {
+                Global::selected_sprite_data.name += key;
+            }
+        }
+
+        if(IsKeyPressed(KEY_BACKSPACE)) {
+            if(Global::selected_sprite_data.name.size() > 0) {
+                Global::selected_sprite_data.name.pop_back();
+            }
         }
     }
 }
