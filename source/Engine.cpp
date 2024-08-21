@@ -38,7 +38,7 @@ void Engine::Draw()
             case Window::Type::SCROLL_WINDOW: {
                 window.Draw([&]() {
                     for(Sprite &sprite: sprites) {
-                        sprite.Draw(window.x, window.y);
+                        sprite.Draw(window.x, window.y - windows[2].wheel_power);
                     }
                 });
             }
@@ -149,7 +149,7 @@ void Engine::ButtonUpdate()
             uint16_t fixed_y_offset = (Global::sprites_amount / 5) * 100;
             sprites.emplace_back(20 + fixed_x_offset, 20 + fixed_y_offset, 80, 80, Global::sprites_amount);
             if(100 + fixed_y_offset > sprite_window_height) {
-                windows[2].wheel_length = 100 + fixed_y_offset - sprite_window_height;
+                windows[2].wheel_length = 120 + fixed_y_offset - sprite_window_height;
             }
             Global::sprites_amount++;
             Global::button_pressed = 0;
