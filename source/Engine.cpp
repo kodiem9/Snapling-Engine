@@ -55,10 +55,6 @@ void Engine::Draw()
         button.Draw();
     }
 
-    for(Sprite &sprite: sprites) {
-        sprite.Draw();
-    }
-
     if(IsKeyDown(KeyboardKey::KEY_TAB)) {
         DrawFPS(10, 10);
     }
@@ -149,8 +145,8 @@ void Engine::ButtonUpdate()
 
         case ButtonTrigger::EMPTY_SPRITE: {
             uint16_t fixed_x_offset = (Global::sprites_amount % 5) * 100;
-            uint16_t fixed_y_offset = (Global::sprites_amount / 5) * 100; 
-            sprites.emplace_back(GetScreenWidth() - 620 + fixed_x_offset, GetScreenHeight() - 230 + fixed_y_offset, 80, 80, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR);
+            uint16_t fixed_y_offset = (Global::sprites_amount / 5) * 100;
+            sprites.emplace_back(GetScreenWidth() - 620 + fixed_x_offset, GetScreenHeight() - 230 + fixed_y_offset, 80, 80, Global::sprites_amount);
             Global::sprites_amount++;
             Global::button_pressed = 0;
         }
