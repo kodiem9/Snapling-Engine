@@ -38,7 +38,9 @@ void Engine::Draw()
         {
             case WindowId::PROPERTIES_WINDOW: {
                 window.Draw([&]() {
-                    properties_box->Draw(window.x, window.y);
+                    if(Global::sprites_amount > 0) {
+                        properties_box->Draw(window.x, window.y);
+                    }
                 });
             }
             break;
@@ -83,7 +85,9 @@ void Engine::Update()
         sprite.Update();
     }
     
-    properties_box->Update();
+    if(Global::sprites_amount > 0) {
+        properties_box->Update();
+    }
 
     ButtonUpdate();
 
