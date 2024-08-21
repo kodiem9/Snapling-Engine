@@ -14,7 +14,6 @@ Sprite::Sprite(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t 
     data.name = "Sprite";
 
     Global::selected_sprite = id;
-    Global::selected_sprite_data = data;
 }
 
 void Sprite::Draw(uint16_t window_x, uint16_t window_y)
@@ -32,11 +31,6 @@ void Sprite::Update()
     if(Global::MouseCollision(fixed_x, fixed_y, width, height)) {
         if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
             Global::selected_sprite = id;
-            Global::selected_sprite_data = data;
         }
-    }
-
-    if(Global::selected_sprite == id) {
-        data = Global::selected_sprite_data;
     }
 }

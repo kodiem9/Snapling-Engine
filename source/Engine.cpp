@@ -182,6 +182,7 @@ void Engine::ButtonUpdate()
         break;
 
         case ButtonTrigger::EMPTY_SPRITE: {
+            Global::entities.emplace_back("Sprite", 0.0f, 0.0f, 90.0f, 100, true, 0);
             if(window_scale_mode == 1)
                 NewSprite(sprites, 1, 10, 3);
             else

@@ -15,7 +15,7 @@ void TypeBox::Draw(uint16_t window_x, uint16_t window_y)
     DrawRectangle(fixed_x, fixed_y, width, height, WHITE);
     DrawRectangleLinesEx(Rectangle{ (float)fixed_x, (float)fixed_y, (float)width, (float)height }, 2, (selected) ? TYPEBOX_OUTLINE_COLOR_TRUE : TYPEBOX_OUTLINE_COLOR_FALSE);
 
-    DrawText(Global::selected_sprite_data.name.c_str(), x + window_x + 5, y + window_y + 10, 20, TEXT_COLOR);
+    DrawText(Global::entities[Global::selected_sprite].name.c_str(), x + window_x + 5, y + window_y + 10, 20, TEXT_COLOR);
 }
 
 void TypeBox::Update()
@@ -30,14 +30,14 @@ void TypeBox::Update()
     if(selected) {
         key = GetCharPressed();
         if(key != 0) {
-            if(MeasureText(Global::selected_sprite_data.name.c_str(), 20) + 20 < width) {
-                Global::selected_sprite_data.name += key;
+            if(MeasureText(Global::entities[Global::selected_sprite].name.c_str(), 20) + 20 < width) {
+                Global::entities[Global::selected_sprite].name += key;
             }
         }
 
         if(IsKeyPressed(KEY_BACKSPACE)) {
-            if(Global::selected_sprite_data.name.size() > 0) {
-                Global::selected_sprite_data.name.pop_back();
+            if(Global::entities[Global::selected_sprite].name.size() > 0) {
+                Global::entities[Global::selected_sprite].name.pop_back();
             }
         }
     }

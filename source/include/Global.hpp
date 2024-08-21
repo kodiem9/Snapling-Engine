@@ -22,10 +22,14 @@ namespace Global
 
         bool show;
         uint8_t direction_mode;
+
+
+        ObjectData(std::string name = "", float x = 0.0f, float y = 0.0f, float direction = 0.0f, uint16_t size = 0, bool show = false, uint8_t direction_mode = 0)
+        : name(name), x(x), y(y), direction(direction), size(size), show(show), direction_mode(direction_mode) {}
     };
 
+    inline std::vector<ObjectData> entities;
     inline Texture2D button_texture;
-    inline ObjectData selected_sprite_data;
     inline uint8_t button_pressed = 0;
     inline uint8_t sprites_amount = 0;
     inline uint8_t selected_sprite = 0;
