@@ -3,6 +3,7 @@
 #include "Button.hpp"
 #include "PopUp.hpp"
 #include "Sprite.hpp"
+#include "PropertiesBox.hpp"
 
 enum ButtonTrigger
 {
@@ -39,6 +40,8 @@ class Engine
         std::vector<Sprite> sprites;
         
         PopUp *new_sprite_popup;
+        
+        PropertiesBox *properties_box;
 
         float tween_timer;
 

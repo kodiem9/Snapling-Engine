@@ -9,6 +9,8 @@
 class Sprite
 {
     public:
+        Global::ObjectData data;
+        
         uint16_t x;
         uint16_t y;
         uint16_t fixed_x;

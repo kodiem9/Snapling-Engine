@@ -4,6 +4,13 @@ Sprite::Sprite(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t 
 {
     fixed_x = 0;
     fixed_y = 0;
+
+    data.x = 0.0f;
+    data.y = 0.0f;
+    data.size = 100;
+    data.direction = 90.0f;
+    data.show = true;
+    data.direction_mode = 0;
 }
 
 void Sprite::Draw(uint16_t window_x, uint16_t window_y)
@@ -21,6 +28,7 @@ void Sprite::Update()
     if(Global::MouseCollision(fixed_x, fixed_y, width, height)) {
         if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
             Global::selected_sprite = id;
+            Global::selected_sprite_data = data;
         }
     }
 }

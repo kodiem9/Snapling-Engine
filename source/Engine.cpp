@@ -10,6 +10,7 @@ Engine::Engine()
     tween_timer = 0.0f;
 
     new_sprite_popup = new PopUp(GetScreenWidth() - 109, GetScreenHeight() - 167, 48, 56, POPUP_COLOR);
+    properties_box = new PropertiesBox;
 
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
     windows.emplace_back(GetScreenWidth() - 640, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, true);
@@ -33,9 +34,16 @@ Engine::~Engine()
 void Engine::Draw()
 {
     for(Window &window: windows) {
-        switch(window.type)
+        switch(window.id)
         {
-            case Window::Type::SCROLL_WINDOW: {
+            case WindowId::PROPERTIES_WINDOW: {
+                window.Draw([&]() {
+                    properties_box->Draw(window.x, window.y);
+                });
+            }
+            break;
+
+            case WindowId::SPRITES_WINDOW: {
                 window.Draw([&]() {
                     for(Sprite &sprite: sprites) {
                         sprite.Draw(window.x, window.y - windows[2].wheel_power);
@@ -44,9 +52,7 @@ void Engine::Draw()
             }
             break;
 
-            case Window::Type::NORMAL_WINDOW: window.Draw([&](){}); break;
-
-            default: break;
+            default: window.Draw([&](){}); break;
         }
     }
 
@@ -76,6 +82,8 @@ void Engine::Update()
     for(Sprite &sprite: sprites) {
         sprite.Update();
     }
+    
+    properties_box->Update();
 
     ButtonUpdate();
 

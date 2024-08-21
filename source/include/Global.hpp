@@ -3,17 +3,30 @@
 
 namespace Global
 {
-    inline Texture2D button_texture;
-    inline uint8_t button_pressed = 0;
-    inline uint8_t sprites_amount = 0;
-    inline uint8_t selected_sprite = 0;
-
     struct Spritesheet
     {
         Rectangle source;
         Rectangle dest;
         Vector2 origin;
     };
+
+    struct ObjectData
+    {
+        float x;
+        float y;
+        float direction;
+
+        uint16_t size;
+
+        bool show;
+        uint8_t direction_mode;
+    };
+
+    inline Texture2D button_texture;
+    inline ObjectData selected_sprite_data;
+    inline uint8_t button_pressed = 0;
+    inline uint8_t sprites_amount = 0;
+    inline uint8_t selected_sprite = 0;
 
     inline bool MouseCollision(int x, int y, int width, int height)
     {
