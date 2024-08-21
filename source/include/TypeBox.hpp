@@ -2,6 +2,7 @@
 #include "Global.hpp"
 
 #define WINDOW_OUTLINE_COLOR Color{ 195, 204, 217, 255 }
+#define TEXT_COLOR Color{ 87, 94, 117, 255 }
 
 class TypeBox
 {

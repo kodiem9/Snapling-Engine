@@ -12,6 +12,8 @@ namespace Global
 
     struct ObjectData
     {
+        std::string name;
+        
         float x;
         float y;
         float direction;

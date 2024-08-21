@@ -11,6 +11,10 @@ Sprite::Sprite(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t 
     data.direction = 90.0f;
     data.show = true;
     data.direction_mode = 0;
+    data.name = "Sprite1";
+
+    Global::selected_sprite = id;
+    Global::selected_sprite_data = data;
 }
 
 void Sprite::Draw(uint16_t window_x, uint16_t window_y)

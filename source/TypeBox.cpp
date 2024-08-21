@@ -6,6 +6,7 @@ void TypeBox::Draw(uint16_t window_x, uint16_t window_y)
 {
     DrawRectangle(x + window_x, y + window_y, width, height, WHITE);
     DrawRectangleLinesEx(Rectangle{ (float)x + window_x, (float)y + window_y, (float)width, (float)height }, 2, WINDOW_OUTLINE_COLOR);
+    DrawText(Global::selected_sprite_data.name.c_str(), x + window_x + 5, y + window_y + 10, 20, TEXT_COLOR);
 }
 
 void TypeBox::Update()

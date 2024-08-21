@@ -2,8 +2,6 @@
 #include "Global.hpp"
 #include "TypeBox.hpp"
 
-#define TEXT_COLOR Color{ 87, 94, 117, 255 }
-
 class PropertiesBox
 {
     private:
