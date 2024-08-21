@@ -87,6 +87,21 @@ void Engine::Update()
 
 
 // PRIVATE
+inline void Engine::NewSprite(std::vector<Sprite> &sprites, uint16_t loop, uint8_t offset, uint8_t row)
+{
+    uint16_t fixed_x_offset;
+    uint16_t fixed_y_offset;
+    for(uint16_t i = 0; i < loop; i++) {
+        fixed_x_offset = (Global::sprites_amount % row) * 100;
+        fixed_y_offset = (Global::sprites_amount / row) * 100;
+        sprites.emplace_back(offset + fixed_x_offset, 20 + fixed_y_offset, 80, 80, Global::sprites_amount);
+        Global::sprites_amount++;
+    }
+    if(100 + fixed_y_offset > sprite_window_height) {
+        windows[2].wheel_length = 120 + fixed_y_offset - sprite_window_height;
+    }
+}
+
 inline void Engine::PopUpUpdate()
 {
     if(tween_timer > 0.0f) {
@@ -134,8 +149,18 @@ void Engine::ButtonUpdate()
     switch(Global::button_pressed)
     {
         case ButtonTrigger::FULLSCREEN: FullscreenOffsets(); break;
-        case ButtonTrigger::BIGGER_WINDOW: BiggerWindowOffsets(); break;
-        case ButtonTrigger::SMALLER_WINDOW: SmallerWindowOffsets(); break;
+
+        case ButtonTrigger::BIGGER_WINDOW: {
+            BiggerWindowOffsets();
+            SpritesOffsets();
+        }
+        break;
+
+        case ButtonTrigger::SMALLER_WINDOW: {
+            SmallerWindowOffsets();
+            SpritesOffsets();   
+        }
+        break;
 
         case ButtonTrigger::NEW_SPRITE: {
             tween_timer = 1.0f;
@@ -145,13 +170,11 @@ void Engine::ButtonUpdate()
         break;
 
         case ButtonTrigger::EMPTY_SPRITE: {
-            uint16_t fixed_x_offset = (Global::sprites_amount % 5) * 100;
-            uint16_t fixed_y_offset = (Global::sprites_amount / 5) * 100;
-            sprites.emplace_back(20 + fixed_x_offset, 20 + fixed_y_offset, 80, 80, Global::sprites_amount);
-            if(100 + fixed_y_offset > sprite_window_height) {
-                windows[2].wheel_length = 120 + fixed_y_offset - sprite_window_height;
-            }
-            Global::sprites_amount++;
+            if(window_scale_mode == 1)
+                NewSprite(sprites, 1, 10, 3);
+            else
+                NewSprite(sprites, 1, 20, 5);
+
             Global::button_pressed = 0;
         }
         break;
@@ -324,4 +347,19 @@ void Engine::SmallerWindowOffsets()
         window_scale_mode = 1;
     }
     Global::button_pressed = 0;
+}
+
+void Engine::SpritesOffsets()
+{
+    std::vector<Sprite> new_sprites;
+    uint16_t fixed_x_offset;
+    uint16_t fixed_y_offset;
+    Global::sprites_amount = 0;
+
+    if(window_scale_mode == 1)
+        NewSprite(new_sprites, sprites.size(), 10, 3);
+    else
+        NewSprite(new_sprites, sprites.size(), 20, 5);
+
+    sprites = new_sprites;
 }

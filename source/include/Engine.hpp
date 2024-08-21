@@ -48,8 +48,10 @@ class Engine
         uint8_t saved_window_scale_mode;
 
         inline void PopUpUpdate();
+        inline void NewSprite(std::vector<Sprite> &sprites, uint16_t loop, uint8_t offset, uint8_t row);
         void ButtonUpdate();
         void FullscreenOffsets();
         void BiggerWindowOffsets();
         void SmallerWindowOffsets();
+        void SpritesOffsets();
 };
