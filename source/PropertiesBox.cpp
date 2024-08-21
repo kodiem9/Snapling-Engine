@@ -13,5 +13,5 @@ void PropertiesBox::Draw(uint16_t window_x, uint16_t window_y)
 
 void PropertiesBox::Update()
 {
-
+    sprite_name_box->Update();
 }

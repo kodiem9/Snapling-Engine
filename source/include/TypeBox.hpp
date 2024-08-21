@@ -1,16 +1,21 @@
 #pragma once
 #include "Global.hpp"
 
-#define WINDOW_OUTLINE_COLOR Color{ 195, 204, 217, 255 }
-#define TEXT_COLOR Color{ 87, 94, 117, 255 }
+#define TYPEBOX_OUTLINE_COLOR_FALSE     Color{ 195, 204, 217, 255 }
+#define TYPEBOX_OUTLINE_COLOR_TRUE      Color{ 177, 62, 83, 255 }
+#define TEXT_COLOR                      Color{ 87, 94, 117, 255 }
 
 class TypeBox
 {
     public:
         uint16_t x;
         uint16_t y;
+        uint16_t fixed_x;
+        uint16_t fixed_y;
         uint16_t width;
         uint16_t height;
+
+        bool selected;
 
         TypeBox(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
         void Draw(uint16_t window_x, uint16_t window_y);
