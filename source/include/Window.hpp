@@ -21,6 +21,7 @@ class Window
         uint16_t width;
         uint16_t height;
         uint16_t wheel_length;
+        int16_t wheel_power;
 
         uint8_t id;
         uint8_t scale;

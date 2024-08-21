@@ -11,12 +11,14 @@ class Sprite
     public:
         uint16_t x;
         uint16_t y;
+        uint16_t fixed_x;
+        uint16_t fixed_y;
         uint16_t width;
         uint16_t height;
 
         uint8_t id;
 
         Sprite(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t id);
-        void Draw();
+        void Draw(uint16_t window_x, uint16_t window_y);
         void Update();
 };

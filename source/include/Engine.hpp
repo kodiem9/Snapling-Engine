@@ -42,6 +42,8 @@ class Engine
 
         float tween_timer;
 
+        uint16_t sprite_window_height;
+
         uint8_t window_scale_mode;
         uint8_t saved_window_scale_mode;
 

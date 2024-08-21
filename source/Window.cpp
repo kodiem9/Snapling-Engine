@@ -23,8 +23,10 @@ void Window::Draw(const std::function<void()>& Render)
         EndScissorMode();
 
         if(type == Type::SCROLL_WINDOW) {
-            DrawRectangle(x + (width * scale) - 13, y + 3, 10, height * scale - 6, Color{ 255, 255, 255, 200 });
-            DrawRectangle(x + (width * scale) - 13, wheel_y + 3, 10, 10, Color{uint8_t(outline_color.r - 40), uint8_t(outline_color.g - 40), uint8_t(outline_color.b - 40), 255});
+            if(wheel_length > 0) {
+                DrawRectangle(x + (width * scale) - 13, y + 3, 10, height * scale - 6, Color{ 255, 255, 255, 200 });
+                DrawRectangle(x + (width * scale) - 13, wheel_y + 3, 10, 10, Color{uint8_t(outline_color.r - 40), uint8_t(outline_color.g - 40), uint8_t(outline_color.b - 40), 255});
+            }
         }
     }
 }
@@ -32,22 +34,30 @@ void Window::Draw(const std::function<void()>& Render)
 void Window::Update()
 {
     if(type == Type::SCROLL_WINDOW) {
-        if(Global::MouseCollision(x, y, width * scale, height * scale)) {
-            wheel_y += (int)(GetMouseWheelMove() * 5);
-        }
+        if(wheel_length > 0) {
+            if(Global::MouseCollision(x, y, width * scale, height * scale)) {
+                wheel_power += (int)(GetMouseWheelMove() * 5);
+            }
 
-        if(Global::MouseCollision(x + width * scale - 23, wheel_y - 7, 20, 20)) {
-            if(IsMouseButtonDown(MouseButton::MOUSE_BUTTON_LEFT)) holding = true;
-        }
+            float multiplier = (float)height * (float)scale / (float)wheel_length;
 
-        if(holding) {
-            wheel_y = GetMouseY();
-        }
-        
-        if(wheel_y < y) wheel_y = y;
-        if(wheel_y > y + (height * scale) - 16) wheel_y = y + (height * scale) - 16;
+            if(Global::MouseCollision(x + width * scale - 23, wheel_y - 7, 20, 20)) {
+                if(IsMouseButtonDown(MouseButton::MOUSE_BUTTON_LEFT)) holding = true;
+            }
 
-        if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) holding = false;
+            if(holding) {
+                wheel_y = GetMouseY();
+                wheel_power = (wheel_y - y) / multiplier;
+            }
+            
+            if(wheel_power < 0) wheel_power = 0;
+            if(wheel_power > wheel_length) wheel_power = wheel_length;
+
+            wheel_y = y + multiplier * wheel_power;
+            if(wheel_y > y + (height * scale) - 16) wheel_y = y + (height * scale) - 16;
+
+            if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) holding = false;
+        }
     }
 }
 

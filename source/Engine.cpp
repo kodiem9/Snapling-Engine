@@ -15,6 +15,7 @@ Engine::Engine()
     windows.emplace_back(GetScreenWidth() - 640, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR);
     windows.emplace_back(GetScreenWidth() - 640, 500, 60, 15, WindowId::PROPERTIES_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR);
     windows.emplace_back(GetScreenWidth() - 640, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR);
+    sprite_window_height = windows[2].height * windows[2].scale;
 
     // Buttons are random lol.
     buttons.emplace_back(GetScreenWidth() - 72, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f);
@@ -37,7 +38,7 @@ void Engine::Draw()
             case Window::Type::SCROLL_WINDOW: {
                 window.Draw([&]() {
                     for(Sprite &sprite: sprites) {
-                        sprite.Draw();
+                        sprite.Draw(window.x, window.y);
                     }
                 });
             }
@@ -146,7 +147,10 @@ void Engine::ButtonUpdate()
         case ButtonTrigger::EMPTY_SPRITE: {
             uint16_t fixed_x_offset = (Global::sprites_amount % 5) * 100;
             uint16_t fixed_y_offset = (Global::sprites_amount / 5) * 100;
-            sprites.emplace_back(GetScreenWidth() - 620 + fixed_x_offset, GetScreenHeight() - 230 + fixed_y_offset, 80, 80, Global::sprites_amount);
+            sprites.emplace_back(20 + fixed_x_offset, 20 + fixed_y_offset, 80, 80, Global::sprites_amount);
+            if(100 + fixed_y_offset > sprite_window_height) {
+                windows[2].wheel_length = 100 + fixed_y_offset - sprite_window_height;
+            }
             Global::sprites_amount++;
             Global::button_pressed = 0;
         }
@@ -269,6 +273,7 @@ void Engine::BiggerWindowOffsets()
                     window.height = (GetScreenHeight() - window.y) / 10 - 10; // some weird math idk why this works
 
                     window.UpdateCursor(old_y, old_height);
+                    sprite_window_height = window.height * window.scale;
                 }
                 break;
 
@@ -309,6 +314,7 @@ void Engine::SmallerWindowOffsets()
                     window.height = (GetScreenHeight() - window.y) / 5 - 20; // some weird math idk why this works
 
                     window.UpdateCursor(old_y, old_height);
+                    sprite_window_height = window.height * window.scale;
                 }
                 break;
 
