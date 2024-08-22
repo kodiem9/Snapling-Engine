@@ -8,7 +8,7 @@ class Block
     private:
         Global::Spritesheet spr;
 
-        void Texture(float _x, float _width, float _height, float _offset_x);
+        void Texture(float _x, float _width, float _height, float _offset_x, float _offset_width, float _offset_width_x);
 
     public:
         enum class Type
@@ -17,6 +17,8 @@ class Block
             PANEL_BLOCK,
             PLACEMENT_BLOCK
         };
+
+        std::string text;
 
         Type type;
         float scale;
@@ -28,11 +30,10 @@ class Block
         int16_t offset_x;
         int16_t offset_y;
         uint16_t width;
-        uint16_t height;
 
         bool held;
 
-        Block(uint16_t x, uint16_t y, float scale, Type type);
+        Block(uint16_t x, uint16_t y, float scale, Type type, std::string text);
         void Draw(uint16_t window_x, uint16_t window_y);
         void Update();
 };
