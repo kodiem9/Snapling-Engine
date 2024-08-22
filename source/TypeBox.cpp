@@ -42,7 +42,6 @@ void TypeBox::Update()
 
         if(key == '.' && type == Type::FLOAT) {
             period = true;
-            printf("does it work?\n");
         }
 
         if(IsKeyPressed(KEY_BACKSPACE)) {
