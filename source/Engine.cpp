@@ -27,18 +27,20 @@ Engine::Engine()
     windows.emplace_back(GetScreenWidth() - 610, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR, true);
     sprite_window_height = windows[WindowId::SPRITES_WINDOW].height * windows[WindowId::SPRITES_WINDOW].scale;
 
-    windows.emplace_back(280, 40, GetScreenWidth() - windows[WindowId::GAME_WINDOW].width * windows[WindowId::GAME_WINDOW].scale - 300, GetScreenHeight() - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true);
+    windows.emplace_back(280, 40, GetScreenWidth() - Global::game_window_width - 300, GetScreenHeight() - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true);
     Global::coding_window_width = windows[WindowId::CODING_WINDOW].width;
 
-    windows.emplace_back(10, 40, 100, 100, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true);
+    Global::coding_panels_width = GetScreenWidth() - Global::game_window_width - Global::coding_window_width - 30;
+    windows.emplace_back(10, 40, Global::coding_panels_width, (GetScreenHeight() / 5) * 2 - 80, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, true);
+    windows.emplace_back(10, 40 + (GetScreenHeight() / 5) * 2 - 80, Global::coding_panels_width, (GetScreenHeight() / 5) * 3 - 60, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, true);
 
 
     // Buttons are random lol.
     buttons.emplace_back(GetScreenWidth() - 42, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f);
     buttons.emplace_back(GetScreenWidth() - 90, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::SINGLE_BUTTON, 1, 2.0f);
     buttons.emplace_back(GetScreenWidth() - 122, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::SINGLE_BUTTON, 2, 2.0f);
-    buttons.emplace_back(GetScreenWidth() - 79, GetScreenHeight() - 159, ButtonTrigger::EMPTY_SPRITE, Button::Type::SINGLE_BUTTON, 4, 3.0f);
-    buttons.emplace_back(GetScreenWidth() - 87, GetScreenHeight() - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 3, 4.0f);
+    buttons.emplace_back(GetScreenWidth() - 79, GetScreenHeight() - 159, ButtonTrigger::EMPTY_SPRITE, Button::Type::SINGLE_BUTTON, 5, 3.0f);
+    buttons.emplace_back(GetScreenWidth() - 87, GetScreenHeight() - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 4, 4.0f);
 }
 
 Engine::~Engine()
@@ -255,6 +257,8 @@ void Engine::FullscreenOffsets()
                 case WindowId::PROPERTIES_WINDOW: window.visible = false; break;
                 case WindowId::SPRITES_WINDOW: window.visible = false; break;
                 case WindowId::CODING_WINDOW: window.visible = false; break;
+                case WindowId::BLOCK_TYPE_WINDOW: window.visible = false; break;
+                case WindowId::BLOCK_PANEL_WINDOW: window.visible = false; break;
 
                 default: break;
             }
@@ -288,13 +292,15 @@ void Engine::FullscreenOffsets()
                         window.scale = 5;
                     
                     window.y = 40;
-                    window.x = (GetScreenWidth() - (window.width * window.scale) - 40);
+                    window.x = (GetScreenWidth() - (window.width * window.scale) - 10);
                 }
                 break;
 
                 case WindowId::PROPERTIES_WINDOW: window.visible = true; break;
                 case WindowId::SPRITES_WINDOW: window.visible = true; break;
                 case WindowId::CODING_WINDOW: window.visible = true; break;
+                case WindowId::BLOCK_TYPE_WINDOW: window.visible = true; break;
+                case WindowId::BLOCK_PANEL_WINDOW: window.visible = true; break;
 
                 default: break;
             }
@@ -303,7 +309,7 @@ void Engine::FullscreenOffsets()
             switch(button.trigger)
             {
                 case ButtonTrigger::FULLSCREEN: {
-                    button.x = GetScreenWidth() - 72;
+                    button.x = GetScreenWidth() - 42;
                 }
                 break;
 
