@@ -4,6 +4,7 @@ TypeBox::TypeBox()
 {
     selected = false;
     period = false;
+    negative = false;
 }
 
 void TypeBox::Draw(uint16_t window_x, uint16_t window_y)
@@ -34,17 +35,35 @@ void TypeBox::Update()
             if(MeasureText(value->c_str(), 15) + 15 < width) {
                 if(key == '.' && period) return;
                 if(type == Type::FLOAT) {
-                    if(isdigit(key) == false && key != '.') return;
+                    if(isdigit(key) == false && !(key == '.' || key == '-')) return;
                     if(value->size() == 1 && value->at(0) == '0' && key != '.') {
                         value->pop_back();
                     }
                 }
-                value->push_back(key);
+                if(key != '-') {
+                    value->push_back(key);
+                }
             }
         }
 
-        if(key == '.' && type == Type::FLOAT) {
-            period = true;
+        if(type == Type::FLOAT) {
+            if(key == '.') {
+                period = true;
+            }
+            if(key == '-') {
+                negative = !negative;
+                if(negative) {
+                    if(value->at(0) != '0') {
+                        value->insert(value->begin(), '-');
+                    }
+                    else {
+                        negative = false;
+                    }
+                }
+                else {
+                    value->erase(value->begin());
+                }
+            }
         }
 
         if(IsKeyPressed(KEY_BACKSPACE)) {

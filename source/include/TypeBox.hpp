@@ -29,6 +29,7 @@ class TypeBox
         uint8_t key;
         bool selected;
         bool period;
+        bool negative;
 
         TypeBox();
         void Draw(uint16_t window_x, uint16_t window_y);
