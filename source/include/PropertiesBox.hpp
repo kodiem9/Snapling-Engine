@@ -19,6 +19,7 @@ class PropertiesBox
         uint8_t new_id;
 
         void Data(TypeBox *type_box, uint16_t x, uint16_t y, uint16_t width, uint16_t height, TypeBox::Type);
+        std::string CustomFloatToString(const float f);
 
     public:
         PropertiesBox();
