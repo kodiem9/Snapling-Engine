@@ -101,8 +101,9 @@ void Engine::Update()
 // PRIVATE
 inline void Engine::NewSprite(std::vector<Sprite> &sprites, uint16_t loop, uint8_t offset, uint8_t row)
 {
-    uint16_t fixed_x_offset;
-    uint16_t fixed_y_offset;
+    uint16_t fixed_x_offset = 0;
+    uint16_t fixed_y_offset = 0;
+    windows[2].wheel_length = 0;
     for(uint16_t i = 0; i < loop; i++) {
         fixed_x_offset = (Global::sprites_amount % row) * 100;
         fixed_y_offset = (Global::sprites_amount / row) * 100;
