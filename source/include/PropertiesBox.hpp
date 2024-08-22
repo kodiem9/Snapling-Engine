@@ -12,11 +12,18 @@ class PropertiesBox
         TypeBox *x_pos_box;
         TypeBox *y_pos_box;
 
+        Vector2 sprite_name_text_offset;
+        Vector2 x_pos_text_offset;
+        Vector2 y_pos_text_offset;
+
         uint8_t new_id;
+
+        void Data(TypeBox *type_box, uint16_t x, uint16_t y, uint16_t width, uint16_t height, TypeBox::Type);
 
     public:
         PropertiesBox();
         ~PropertiesBox();
         void Draw(uint16_t window_x, uint16_t window_y);
         void Update();
+        void Reset(uint8_t mode);
 };

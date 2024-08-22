@@ -166,12 +166,14 @@ void Engine::ButtonUpdate()
         case ButtonTrigger::BIGGER_WINDOW: {
             BiggerWindowOffsets();
             SpritesOffsets();
+            properties_box->Reset(1);
         }
         break;
 
         case ButtonTrigger::SMALLER_WINDOW: {
             SmallerWindowOffsets();
             SpritesOffsets();   
+            properties_box->Reset(0);
         }
         break;
 
