@@ -19,7 +19,8 @@ Engine::Engine()
 
 
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
-    windows.emplace_back(GetScreenWidth() - 610, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, true);
+    Global::game_scale = 10;
+    windows.emplace_back(GetScreenWidth() - 610, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, Global::game_scale, WHITE, WINDOW_OUTLINE_COLOR, true);
     Global::game_window_width = windows[WindowId::GAME_WINDOW].width * windows[WindowId::GAME_WINDOW].scale;
     Global::game_window_height = windows[WindowId::GAME_WINDOW].height * windows[WindowId::GAME_WINDOW].scale;
 
@@ -257,8 +258,11 @@ void Engine::FullscreenOffsets()
             {
                 case WindowId::GAME_WINDOW: {
                     window.scale = 17;
+                    Global::game_scale = window.scale;
                     window.y = (GetScreenHeight() - window.height * window.scale) / 2 - 28;
                     window.x = (GetScreenWidth() - window.width * window.scale) / 2;
+                    Global::game_window_width = window.width * window.scale;
+                    Global::game_window_height = window.height * window.scale;
                 }
                 break;
 
@@ -298,9 +302,13 @@ void Engine::FullscreenOffsets()
                         window.scale = 10;
                     else
                         window.scale = 5;
+                    Global::game_scale = window.scale;
                     
                     window.y = 40;
                     window.x = (GetScreenWidth() - (window.width * window.scale) - 10);
+
+                    Global::game_window_width = window.width * window.scale;
+                    Global::game_window_height = window.height * window.scale;
                 }
                 break;
 
@@ -342,6 +350,10 @@ void Engine::BiggerWindowOffsets()
                 case WindowId::GAME_WINDOW: {
                     window.x -= window.width * window.scale;
                     window.scale = 10;
+
+                    Global::game_window_width = window.width * window.scale;
+                    Global::game_window_height = window.height * window.scale;
+                    Global::game_scale = window.scale;
                 }
                 break;
 
@@ -389,6 +401,10 @@ void Engine::SmallerWindowOffsets()
                 case WindowId::GAME_WINDOW: {
                     window.scale = 5;
                     window.x += window.width * window.scale;
+
+                    Global::game_window_width = window.width * window.scale;
+                    Global::game_window_height = window.height * window.scale;
+                    Global::game_scale = window.scale;
                 }
                 break;
 
