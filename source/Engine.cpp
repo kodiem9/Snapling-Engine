@@ -9,29 +9,36 @@ Engine::Engine()
     saved_window_scale_mode = 0;
     tween_timer = 0.0f;
 
-    new_sprite_popup = new PopUp(GetScreenWidth() - 109, GetScreenHeight() - 167, 48, 56, POPUP_COLOR);
+    new_sprite_popup = new PopUp(GetScreenWidth() - 79, GetScreenHeight() - 167, 48, 56, POPUP_COLOR);
     properties_box = new PropertiesBox;
     // This isn't a vector of entities. It's more of a template. The entities data is actually inside "Global.hpp".
     // I made this entity class for it to be clean (just like the PopUp class)
     entity = new Entity;
     block = new Block(0, 0, 4.0f);
 
+
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
-    windows.emplace_back(GetScreenWidth() - 640, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, true);
-    Global::game_window_width = windows[0].width * windows[0].scale;
-    Global::game_window_height = windows[0].height * windows[0].scale;
-    windows.emplace_back(GetScreenWidth() - 640, 500, 60, 15, WindowId::PROPERTIES_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, false);
-    windows.emplace_back(GetScreenWidth() - 640, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR, true);
-    sprite_window_height = windows[2].height * windows[2].scale;
-    windows.emplace_back(0, 40, GetScreenWidth() - windows[0].width * windows[0].scale - 50, GetScreenHeight() - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true);
-    Global::coding_window_width = windows[3].width;
+    windows.emplace_back(GetScreenWidth() - 610, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, true);
+    Global::game_window_width = windows[WindowId::GAME_WINDOW].width * windows[WindowId::GAME_WINDOW].scale;
+    Global::game_window_height = windows[WindowId::GAME_WINDOW].height * windows[WindowId::GAME_WINDOW].scale;
+
+    windows.emplace_back(GetScreenWidth() - 610, 500, 60, 15, WindowId::PROPERTIES_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, false);
+
+    windows.emplace_back(GetScreenWidth() - 610, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR, true);
+    sprite_window_height = windows[WindowId::SPRITES_WINDOW].height * windows[WindowId::SPRITES_WINDOW].scale;
+
+    windows.emplace_back(280, 40, GetScreenWidth() - windows[WindowId::GAME_WINDOW].width * windows[WindowId::GAME_WINDOW].scale - 300, GetScreenHeight() - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true);
+    Global::coding_window_width = windows[WindowId::CODING_WINDOW].width;
+
+    windows.emplace_back(10, 40, 100, 100, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true);
+
 
     // Buttons are random lol.
-    buttons.emplace_back(GetScreenWidth() - 72, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f);
-    buttons.emplace_back(GetScreenWidth() - 120, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::SINGLE_BUTTON, 1, 2.0f);
-    buttons.emplace_back(GetScreenWidth() - 152, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::SINGLE_BUTTON, 2, 2.0f);
-    buttons.emplace_back(GetScreenWidth() - 109, GetScreenHeight() - 159, ButtonTrigger::EMPTY_SPRITE, Button::Type::SINGLE_BUTTON, 4, 3.0f);
-    buttons.emplace_back(GetScreenWidth() - 117, GetScreenHeight() - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 3, 4.0f);
+    buttons.emplace_back(GetScreenWidth() - 42, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f);
+    buttons.emplace_back(GetScreenWidth() - 90, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::SINGLE_BUTTON, 1, 2.0f);
+    buttons.emplace_back(GetScreenWidth() - 122, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::SINGLE_BUTTON, 2, 2.0f);
+    buttons.emplace_back(GetScreenWidth() - 79, GetScreenHeight() - 159, ButtonTrigger::EMPTY_SPRITE, Button::Type::SINGLE_BUTTON, 4, 3.0f);
+    buttons.emplace_back(GetScreenWidth() - 87, GetScreenHeight() - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 3, 4.0f);
 }
 
 Engine::~Engine()
@@ -346,7 +353,7 @@ void Engine::BiggerWindowOffsets()
                 break;
 
                 case WindowId::CODING_WINDOW: {
-                    window.width = GetScreenWidth() - windows[0].width * windows[0].scale - 50;
+                    window.width = GetScreenWidth() - windows[0].width * windows[0].scale - 300;
                     Global::coding_window_width = window.width;
                 }
                 break;
@@ -393,7 +400,7 @@ void Engine::SmallerWindowOffsets()
                 break;
 
                 case WindowId::CODING_WINDOW: {
-                    window.width = GetScreenWidth() - windows[0].width * windows[0].scale - 50;
+                    window.width = GetScreenWidth() - windows[0].width * windows[0].scale - 300;
                     Global::coding_window_width = window.width;
                 }
                 break;
