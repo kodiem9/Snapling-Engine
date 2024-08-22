@@ -33,10 +33,9 @@ void TypeBox::Update()
         key = GetCharPressed();
         if(key != 0) {
             if(MeasureText(value->c_str(), 15) + 15 < width) {
-                if(key == '.' && period) return;
-                if(type == Type::FLOAT) {
-                    if(isdigit(key) == false && !(key == '.' || key == '-')) return;
-                    if(value->size() == 1 && value->at(0) == '0' && key != '.') {
+                if(type == Type::NUMBER) {
+                    if(isdigit(key) == false && key != '-') return;
+                    if(value->size() == 1 && value->at(0) == '0' && key != '-') {
                         value->pop_back();
                     }
                 }
@@ -46,19 +45,14 @@ void TypeBox::Update()
             }
         }
 
-        if(type == Type::FLOAT) {
-            if(key == '.') {
-                period = true;
-            }
+        if(type == Type::NUMBER) {
             if(key == '-') {
                 negative = !negative;
                 if(negative) {
-                    if(value->at(0) != '0') {
+                    if(value->at(0) != '0')
                         value->insert(value->begin(), '-');
-                    }
-                    else {
+                    else
                         negative = false;
-                    }
                 }
                 else {
                     value->erase(value->begin());
@@ -67,17 +61,10 @@ void TypeBox::Update()
         }
 
         if(IsKeyPressed(KEY_BACKSPACE)) {
-            if(type == Type::FLOAT) {
-                if(value->at(value->size()-1) == '.') {
-                    period = false;
-                }
-            }
-            if(value->size() > 0) {
-                value->pop_back();
-            }
+            value->pop_back();
         }
 
-        if(type == Type::FLOAT) {
+        if(type == Type::NUMBER) {
             if(value->size() == 0) {
                 value->push_back('0');
             }

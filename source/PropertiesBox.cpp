@@ -25,8 +25,8 @@ void PropertiesBox::Draw(uint16_t window_x, uint16_t window_y)
     if(new_id != Global::selected_sprite) {
         new_id = Global::selected_sprite;
 
-        x_pos_string = CustomFloatToString(Global::entities[new_id].x);
-        y_pos_string = CustomFloatToString(Global::entities[new_id].y);
+        x_pos_string = std::to_string(Global::entities[new_id].x);
+        y_pos_string = std::to_string(Global::entities[new_id].y);
 
         sprite_name_box->value = &Global::entities[new_id].name;
         x_pos_box->value = &x_pos_string;
@@ -49,8 +49,8 @@ void PropertiesBox::Update()
     x_pos_box->Update();
     y_pos_box->Update();
 
-    Global::entities[new_id].x = stof(x_pos_string);
-    Global::entities[new_id].y = stof(y_pos_string);
+    Global::entities[new_id].x = stoi(x_pos_string);
+    Global::entities[new_id].y = stoi(y_pos_string);
 }
 
 void PropertiesBox::Reset(uint8_t mode)
@@ -60,11 +60,11 @@ void PropertiesBox::Reset(uint8_t mode)
         sprite_name_text_offset.x = 15;
         sprite_name_text_offset.y = 25;
 
-        Data(x_pos_box, 270, 20, 85, 30, TypeBox::Type::FLOAT);
+        Data(x_pos_box, 270, 20, 85, 30, TypeBox::Type::NUMBER);
         x_pos_text_offset.x = 245;
         x_pos_text_offset.y = 25;
 
-        Data(y_pos_box, 410, 20, 85, 30, TypeBox::Type::FLOAT);
+        Data(y_pos_box, 410, 20, 85, 30, TypeBox::Type::NUMBER);
         y_pos_text_offset.x = 385;
         y_pos_text_offset.y = 25;
     }
@@ -73,11 +73,11 @@ void PropertiesBox::Reset(uint8_t mode)
         sprite_name_text_offset.x = 50;
         sprite_name_text_offset.y = 10;
 
-        Data(x_pos_box, 50, 40, 85, 30, TypeBox::Type::FLOAT);
+        Data(x_pos_box, 50, 40, 85, 30, TypeBox::Type::NUMBER);
         x_pos_text_offset.x = 30;
         x_pos_text_offset.y = 45;
 
-        Data(y_pos_box, 170, 40, 85, 30, TypeBox::Type::FLOAT);
+        Data(y_pos_box, 170, 40, 85, 30, TypeBox::Type::NUMBER);
         y_pos_text_offset.x = 150;
         y_pos_text_offset.y = 45;
     }
@@ -92,24 +92,4 @@ void PropertiesBox::Data(TypeBox *type_box, uint16_t x, uint16_t y, uint16_t wid
     type_box->width = width;
     type_box->height = height;
     type_box->type = type;
-}
-
-std::string PropertiesBox::CustomFloatToString(const float f)
-{
-    std::string str = std::to_string(f);
-    std::string out_str;
-    bool stop = false;
-    
-    for(char ch: str) {
-        if(ch == '.') stop = true;
-        if(stop) {
-            if(ch == '0') break;
-        }
-        out_str.push_back(ch);
-    }
-
-    if(out_str[out_str.size()-1] == '.') {
-        out_str.pop_back();
-    }
-    return out_str;
 }

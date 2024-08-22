@@ -12,7 +12,7 @@ class TypeBox
         enum class Type
         {
             STRING,
-            FLOAT
+            NUMBER
         };
 
         std::string *value;

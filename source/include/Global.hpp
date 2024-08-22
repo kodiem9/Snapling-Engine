@@ -14,9 +14,9 @@ namespace Global
     {
         std::string name;
         
-        float x;
-        float y;
-        float direction;
+        int x;
+        int y;
+        int direction;
 
         uint16_t size;
 
