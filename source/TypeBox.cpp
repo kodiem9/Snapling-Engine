@@ -34,7 +34,7 @@ void TypeBox::Update()
             if(MeasureText(value->c_str(), 15) + 15 < width) {
                 if(key == '.' && period) return;
                 if(type == Type::FLOAT) {
-                    if(isdigit(key) == false) return;
+                    if(isdigit(key) == false && key != '.') return;
                     if(value->size() == 1 && value->at(0) == '0' && key != '.') {
                         value->pop_back();
                     }
