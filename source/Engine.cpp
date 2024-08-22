@@ -23,6 +23,7 @@ Engine::Engine()
     windows.emplace_back(GetScreenWidth() - 640, 500, 60, 15, WindowId::PROPERTIES_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, false);
     windows.emplace_back(GetScreenWidth() - 640, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR, true);
     sprite_window_height = windows[2].height * windows[2].scale;
+    windows.emplace_back(0, 40, 790, GetScreenHeight() - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true);
 
     // Buttons are random lol.
     buttons.emplace_back(GetScreenWidth() - 72, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f);
@@ -69,6 +70,13 @@ void Engine::Draw()
             }
             break;
 
+            case WindowId::CODING_WINDOW: {
+                window.Draw([&]() {
+                    block->Draw(window.x, window.y);
+                });
+            }
+            break;
+
             default: window.Draw([&](){}); break;
         }
     }
@@ -78,8 +86,6 @@ void Engine::Draw()
     for(Button &button: buttons) {
         button.Draw();
     }
-
-    block->Draw();
 
     if(IsKeyDown(KeyboardKey::KEY_TAB)) {
         DrawFPS(10, 10);
