@@ -36,7 +36,7 @@ void Block::Update()
     }
 
     if(x < 0) x = 0;
-    if(x > (790 - BLOCK_SIZE * scale)) x = (790 - BLOCK_SIZE * scale);
+    if(x > (Global::coding_window_width - BLOCK_SIZE * scale)) x = (Global::coding_window_width - BLOCK_SIZE * scale);
     if(y < 0) y = 0;
     if(y > (GetScreenHeight() - 140 - BLOCK_SIZE * scale)) y = (GetScreenHeight() - 140 - BLOCK_SIZE * scale);
 
