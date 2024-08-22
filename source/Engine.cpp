@@ -14,7 +14,8 @@ Engine::Engine()
     // This isn't a vector of entities. It's more of a template. The entities data is actually inside "Global.hpp".
     // I made this entity class for it to be clean (just like the PopUp class)
     entity = new Entity;
-    block = new Block(0, 0, 4.0f);
+    block = new Block(10, 10, 3.0f, Block::Type::NORMAL_BLOCK);
+    panel_blocks = new PanelBlocks;
 
 
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
@@ -31,8 +32,8 @@ Engine::Engine()
     Global::coding_window_width = windows[WindowId::CODING_WINDOW].width;
 
     Global::coding_panels_width = GetScreenWidth() - Global::game_window_width - Global::coding_window_width - 30;
-    windows.emplace_back(10, 40, Global::coding_panels_width, (GetScreenHeight() / 5) * 2 - 80, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, true);
-    windows.emplace_back(10, 40 + (GetScreenHeight() / 5) * 2 - 80, Global::coding_panels_width, (GetScreenHeight() / 5) * 3 - 60, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, true);
+    windows.emplace_back(10, 40, Global::coding_panels_width, (GetScreenHeight() / 5) * 2 - 80, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, false);
+    windows.emplace_back(10, 40 + (GetScreenHeight() / 5) * 2 - 80, Global::coding_panels_width, (GetScreenHeight() / 5) * 3 - 60, WindowId::BLOCK_PANEL_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, true);
 
 
     // Buttons are random lol.
@@ -83,6 +84,13 @@ void Engine::Draw()
             case WindowId::CODING_WINDOW: {
                 window.Draw([&]() {
                     block->Draw(window.x, window.y);
+                });
+            }
+            break;
+
+            case WindowId::BLOCK_PANEL_WINDOW: {
+                window.Draw([&]() {
+                    panel_blocks->Draw(window.x, window.y);
                 });
             }
             break;

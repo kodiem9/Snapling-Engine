@@ -2,7 +2,7 @@
 
 
 // PUBLIC
-Block::Block(uint16_t x, uint16_t y, float scale) : x(x), y(y), scale(scale) {}
+Block::Block(uint16_t x, uint16_t y, float scale, Type type) : x(x), y(y), scale(scale), type(type) {}
 
 void Block::Draw(uint16_t window_x, uint16_t window_y)
 {
@@ -22,26 +22,34 @@ void Block::Draw(uint16_t window_x, uint16_t window_y)
 
 void Block::Update()
 {
-    if(Global::MouseCollision(fixed_x, fixed_y, BLOCK_SIZE * scale, BLOCK_SIZE * scale)) {
-        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
-            offset_x = GetMouseX() - x;
-            offset_y = GetMouseY() - y;
-            held = true;
+    switch(type)
+    {
+        case Type::NORMAL_BLOCK: {
+            if(Global::MouseCollision(fixed_x, fixed_y, BLOCK_SIZE * scale, BLOCK_SIZE * scale)) {
+                if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
+                    offset_x = GetMouseX() - x;
+                    offset_y = GetMouseY() - y;
+                    held = true;
+                }
+            }
+
+            if(held) {
+                x = GetMouseX() - offset_x;
+                y = GetMouseY() - offset_y;
+            }
+
+            if(x < 0) x = 0;
+            if(x > (Global::coding_window_width - BLOCK_SIZE * scale)) x = (Global::coding_window_width - BLOCK_SIZE * scale);
+            if(y < 0) y = 0;
+            if(y > (GetScreenHeight() - 140 - BLOCK_SIZE * scale)) y = (GetScreenHeight() - 140 - BLOCK_SIZE * scale);
+
+            if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
+                held = false;
+            }
         }
-    }
+        break;
 
-    if(held) {
-        x = GetMouseX() - offset_x;
-        y = GetMouseY() - offset_y;
-    }
-
-    if(x < 0) x = 0;
-    if(x > (Global::coding_window_width - BLOCK_SIZE * scale)) x = (Global::coding_window_width - BLOCK_SIZE * scale);
-    if(y < 0) y = 0;
-    if(y > (GetScreenHeight() - 140 - BLOCK_SIZE * scale)) y = (GetScreenHeight() - 140 - BLOCK_SIZE * scale);
-
-    if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
-        held = false;
+        default: break;
     }
 }
 

@@ -5,7 +5,8 @@
 #include "Sprite.hpp"
 #include "PropertiesBox.hpp"
 #include "Entity.hpp"
-#include "CodeBlock.hpp"
+// PanelBlocks.hpp HAS CodeBlocks.hpp INSIDE
+#include "PanelBlocks.hpp"
 
 enum ButtonTrigger
 {
@@ -47,6 +48,7 @@ class Engine
         
         PopUp *new_sprite_popup;
         PropertiesBox *properties_box;
+        PanelBlocks *panel_blocks;
         Entity *entity;
         Block *block;
 
