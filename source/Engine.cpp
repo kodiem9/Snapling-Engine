@@ -66,6 +66,7 @@ void Engine::Draw()
 
     if(IsKeyDown(KeyboardKey::KEY_TAB)) {
         DrawFPS(10, 10);
+        DrawText(TextFormat("Sprites: %i\n", Global::sprites_amount), 10, 40, 25, RED);
     }
 }
 
