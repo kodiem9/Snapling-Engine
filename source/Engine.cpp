@@ -11,9 +11,14 @@ Engine::Engine()
 
     new_sprite_popup = new PopUp(GetScreenWidth() - 109, GetScreenHeight() - 167, 48, 56, POPUP_COLOR);
     properties_box = new PropertiesBox;
+    // This isn't a vector of entities. It's more of a template. The entities data is actually inside "Global.hpp".
+    // I made this entity class for it to be clean (just like the PopUp class)
+    entity = new Entity;
 
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
     windows.emplace_back(GetScreenWidth() - 640, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, true);
+    Global::game_window_width = windows[0].width * windows[0].scale;
+    Global::game_window_height = windows[0].height * windows[0].scale;
     windows.emplace_back(GetScreenWidth() - 640, 500, 60, 15, WindowId::PROPERTIES_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, false);
     windows.emplace_back(GetScreenWidth() - 640, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR, true);
     sprite_window_height = windows[2].height * windows[2].scale;
@@ -36,6 +41,15 @@ void Engine::Draw()
     for(Window &window: windows) {
         switch(window.id)
         {
+            case WindowId::GAME_WINDOW: {
+                window.Draw([&]() {
+                    for(uint8_t i = 0; i < Global::sprites_amount; i++) {
+                        entity->Draw(window.x, window.y, i);
+                    }
+                });
+            }
+            break;
+
             case WindowId::PROPERTIES_WINDOW: {
                 window.Draw([&]() {
                     if(Global::sprites_amount > 0) {

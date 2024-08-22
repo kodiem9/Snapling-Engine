@@ -30,6 +30,8 @@ namespace Global
 
     inline std::vector<ObjectData> entities;
     inline Texture2D button_texture;
+    inline uint16_t game_window_width = 0;
+    inline uint16_t game_window_height = 0;
     inline uint8_t button_pressed = 0;
     inline uint8_t sprites_amount = 0;
     inline uint8_t selected_sprite = 0;
