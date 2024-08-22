@@ -14,6 +14,7 @@ Engine::Engine()
     // This isn't a vector of entities. It's more of a template. The entities data is actually inside "Global.hpp".
     // I made this entity class for it to be clean (just like the PopUp class)
     entity = new Entity;
+    block = new Block(0, 0, 4.0f);
 
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
     windows.emplace_back(GetScreenWidth() - 640, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, true);
@@ -78,6 +79,8 @@ void Engine::Draw()
         button.Draw();
     }
 
+    block->Draw();
+
     if(IsKeyDown(KeyboardKey::KEY_TAB)) {
         DrawFPS(10, 10);
         DrawText(TextFormat("Sprites: %i\n", Global::sprites_amount), 10, 40, 25, RED);
@@ -105,6 +108,8 @@ void Engine::Update()
     }
 
     ButtonUpdate();
+
+    block->Update();
 
     if(tween_timer > 0.0f) {
         tween_timer -= GetFrameTime();

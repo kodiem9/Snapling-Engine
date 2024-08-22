@@ -5,6 +5,7 @@
 #include "Sprite.hpp"
 #include "PropertiesBox.hpp"
 #include "Entity.hpp"
+#include "CodeBlock.hpp"
 
 enum ButtonTrigger
 {
@@ -43,6 +44,7 @@ class Engine
         PopUp *new_sprite_popup;
         PropertiesBox *properties_box;
         Entity *entity;
+        Block *block;
 
         float tween_timer;
 

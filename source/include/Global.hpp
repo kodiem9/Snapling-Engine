@@ -29,9 +29,13 @@ namespace Global
     };
 
     inline std::vector<ObjectData> entities;
+
     inline Texture2D button_texture;
+    inline Texture2D blocks_texture;
+
     inline uint16_t game_window_width = 0;
     inline uint16_t game_window_height = 0;
+
     inline uint8_t button_pressed = 0;
     inline uint8_t sprites_amount = 0;
     inline uint8_t selected_sprite = 0;
@@ -44,10 +48,12 @@ namespace Global
     inline void LoadTextures()
     {
         button_texture = LoadTexture("assets/images/buttons.png");
+        blocks_texture = LoadTexture("assets/images/blocks.png");
     }
 
     inline void UnloadTextures()
     {
         UnloadTexture(button_texture);
+        UnloadTexture(blocks_texture);
     }
 };
