@@ -7,6 +7,11 @@ TypeBox::TypeBox()
     negative = false;
 }
 
+TypeBox::~TypeBox()
+{
+    delete value;
+}
+
 void TypeBox::Draw(uint16_t window_x, uint16_t window_y)
 {
     if(fixed_x != window_x || fixed_y != window_y) {

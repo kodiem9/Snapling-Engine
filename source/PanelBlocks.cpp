@@ -11,6 +11,11 @@ PanelBlocks::PanelBlocks(Block *block)
     blocks.emplace_back(10, 50, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing Two", 2);
 }
 
+PanelBlocks::~PanelBlocks()
+{
+    delete block_data;
+}
+
 void PanelBlocks::Draw(uint16_t window_x, uint16_t window_y)
 {
     if(this->window_x != window_x || this->window_y != window_y) {

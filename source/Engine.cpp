@@ -48,6 +48,12 @@ Engine::Engine()
 Engine::~Engine()
 {
     Global::UnloadTextures();
+
+    delete new_sprite_popup;
+    delete properties_box;
+    delete panel_blocks;
+    delete entity;
+    delete dragged_block;
 }
 
 void Engine::Draw()

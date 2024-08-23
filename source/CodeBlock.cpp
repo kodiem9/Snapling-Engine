@@ -64,13 +64,7 @@ void Block::Update()
             if(Global::MouseCollision(fixed_x, fixed_y, BLOCK_SIZE * scale + width, BLOCK_SIZE * scale)) {
                 if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
                     Global::selected_panel_block = id;
-                    held = true;
                 }
-            }
-
-            if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT) && held) {
-                Global:: selected_panel_block = 0;
-                held = false;
             }
         }
         break;
@@ -79,6 +73,13 @@ void Block::Update()
             if(Global::selected_panel_block > 0) {
                 x = GetMouseX() - offset_x;
                 y = GetMouseY() - offset_y;
+            }
+
+            if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT) && Global::selected_panel_block > 0) {
+                if(x > Global::coding_panels_width) {
+                    Global::execute_new_block = true;
+                }
+                Global::selected_panel_block = 0;
             }
         }
         break;

@@ -32,6 +32,7 @@ class TypeBox
         bool negative;
 
         TypeBox();
+        ~TypeBox();
         void Draw(uint16_t window_x, uint16_t window_y);
         void Update();
 };
