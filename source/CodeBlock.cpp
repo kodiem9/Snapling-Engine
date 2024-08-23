@@ -4,7 +4,7 @@
 // PUBLIC
 Block::Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id) : x(x), y(y), scale(scale), type(type), text(text), id(id)
 {
-    width = MeasureText(text.c_str(), 5 * (scale - 1));
+    Data();
 }
 
 void Block::Draw(uint16_t window_x, uint16_t window_y)
@@ -54,7 +54,6 @@ void Block::Update()
         break;
 
         case Type::PANEL_BLOCK: {
-            printf("pressed\n");
             if(Global::MouseCollision(fixed_x, fixed_y, BLOCK_SIZE * scale + width, BLOCK_SIZE * scale)) {
                 if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
                     Global::selected_panel_block = id;
@@ -63,15 +62,27 @@ void Block::Update()
             }
 
             if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT) && held) {
-                printf("released\n");
                 Global:: selected_panel_block = 0;
                 held = false;
             }
         }
         break;
 
+        case Type::PLACEMENT_BLOCK: {
+            if(Global::selected_panel_block > 0) {
+                x = GetMouseX() - offset_x;
+                y = GetMouseY() - offset_y;
+            }
+        }
+        break;
+
         default: break;
     }
+}
+
+void Block::Data()
+{
+    width = MeasureText(text.c_str(), 5 * (scale - 1));
 }
 
 

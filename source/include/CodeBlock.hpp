@@ -37,4 +37,5 @@ class Block
         Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id = 0);
         void Draw(uint16_t window_x, uint16_t window_y);
         void Update();
+        void Data();
 };
