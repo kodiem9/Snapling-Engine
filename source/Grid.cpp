@@ -22,7 +22,7 @@ void Grid::Update()
         held = true;
     }
 
-    if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
+    if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT) && held) {
         held = false;
     }
 

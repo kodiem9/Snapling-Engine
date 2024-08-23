@@ -47,7 +47,7 @@ void Block::Update()
                     held = true;
                 }
 
-                if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT) && IsKeyDown(KeyboardKey::KEY_LEFT_SHIFT)) {
+                if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_RIGHT) && IsKeyDown(KeyboardKey::KEY_LEFT_SHIFT)) {
                     remove = true;
                 }
             }
