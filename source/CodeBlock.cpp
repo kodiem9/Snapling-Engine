@@ -2,7 +2,8 @@
 
 
 // PUBLIC
-Block::Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id) : x(x), y(y), scale(scale), type(type), text(text), id(id)
+Block::Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id, uint8_t block_type)
+: x(x), y(y), scale(scale), type(type), text(text), id(id), block_type(block_type)
 {
     held = false;
     remove = false;

@@ -32,10 +32,11 @@ class Block
         uint16_t width;
         uint16_t id;
 
+        uint8_t block_type;
         bool held;
         bool remove;
 
-        Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id = 0);
+        Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id = 0, uint8_t block_type = 0);
         void Draw(int16_t window_x, int16_t window_y);
         void Update();
         void Data();

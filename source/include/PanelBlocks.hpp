@@ -4,7 +4,7 @@
 class PanelBlocks
 {
     private:
-        std::vector<Block> blocks;
+        std::vector<std::vector<Block>> blocks;
 
         uint16_t new_dragged_block_id;
         uint16_t window_x;
