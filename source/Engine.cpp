@@ -17,7 +17,6 @@ Engine::Engine()
     entity = new Entity;
     dragged_block = new Block(10, 10, Global::code_panel_scale, Block::Type::PLACEMENT_BLOCK, "Testing");
     panel_blocks = new PanelBlocks(dragged_block);
-    grid = new Grid;
 
 
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
@@ -31,12 +30,17 @@ Engine::Engine()
     windows.emplace_back(GetScreenWidth() - 610, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR, true);
     sprite_window_height = windows[WindowId::SPRITES_WINDOW].height * windows[WindowId::SPRITES_WINDOW].scale;
 
-    windows.emplace_back(280, 40, GetScreenWidth() - Global::game_window_width - 300, GetScreenHeight() - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true);
+    Global::coding_panels_x = 280;
+    windows.emplace_back(Global::coding_panels_x, 40, GetScreenWidth() - Global::game_window_width - (Global::coding_panels_x + 20), GetScreenHeight() - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true);
     Global::coding_window_width = windows[WindowId::CODING_WINDOW].width;
 
     Global::coding_panels_width = GetScreenWidth() - Global::game_window_width - Global::coding_window_width - 30;
     windows.emplace_back(10, 40, Global::coding_panels_width, (GetScreenHeight() / 5) * 2 - 80, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, false);
     windows.emplace_back(10, 40 + (GetScreenHeight() / 5) * 2 - 80, Global::coding_panels_width, (GetScreenHeight() / 5) * 3 - 60, WindowId::BLOCK_PANEL_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, true);
+
+
+    // Lonely grid...
+    grid = new Grid;
 
 
     // Buttons are random lol.
@@ -98,7 +102,7 @@ void Engine::Draw()
                     for(Block &block: blocks) {
                         block.Draw(window.x, window.y);
                     }
-                    DrawText(TextFormat("(%i, %i)", Global::coding_window_x, Global::coding_window_y), 10 + window.x, window.height - 30 + window.y, 20, LIGHTGRAY);
+                    DrawText(TextFormat("(%i, %i)", Global::block_grid_x, Global::block_grid_y), 10 + window.x, window.height - 30 + window.y, 20, LIGHTGRAY);
                 });
             }
             break;
@@ -489,6 +493,7 @@ void Engine::BlockPanelsOffsets()
                     window.x = 280;
                     window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
                     Global::coding_window_width = window.width;
+                    Global::coding_panels_x = window.x;
                 }
                 break;
 
@@ -507,6 +512,7 @@ void Engine::BlockPanelsOffsets()
                     window.x = 10;
                     window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
                     Global::coding_window_width = window.width;
+                    Global::coding_panels_x = window.x;
                 }
                 break;
 

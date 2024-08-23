@@ -1,15 +1,36 @@
 #include "include/Grid.hpp"
 
+
+// PUBLIC
+Grid::Grid()
+{
+    uint16_t gap_x = 60;
+    uint16_t gap_y = 60;
+    uint16_t x;
+    uint16_t y;
+
+    for(x = 0; x < (Global::coding_window_width / gap_x) + 1; x++) {
+        for(y = 0; y < ((GetScreenHeight() - 140) / gap_y) + 1; y++) {
+            dots.emplace_back(x * 60 + 10, y * 60 + 10);
+        }
+    }
+
+    move_x = x * gap_x;
+    move_y = y * gap_y;
+}
+
 void Grid::Draw(uint16_t window_x, uint16_t window_y)
 {
-    DrawCircle(10 + window_x, 10 + window_y, 2, LIGHTGRAY);
+    for(Dot &dot: dots) {
+        DrawCircle(dot.x + window_x - Global::block_grid_x, dot.y + window_y - Global::block_grid_y, 2, LIGHTGRAY);
+    }
 }
 
 void Grid::Update()
 {
     if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
-        offset_x = GetMouseX() + Global::coding_window_x;
-        offset_y = GetMouseY() + Global::coding_window_y;
+        offset_x = GetMouseX() + Global::block_grid_x;
+        offset_y = GetMouseY() + Global::block_grid_y;
         held = true;
     }
 
@@ -19,13 +40,28 @@ void Grid::Update()
 
     if(held) {
         if(offset_x - GetMouseX() < 0)
-            Global::coding_window_x = 0;
+            Global::block_grid_x = 0;
         else
-            Global::coding_window_x = offset_x - GetMouseX();
+            Global::block_grid_x = offset_x - GetMouseX();
 
         if(offset_y - GetMouseY() < 0)
-            Global::coding_window_y = 0;
+            Global::block_grid_y = 0;
         else
-            Global::coding_window_y = offset_y - GetMouseY();
+            Global::block_grid_y = offset_y - GetMouseY();
+    }
+
+    for(Dot &dot: dots) {
+        if(dot.x - Global::block_grid_x < 0) {
+            dot.x += move_x;
+        }
+        if(dot.x - Global::block_grid_x > move_x) {
+            dot.x -= move_x;
+        }
+        if(dot.y - Global::block_grid_y < 0) {
+            dot.y += move_y;
+        }
+        if(dot.y - Global::block_grid_y > move_y) {
+            dot.y -= move_y;
+        }
     }
 }
