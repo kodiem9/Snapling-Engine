@@ -97,18 +97,22 @@ void Engine::Draw()
 
             case WindowId::CODING_WINDOW: {
                 window.Draw([&]() {
-                    grid->Draw(window.x, window.y);
-                    for(Block &block: blocks) {
-                        block.Draw(window.x - Global::block_grid_x, window.y - Global::block_grid_y);
+                    if(Global::sprites_amount > 0) {
+                        grid->Draw(window.x, window.y);
+                        for(Block &block: blocks[Global::selected_sprite]) {
+                            block.Draw(window.x - Global::block_grid[Global::selected_sprite].x, window.y - Global::block_grid[Global::selected_sprite].y);
+                        }
+                        DrawText(TextFormat("(%.0f, %.0f)", Global::block_grid[Global::selected_sprite].y, Global::block_grid[Global::selected_sprite].y), 10 + window.x, window.height - 30 + window.y, 20, LIGHTGRAY);
                     }
-                    DrawText(TextFormat("(%i, %i)", Global::block_grid_x, Global::block_grid_y), 10 + window.x, window.height - 30 + window.y, 20, LIGHTGRAY);
                 });
             }
             break;
 
             case WindowId::BLOCK_PANEL_WINDOW: {
                 window.Draw([&]() {
-                    panel_blocks->Draw(window.x, window.y);
+                    if(Global::sprites_amount > 0) {
+                        panel_blocks->Draw(window.x, window.y);
+                    }
                 });
             }
             break;
@@ -149,8 +153,10 @@ void Engine::Update()
         sprite.Update();
     }
 
-    for(Block &block: blocks) {
-        block.Update();
+    if(Global::sprites_amount > 0) {
+        for(Block &block: blocks[Global::selected_sprite]) {
+            block.Update();
+        }
     }
     
     if(Global::sprites_amount > 0) {
@@ -159,16 +165,20 @@ void Engine::Update()
 
     ButtonUpdate();
 
-    grid->Update();
+    if(Global::sprites_amount > 0) {
+        grid->Update();
+    }
 
-    panel_blocks->Update();
+    if(Global::sprites_amount > 0) {
+        panel_blocks->Update();
+    }
 
     if(Global::selected_panel_block > 0) {
         dragged_block->Update();
     }
 
     if(Global::execute_new_block) {
-        blocks.emplace_back(dragged_block->x - Global::coding_panels_width, dragged_block->y - 40, Global::coding_grid_scale, Block::Type::NORMAL_BLOCK, dragged_block->text);
+        blocks[Global::selected_sprite].emplace_back(dragged_block->x - Global::coding_panels_width, dragged_block->y - 40, Global::coding_grid_scale, Block::Type::NORMAL_BLOCK, dragged_block->text);
         Global::execute_new_block = false;
     }
 
@@ -194,6 +204,8 @@ inline void Engine::NewSprite(std::vector<Sprite> &sprites, uint16_t loop, uint8
     if(100 + fixed_y_offset > sprite_window_height) {
         windows[2].wheel_length = 120 + fixed_y_offset - sprite_window_height;
     }
+    blocks.push_back(std::vector<Block>());
+    Global::block_grid.push_back(Vector2{ 0, 0 });
 }
 
 inline void Engine::PopUpUpdate()

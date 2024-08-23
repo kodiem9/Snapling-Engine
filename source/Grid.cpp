@@ -10,15 +10,15 @@ Grid::Grid()
 void Grid::Draw(uint16_t window_x, uint16_t window_y)
 {
     for(Dot &dot: dots) {
-        DrawCircle(dot.x + window_x - Global::block_grid_x, dot.y + window_y - Global::block_grid_y, 2, LIGHTGRAY);
+        DrawCircle(dot.x + window_x - Global::block_grid[Global::selected_sprite].x, dot.y + window_y - Global::block_grid[Global::selected_sprite].y, 2, LIGHTGRAY);
     }
 }
 
 void Grid::Update()
 {
     if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
-        offset_x = GetMouseX() + Global::block_grid_x;
-        offset_y = GetMouseY() + Global::block_grid_y;
+        offset_x = GetMouseX() + Global::block_grid[Global::selected_sprite].x;
+        offset_y = GetMouseY() + Global::block_grid[Global::selected_sprite].y;
         held = true;
     }
 
@@ -29,28 +29,28 @@ void Grid::Update()
     if(held) {
         if(Global::MouseCollision(Global::coding_window_x, 40, Global::coding_window_width, GetScreenHeight() - 140) && !Global::holding_block) {
             if(offset_x - GetMouseX() < 0)
-                Global::block_grid_x = 0;
+                Global::block_grid[Global::selected_sprite].x = 0;
             else
-                Global::block_grid_x = offset_x - GetMouseX();
+                Global::block_grid[Global::selected_sprite].x = offset_x - GetMouseX();
 
             if(offset_y - GetMouseY() < 0)
-                Global::block_grid_y = 0;
+                Global::block_grid[Global::selected_sprite].y = 0;
             else
-                Global::block_grid_y = offset_y - GetMouseY();
+                Global::block_grid[Global::selected_sprite].y = offset_y - GetMouseY();
         }
     }
 
     for(Dot &dot: dots) {
-        if(dot.x - Global::block_grid_x < 0) {
+        if(dot.x - Global::block_grid[Global::selected_sprite].x < 0) {
             dot.x += move_x;
         }
-        if(dot.x - Global::block_grid_x > move_x) {
+        if(dot.x - Global::block_grid[Global::selected_sprite].x > move_x) {
             dot.x -= move_x;
         }
-        if(dot.y - Global::block_grid_y < 0) {
+        if(dot.y - Global::block_grid[Global::selected_sprite].y < 0) {
             dot.y += move_y;
         }
-        if(dot.y - Global::block_grid_y > move_y) {
+        if(dot.y - Global::block_grid[Global::selected_sprite].y > move_y) {
             dot.y -= move_y;
         }
     }
