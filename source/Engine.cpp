@@ -363,6 +363,7 @@ void Engine::FullscreenOffsets()
                 case ButtonTrigger::BIGGER_WINDOW: button.visible = false; break;
                 case ButtonTrigger::NEW_SPRITE: button.visible = false; break;
                 case ButtonTrigger::EMPTY_SPRITE: button.visible = false; break;
+                case ButtonTrigger::BLOCK_PANELS: button.visible = false; break;
             }
         }
         new_sprite_popup->visible = false;
@@ -408,6 +409,7 @@ void Engine::FullscreenOffsets()
                 case ButtonTrigger::BIGGER_WINDOW: button.visible = true; break;
                 case ButtonTrigger::NEW_SPRITE: button.visible = true; break;
                 case ButtonTrigger::EMPTY_SPRITE: button.visible = true; break;
+                case ButtonTrigger::BLOCK_PANELS: button.visible = true; break;
             }
         }
         window_scale_mode = saved_window_scale_mode;
