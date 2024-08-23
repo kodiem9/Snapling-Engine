@@ -414,7 +414,7 @@ void Engine::BiggerWindowOffsets()
                 break;
 
                 case WindowId::CODING_WINDOW: {
-                    window.width = GetScreenWidth() - windows[0].width * windows[0].scale - 300;
+                    window.width = GetScreenWidth() - windows[0].width * windows[0].scale - (window.x + 20);
                     Global::coding_window_width = window.width;
                 }
                 break;
@@ -465,7 +465,7 @@ void Engine::SmallerWindowOffsets()
                 break;
 
                 case WindowId::CODING_WINDOW: {
-                    window.width = GetScreenWidth() - windows[0].width * windows[0].scale - 300;
+                    window.width = GetScreenWidth() - windows[0].width * windows[0].scale - (window.x + 20);
                     Global::coding_window_width = window.width;
                 }
                 break;
