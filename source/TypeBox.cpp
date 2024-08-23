@@ -70,6 +70,10 @@ void TypeBox::Update()
         }
 
         if(type == Type::NUMBER) {
+            if(value->size() == 1 && value->at(0) == '-') {
+                value->pop_back();
+            }
+
             if(value->size() == 0) {
                 value->push_back('0');
             }
