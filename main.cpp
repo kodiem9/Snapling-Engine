@@ -1,7 +1,7 @@
 #include "source/include/Engine.hpp"
 
 #define BACKGROUND_COLOR Color{ 229, 240, 255, 255 }
-constexpr uint16_t BUILD_NUMBER = 1007;
+constexpr uint16_t BUILD_NUMBER = 1139;
 
 int main()
 {
