@@ -14,7 +14,7 @@ Engine::Engine()
     // This isn't a vector of entities. It's more of a template. The entities data is actually inside "Global.hpp".
     // I made this entity class for it to be clean (just like the PopUp class)
     entity = new Entity;
-    block = new Block(10, 10, 3.0f, Block::Type::NORMAL_BLOCK, "Testing");
+    dragged_block = new Block(10, 10, 4.0f, Block::Type::NORMAL_BLOCK, "Testing");
     panel_blocks = new PanelBlocks;
 
 
@@ -83,9 +83,7 @@ void Engine::Draw()
             break;
 
             case WindowId::CODING_WINDOW: {
-                window.Draw([&]() {
-                    block->Draw(window.x, window.y);
-                });
+                window.Draw([&](){});
             }
             break;
 
@@ -101,7 +99,11 @@ void Engine::Draw()
     }
 
     new_sprite_popup->Draw();
-    
+
+    if(Global::selected_panel_block > 0) {
+        dragged_block->Draw(0, 0);
+    }
+
     for(Button &button: buttons) {
         button.Draw();
     }
@@ -134,7 +136,11 @@ void Engine::Update()
 
     ButtonUpdate();
 
-    block->Update();
+    panel_blocks->Update();
+
+    if(Global::selected_panel_block > 0) {
+        dragged_block->Update();
+    }
 
     if(tween_timer > 0.0f) {
         tween_timer -= GetFrameTime();

@@ -30,10 +30,11 @@ class Block
         int16_t offset_x;
         int16_t offset_y;
         uint16_t width;
+        uint16_t id;
 
         bool held;
 
-        Block(uint16_t x, uint16_t y, float scale, Type type, std::string text);
+        Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id = 0);
         void Draw(uint16_t window_x, uint16_t window_y);
         void Update();
 };

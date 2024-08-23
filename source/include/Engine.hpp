@@ -50,7 +50,7 @@ class Engine
         PropertiesBox *properties_box;
         PanelBlocks *panel_blocks;
         Entity *entity;
-        Block *block;
+        Block *dragged_block;
 
         float tween_timer;
 

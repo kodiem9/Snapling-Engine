@@ -2,7 +2,7 @@
 
 
 // PUBLIC
-Block::Block(uint16_t x, uint16_t y, float scale, Type type, std::string text) : x(x), y(y), scale(scale), type(type), text(text)
+Block::Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id) : x(x), y(y), scale(scale), type(type), text(text), id(id)
 {
     width = MeasureText(text.c_str(), 5 * (scale - 1));
 }
@@ -48,6 +48,23 @@ void Block::Update()
             if(y > (GetScreenHeight() - 140 - BLOCK_SIZE * scale)) y = (GetScreenHeight() - 140 - BLOCK_SIZE * scale);
 
             if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
+                held = false;
+            }
+        }
+        break;
+
+        case Type::PANEL_BLOCK: {
+            printf("pressed\n");
+            if(Global::MouseCollision(fixed_x, fixed_y, BLOCK_SIZE * scale + width, BLOCK_SIZE * scale)) {
+                if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
+                    Global::selected_panel_block = id;
+                    held = true;
+                }
+            }
+
+            if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT) && held) {
+                printf("released\n");
+                Global:: selected_panel_block = 0;
                 held = false;
             }
         }

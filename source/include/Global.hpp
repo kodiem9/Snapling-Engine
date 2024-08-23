@@ -37,6 +37,7 @@ namespace Global
     inline uint16_t game_window_height = 0;
     inline uint16_t coding_window_width = 0;
     inline uint16_t coding_panels_width = 0;
+    inline uint16_t selected_panel_block = 0;
 
     inline uint8_t game_scale = 0;
     inline uint8_t button_pressed = 0;
