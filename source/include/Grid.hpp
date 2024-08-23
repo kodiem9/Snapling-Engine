@@ -14,11 +14,12 @@ class Grid
 
         std::vector<Dot> dots;
 
-        bool held;
         uint16_t offset_x;
         uint16_t offset_y;
         uint16_t move_x;
         uint16_t move_y;
+
+        bool held;
 
     public:
         Grid();

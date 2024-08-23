@@ -40,6 +40,7 @@ void Block::Update()
                 if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
                     offset_x = GetMouseX() - x;
                     offset_y = GetMouseY() - y;
+                    Global::holding_block = true;
                     held = true;
                 }
             }
@@ -54,8 +55,9 @@ void Block::Update()
             if(y < 0) y = 0;
             if(y > (GetScreenHeight() - 140 - BLOCK_SIZE * scale)) y = (GetScreenHeight() - 140 - BLOCK_SIZE * scale);
 
-            if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
+            if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT) && held) {
                 held = false;
+                Global::holding_block = false;
             }
         }
         break;
@@ -64,6 +66,7 @@ void Block::Update()
             if(Global::MouseCollision(fixed_x, fixed_y, BLOCK_SIZE * scale + width, BLOCK_SIZE * scale)) {
                 if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
                     Global::selected_panel_block = id;
+                    Global::holding_block = true;
                 }
             }
         }
@@ -78,6 +81,7 @@ void Block::Update()
             if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT) && Global::selected_panel_block > 0) {
                 if(x > Global::coding_panels_width) {
                     Global::execute_new_block = true;
+                    Global::holding_block = false;
                 }
                 Global::selected_panel_block = 0;
             }

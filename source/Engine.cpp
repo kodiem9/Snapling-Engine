@@ -30,8 +30,8 @@ Engine::Engine()
     windows.emplace_back(GetScreenWidth() - 610, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR, true);
     sprite_window_height = windows[WindowId::SPRITES_WINDOW].height * windows[WindowId::SPRITES_WINDOW].scale;
 
-    Global::coding_panels_x = 280;
-    windows.emplace_back(Global::coding_panels_x, 40, GetScreenWidth() - Global::game_window_width - (Global::coding_panels_x + 20), GetScreenHeight() - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true);
+    Global::coding_window_x = 280;
+    windows.emplace_back(Global::coding_window_x, 40, GetScreenWidth() - Global::game_window_width - (Global::coding_window_x + 20), GetScreenHeight() - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true);
     Global::coding_window_width = windows[WindowId::CODING_WINDOW].width;
 
     Global::coding_panels_width = GetScreenWidth() - Global::game_window_width - Global::coding_window_width - 30;
@@ -100,7 +100,7 @@ void Engine::Draw()
                 window.Draw([&]() {
                     grid->Draw(window.x, window.y);
                     for(Block &block: blocks) {
-                        block.Draw(window.x, window.y);
+                        block.Draw(window.x - Global::block_grid_x, window.y - Global::block_grid_y);
                     }
                     DrawText(TextFormat("(%i, %i)", Global::block_grid_x, Global::block_grid_y), 10 + window.x, window.height - 30 + window.y, 20, LIGHTGRAY);
                 });
@@ -493,7 +493,7 @@ void Engine::BlockPanelsOffsets()
                     window.x = 280;
                     window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
                     Global::coding_window_width = window.width;
-                    Global::coding_panels_x = window.x;
+                    Global::coding_window_x = window.x;
                 }
                 break;
 
@@ -512,7 +512,7 @@ void Engine::BlockPanelsOffsets()
                     window.x = 10;
                     window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
                     Global::coding_window_width = window.width;
-                    Global::coding_panels_x = window.x;
+                    Global::coding_window_x = window.x;
                 }
                 break;
 

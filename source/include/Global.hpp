@@ -39,8 +39,8 @@ namespace Global
     inline uint16_t game_window_width = 0;
     inline uint16_t game_window_height = 0;
     inline uint16_t coding_window_width = 0;
+    inline uint16_t coding_window_x = 0;
     inline uint16_t coding_panels_width = 0;
-    inline uint16_t coding_panels_x = 0;
     inline uint16_t selected_panel_block = 0;
     inline uint16_t block_grid_x = 0;
     inline uint16_t block_grid_y = 0;
@@ -50,6 +50,7 @@ namespace Global
     inline uint8_t sprites_amount = 0;
     inline uint8_t selected_sprite = 0;
     inline bool execute_new_block = false;
+    inline bool holding_block = false;
 
     inline bool MouseCollision(int x, int y, int width, int height)
     {

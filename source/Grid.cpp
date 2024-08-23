@@ -39,15 +39,17 @@ void Grid::Update()
     }
 
     if(held) {
-        if(offset_x - GetMouseX() < 0)
-            Global::block_grid_x = 0;
-        else
-            Global::block_grid_x = offset_x - GetMouseX();
+        if(Global::MouseCollision(Global::coding_window_x, 40, Global::coding_window_width, GetScreenHeight() - 140) && !Global::holding_block) {
+            if(offset_x - GetMouseX() < 0)
+                Global::block_grid_x = 0;
+            else
+                Global::block_grid_x = offset_x - GetMouseX();
 
-        if(offset_y - GetMouseY() < 0)
-            Global::block_grid_y = 0;
-        else
-            Global::block_grid_y = offset_y - GetMouseY();
+            if(offset_y - GetMouseY() < 0)
+                Global::block_grid_y = 0;
+            else
+                Global::block_grid_y = offset_y - GetMouseY();
+        }
     }
 
     for(Dot &dot: dots) {
