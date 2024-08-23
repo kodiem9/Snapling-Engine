@@ -45,6 +45,7 @@ class Engine
         std::vector<Window> windows;
         std::vector<Button> buttons;
         std::vector<Sprite> sprites;
+        std::vector<Block> blocks;
         
         PopUp *new_sprite_popup;
         PropertiesBox *properties_box;

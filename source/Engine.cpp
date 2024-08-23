@@ -89,7 +89,11 @@ void Engine::Draw()
             break;
 
             case WindowId::CODING_WINDOW: {
-                window.Draw([&](){});
+                window.Draw([&]() {
+                    for(Block &block: blocks) {
+                        block.Draw(window.x, window.y);
+                    }
+                });
             }
             break;
 
@@ -135,6 +139,10 @@ void Engine::Update()
     for(Sprite &sprite: sprites) {
         sprite.Update();
     }
+
+    for(Block &block: blocks) {
+        block.Update();
+    }
     
     if(Global::sprites_amount > 0) {
         properties_box->Update();
@@ -146,6 +154,11 @@ void Engine::Update()
 
     if(Global::selected_panel_block > 0) {
         dragged_block->Update();
+    }
+
+    if(Global::execute_new_block) {
+        blocks.emplace_back(dragged_block->x - Global::coding_panels_width, dragged_block->y - 40, Global::coding_grid_scale, Block::Type::NORMAL_BLOCK, dragged_block->text);
+        Global::execute_new_block = false;
     }
 
     if(tween_timer > 0.0f) {

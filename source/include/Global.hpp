@@ -34,6 +34,7 @@ namespace Global
     inline Texture2D blocks_texture;
 
     inline float code_panel_scale = 4.0f;
+    inline float coding_grid_scale = 3.0f;
 
     inline uint16_t game_window_width = 0;
     inline uint16_t game_window_height = 0;
