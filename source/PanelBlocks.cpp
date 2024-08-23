@@ -11,11 +11,6 @@ PanelBlocks::PanelBlocks(Block *block)
     blocks.emplace_back(10, 50, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing Two", 2);
 }
 
-PanelBlocks::~PanelBlocks()
-{
-    delete block_data;
-}
-
 void PanelBlocks::Draw(uint16_t window_x, uint16_t window_y)
 {
     if(this->window_x != window_x || this->window_y != window_y) {
@@ -35,7 +30,6 @@ void PanelBlocks::Update()
     }
 
     if(new_dragged_block_id != Global::selected_panel_block && Global::selected_panel_block != 0) {
-        printf("hi\n");
         new_dragged_block_id = Global::selected_panel_block;
         block_data->text = blocks[Global::selected_panel_block-1].text;
         block_data->offset_x = GetMouseX() - (blocks[Global::selected_panel_block-1].x + window_x);

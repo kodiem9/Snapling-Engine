@@ -17,7 +17,7 @@ class PanelBlocks
         Block *block_data;
 
         PanelBlocks(Block *block);
-        ~PanelBlocks();
         void Draw(uint16_t window_x, uint16_t window_y);
         void Update();
+        void Free();
 };
