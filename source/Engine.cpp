@@ -17,6 +17,7 @@ Engine::Engine()
     entity = new Entity;
     dragged_block = new Block(10, 10, Global::code_panel_scale, Block::Type::PLACEMENT_BLOCK, "Testing");
     panel_blocks = new PanelBlocks(dragged_block);
+    block_type_panel = new BlockTypePanel;
 
 
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
@@ -61,6 +62,7 @@ Engine::~Engine()
     delete entity;
     delete dragged_block;
     delete grid;
+    delete block_type_panel;
 }
 
 void Engine::Draw()
@@ -117,6 +119,15 @@ void Engine::Draw()
             }
             break;
 
+            case WindowId::BLOCK_TYPE_WINDOW: {
+                window.Draw([&]() {
+                    if(Global::sprites_amount > 0) {
+                        block_type_panel->Draw(window.x, window.y);
+                    }
+                });
+            }
+            break;
+
             default: window.Draw([&](){}); break;
         }
     }
@@ -164,7 +175,7 @@ void Engine::Update()
             }
         }
     }
-    
+
     if(Global::sprites_amount > 0) {
         properties_box->Update();
     }
@@ -173,10 +184,8 @@ void Engine::Update()
 
     if(Global::sprites_amount > 0) {
         grid->Update();
-    }
-
-    if(Global::sprites_amount > 0) {
         panel_blocks->Update();
+        block_type_panel->Update();
     }
 
     if(Global::selected_panel_block > 0) {

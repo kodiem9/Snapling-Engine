@@ -8,6 +8,8 @@
 // PanelBlocks.hpp HAS CodeBlocks.hpp INSIDE
 #include "PanelBlocks.hpp"
 #include "Grid.hpp"
+// BlockTypePanel.hpp HAS BlockType.hpp INSIDE
+#include "BlockTypePanel.hpp"
 
 enum ButtonTrigger
 {
@@ -55,6 +57,7 @@ class Engine
         Entity *entity;
         Block *dragged_block;
         Grid *grid;
+        BlockTypePanel *block_type_panel;
 
         float tween_timer;
 
