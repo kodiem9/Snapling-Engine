@@ -48,12 +48,13 @@ void Block::Update()
             if(held) {
                 x = GetMouseX() - offset_x;
                 y = GetMouseY() - offset_y;
+
+                if(x < 0) x = 0;
+                if(x > (Global::coding_window_width - BLOCK_SIZE * scale) + Global::block_grid[Global::selected_sprite].x) x = (Global::coding_window_width - BLOCK_SIZE * scale) + Global::block_grid[Global::selected_sprite].x;
+                if(y < 0) y = 0;
+                if(y > (GetScreenHeight() - 140 - BLOCK_SIZE * scale) + Global::block_grid[Global::selected_sprite].y) y = (GetScreenHeight() - 140 - BLOCK_SIZE * scale) + Global::block_grid[Global::selected_sprite].y;
             }
 
-            if(x < 0) x = 0;
-            if(x > (Global::coding_window_width - BLOCK_SIZE * scale)) x = (Global::coding_window_width - BLOCK_SIZE * scale);
-            if(y < 0) y = 0;
-            if(y > (GetScreenHeight() - 140 - BLOCK_SIZE * scale)) y = (GetScreenHeight() - 140 - BLOCK_SIZE * scale);
 
             if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT) && held) {
                 held = false;
