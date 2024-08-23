@@ -184,7 +184,6 @@ void Engine::Update()
     }
 
     if(Global::execute_new_block) {
-        printf("%i\n", dragged_block->x - Global::coding_panels_width + (int)Global::block_grid[Global::selected_sprite].x);
         Global::blocks_amount++;
         blocks[Global::selected_sprite].emplace_back(dragged_block->x - Global::coding_panels_width + Global::block_grid[Global::selected_sprite].x, dragged_block->y - 40 + Global::block_grid[Global::selected_sprite].y, Global::coding_grid_scale, Block::Type::NORMAL_BLOCK, dragged_block->text);
         Global::execute_new_block = false;
