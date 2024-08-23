@@ -249,6 +249,7 @@ void Engine::ButtonUpdate()
             BiggerWindowOffsets();
             SpritesOffsets();
             properties_box->Reset(1);
+            grid->Data();
         }
         break;
 
@@ -256,6 +257,7 @@ void Engine::ButtonUpdate()
             SmallerWindowOffsets();
             SpritesOffsets();   
             properties_box->Reset(0);
+            grid->Data();
         }
         break;
 
@@ -277,7 +279,11 @@ void Engine::ButtonUpdate()
         }
         break;
 
-        case ButtonTrigger::BLOCK_PANELS: BlockPanelsOffsets(); break;
+        case ButtonTrigger::BLOCK_PANELS: {
+            BlockPanelsOffsets();
+            grid->Data();
+        }
+        break;
 
         default: break;
     }

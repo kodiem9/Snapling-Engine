@@ -4,19 +4,7 @@
 // PUBLIC
 Grid::Grid()
 {
-    uint16_t gap_x = 60;
-    uint16_t gap_y = 60;
-    uint16_t x;
-    uint16_t y;
-
-    for(x = 0; x < (Global::coding_window_width / gap_x) + 1; x++) {
-        for(y = 0; y < ((GetScreenHeight() - 140) / gap_y) + 1; y++) {
-            dots.emplace_back(x * 60 + 10, y * 60 + 10);
-        }
-    }
-
-    move_x = x * gap_x;
-    move_y = y * gap_y;
+    Data();
 }
 
 void Grid::Draw(uint16_t window_x, uint16_t window_y)
@@ -66,4 +54,19 @@ void Grid::Update()
             dot.y -= move_y;
         }
     }
+}
+
+void Grid::Data()
+{
+    uint16_t x;
+    uint16_t y;
+
+    for(x = 0; x < (Global::coding_window_width / GRID_GAPS) + 1; x++) {
+        for(y = 0; y < ((GetScreenHeight() - 140) / GRID_GAPS) + 1; y++) {
+            dots.emplace_back(x * 60 + 10, y * 60 + 10);
+        }
+    }
+
+    move_x = x * GRID_GAPS;
+    move_y = y * GRID_GAPS;
 }
