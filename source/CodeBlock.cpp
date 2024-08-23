@@ -19,8 +19,15 @@ void Block::Draw(uint16_t window_x, uint16_t window_y)
             case 1: Texture(6, 1, BLOCK_SIZE, 6 * scale, width, 0); break;
             case 2: Texture(7, 2, BLOCK_SIZE, 7 * scale, 0, width); break;
         }
-        DrawTexturePro(Global::blocks_texture, spr.source, spr.dest, spr.origin, 0.0f, WHITE);
-        DrawText(text.c_str(), fixed_x + (2 * scale + 1), fixed_y + (2 * scale + 1), 5 * (scale - 1), WHITE);
+
+        Color color;
+        if(type == Type::PLACEMENT_BLOCK)
+            color = Color{ 255, 255, 255, 150 };
+        else
+            color = WHITE;
+        
+        DrawTexturePro(Global::blocks_texture, spr.source, spr.dest, spr.origin, 0.0f, color);
+        DrawText(text.c_str(), fixed_x + (2 * scale + 1), fixed_y + (2 * scale + 1), 5 * (scale - 1), color);
     }
 }
 

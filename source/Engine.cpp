@@ -14,7 +14,7 @@ Engine::Engine()
     // This isn't a vector of entities. It's more of a template. The entities data is actually inside "Global.hpp".
     // I made this entity class for it to be clean (just like the PopUp class)
     entity = new Entity;
-    dragged_block = new Block(10, 10, 4.0f, Block::Type::PLACEMENT_BLOCK, "Testing");
+    dragged_block = new Block(10, 10, Global::code_panel_scale, Block::Type::PLACEMENT_BLOCK, "Testing");
     panel_blocks = new PanelBlocks(dragged_block);
 
 

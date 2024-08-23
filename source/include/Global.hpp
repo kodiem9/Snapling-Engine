@@ -33,6 +33,8 @@ namespace Global
     inline Texture2D button_texture;
     inline Texture2D blocks_texture;
 
+    inline float code_panel_scale = 4.0f;
+
     inline uint16_t game_window_width = 0;
     inline uint16_t game_window_height = 0;
     inline uint16_t coding_window_width = 0;

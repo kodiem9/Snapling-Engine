@@ -7,8 +7,8 @@ PanelBlocks::PanelBlocks(Block *block)
     block_data = block;
     new_dragged_block_id = 0;
 
-    blocks.emplace_back(10, 10, 4.0f, Block::Type::PANEL_BLOCK, "Testing One", 1);
-    blocks.emplace_back(10, 50, 4.0f, Block::Type::PANEL_BLOCK, "Testing Two", 2);
+    blocks.emplace_back(10, 10, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing One", 1);
+    blocks.emplace_back(10, 50, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing Two", 2);
 }
 
 void PanelBlocks::Draw(uint16_t window_x, uint16_t window_y)
