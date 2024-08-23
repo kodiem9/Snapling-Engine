@@ -1,5 +1,4 @@
 #pragma once
-#include "Global.hpp"
 #include "CodeBlock.hpp"
 
 class PanelBlocks
