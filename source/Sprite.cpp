@@ -1,6 +1,6 @@
 #include "include/Sprite.hpp"
 
-Sprite::Sprite(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t id) : x(x), y(y), width(width), height(height), id(id)
+Sprite::Sprite(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t id, bool upd_curr_spr) : x(x), y(y), width(width), height(height), id(id)
 {
     fixed_x = 0;
     fixed_y = 0;
@@ -13,7 +13,9 @@ Sprite::Sprite(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t 
     data.direction_mode = 0;
     data.name = "Sprite";
 
-    Global::selected_sprite = id;
+    if(upd_curr_spr) {
+        Global::selected_sprite = id;
+    }
 }
 
 void Sprite::Draw(uint16_t window_x, uint16_t window_y)
