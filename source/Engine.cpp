@@ -154,8 +154,12 @@ void Engine::Update()
     }
 
     if(Global::sprites_amount > 0) {
-        for(Block &block: blocks[Global::selected_sprite]) {
-            block.Update();
+        for(auto block = blocks[Global::selected_sprite].begin(); block < blocks[Global::selected_sprite].end(); ++block) {
+            block->Update();
+
+            if(block->remove) {
+                blocks[Global::selected_sprite].erase(block);
+            }
         }
     }
     

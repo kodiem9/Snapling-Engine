@@ -4,6 +4,9 @@
 // PUBLIC
 Block::Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id) : x(x), y(y), scale(scale), type(type), text(text), id(id)
 {
+    held = false;
+    remove = false;
+
     Data();
 }
 
@@ -42,6 +45,10 @@ void Block::Update()
                     offset_y = GetMouseY() - y;
                     Global::holding_block = true;
                     held = true;
+                }
+
+                if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT) && IsKeyDown(KeyboardKey::KEY_LEFT_SHIFT)) {
+                    remove = true;
                 }
             }
 

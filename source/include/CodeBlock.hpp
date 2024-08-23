@@ -33,6 +33,7 @@ class Block
         uint16_t id;
 
         bool held;
+        bool remove;
 
         Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id = 0);
         void Draw(int16_t window_x, int16_t window_y);
