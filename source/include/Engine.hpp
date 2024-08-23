@@ -14,7 +14,8 @@ enum ButtonTrigger
     BIGGER_WINDOW,
     SMALLER_WINDOW,
     NEW_SPRITE,
-    EMPTY_SPRITE
+    EMPTY_SPRITE,
+    BLOCK_PANELS
 };
 
 enum WindowId
@@ -59,6 +60,7 @@ class Engine
 
         uint8_t window_scale_mode;
         uint8_t saved_window_scale_mode;
+        bool code_panels_mode;
 
         inline void PopUpUpdate();
         inline void NewSprite(std::vector<Sprite> &sprites, uint16_t loop, uint8_t offset, uint8_t row);
@@ -66,5 +68,6 @@ class Engine
         void FullscreenOffsets();
         void BiggerWindowOffsets();
         void SmallerWindowOffsets();
+        void BlockPanelsOffsets();
         void SpritesOffsets();
 };

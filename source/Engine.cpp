@@ -8,6 +8,7 @@ Engine::Engine()
     window_scale_mode = 0;
     saved_window_scale_mode = 0;
     tween_timer = 0.0f;
+    code_panels_mode = true;
 
     new_sprite_popup = new PopUp(GetScreenWidth() - 79, GetScreenHeight() - 167, 48, 56, POPUP_COLOR);
     properties_box = new PropertiesBox;
@@ -43,6 +44,7 @@ Engine::Engine()
     buttons.emplace_back(GetScreenWidth() - 122, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::SINGLE_BUTTON, 2, 2.0f);
     buttons.emplace_back(GetScreenWidth() - 79, GetScreenHeight() - 159, ButtonTrigger::EMPTY_SPRITE, Button::Type::SINGLE_BUTTON, 5, 3.0f);
     buttons.emplace_back(GetScreenWidth() - 87, GetScreenHeight() - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 4, 4.0f);
+    buttons.emplace_back(10, GetScreenHeight() - 92, ButtonTrigger::BLOCK_PANELS, Button::Type::SINGLE_BUTTON, 3, 2.0f);
 }
 
 Engine::~Engine()
@@ -265,6 +267,8 @@ void Engine::ButtonUpdate()
         }
         break;
 
+        case ButtonTrigger::BLOCK_PANELS: BlockPanelsOffsets(); break;
+
         default: break;
     }
 }
@@ -464,6 +468,46 @@ void Engine::SmallerWindowOffsets()
             }
         }
         window_scale_mode = 1;
+    }
+    Global::button_pressed = 0;
+}
+
+void Engine::BlockPanelsOffsets()
+{
+    code_panels_mode = !code_panels_mode;
+    if(code_panels_mode) {
+        for(Window &window: windows) {
+            switch(window.id)
+            {
+                case WindowId::CODING_WINDOW: {
+                    window.x = 280;
+                    window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
+                }
+                break;
+
+                case WindowId::BLOCK_TYPE_WINDOW: window.visible = true;
+                case WindowId::BLOCK_PANEL_WINDOW: window.visible = true;
+                
+                default: break;
+            }
+        }
+    }
+    else {
+        for(Window &window: windows) {
+            switch(window.id)
+            {
+                case WindowId::CODING_WINDOW: {
+                    window.x = 10;
+                    window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
+                }
+                break;
+
+                case WindowId::BLOCK_TYPE_WINDOW: window.visible = false;
+                case WindowId::BLOCK_PANEL_WINDOW: window.visible = false;
+
+                default: break;
+            }
+        }
     }
     Global::button_pressed = 0;
 }
