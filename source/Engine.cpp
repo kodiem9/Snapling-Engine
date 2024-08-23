@@ -17,6 +17,7 @@ Engine::Engine()
     entity = new Entity;
     dragged_block = new Block(10, 10, Global::code_panel_scale, Block::Type::PLACEMENT_BLOCK, "Testing");
     panel_blocks = new PanelBlocks(dragged_block);
+    grid = new Grid;
 
 
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
@@ -56,6 +57,7 @@ Engine::~Engine()
     delete panel_blocks;
     delete entity;
     delete dragged_block;
+    delete grid;
 }
 
 void Engine::Draw()
@@ -92,9 +94,11 @@ void Engine::Draw()
 
             case WindowId::CODING_WINDOW: {
                 window.Draw([&]() {
+                    grid->Draw(window.x, window.y);
                     for(Block &block: blocks) {
                         block.Draw(window.x, window.y);
                     }
+                    DrawText(TextFormat("(%i, %i)", Global::coding_window_x, Global::coding_window_y), 10 + window.x, window.height - 30 + window.y, 20, LIGHTGRAY);
                 });
             }
             break;
@@ -151,6 +155,8 @@ void Engine::Update()
     }
 
     ButtonUpdate();
+
+    grid->Update();
 
     panel_blocks->Update();
 
@@ -482,6 +488,7 @@ void Engine::BlockPanelsOffsets()
                 case WindowId::CODING_WINDOW: {
                     window.x = 280;
                     window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
+                    Global::coding_window_width = window.width;
                 }
                 break;
 
@@ -499,6 +506,7 @@ void Engine::BlockPanelsOffsets()
                 case WindowId::CODING_WINDOW: {
                     window.x = 10;
                     window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
+                    Global::coding_window_width = window.width;
                 }
                 break;
 
