@@ -134,6 +134,7 @@ void Engine::Draw()
     if(IsKeyDown(KeyboardKey::KEY_TAB)) {
         DrawFPS(10, 10);
         DrawText(TextFormat("Sprites: %i\n", Global::sprites_amount), 10, 40, 25, RED);
+        DrawText(TextFormat("Blocks: %i\n", Global::blocks_amount), 10, 70, 25, BLUE);
     }
 }
 
@@ -158,6 +159,7 @@ void Engine::Update()
             block->Update();
 
             if(block->remove) {
+                Global::blocks_amount--;
                 blocks[Global::selected_sprite].erase(block);
             }
         }
@@ -183,6 +185,7 @@ void Engine::Update()
 
     if(Global::execute_new_block) {
         printf("%i\n", dragged_block->x - Global::coding_panels_width + (int)Global::block_grid[Global::selected_sprite].x);
+        Global::blocks_amount++;
         blocks[Global::selected_sprite].emplace_back(dragged_block->x - Global::coding_panels_width + Global::block_grid[Global::selected_sprite].x, dragged_block->y - 40 + Global::block_grid[Global::selected_sprite].y, Global::coding_grid_scale, Block::Type::NORMAL_BLOCK, dragged_block->text);
         Global::execute_new_block = false;
     }
@@ -191,6 +194,8 @@ void Engine::Update()
         tween_timer -= GetFrameTime();
         if(tween_timer < 0.0f) tween_timer = 0.0f;
     }
+
+    Commands();
 }
 
 
@@ -252,6 +257,16 @@ inline void Engine::PopUpUpdate()
                 }
             }
         }
+    }
+}
+
+void Engine::Commands()
+{
+    if(IsKeyPressed(KeyboardKey::KEY_R) && IsKeyDown(KeyboardKey::KEY_LEFT_CONTROL)) {
+        for(std::vector<Block> &block: blocks) {
+            block.shrink_to_fit();
+        }
+        blocks.shrink_to_fit();
     }
 }
 

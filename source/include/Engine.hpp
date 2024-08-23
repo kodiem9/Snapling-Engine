@@ -66,6 +66,7 @@ class Engine
 
         inline void PopUpUpdate();
         inline void NewSprite(std::vector<Sprite> &sprites, uint16_t loop, uint8_t offset, uint8_t row);
+        void Commands();
         void ButtonUpdate();
         void FullscreenOffsets();
         void BiggerWindowOffsets();

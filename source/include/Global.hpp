@@ -42,6 +42,7 @@ namespace Global
     inline uint16_t coding_window_x = 0;
     inline uint16_t coding_panels_width = 0;
     inline uint16_t selected_panel_block = 0;
+    inline uint16_t blocks_amount;
     inline std::vector<Vector2> block_grid;
 
     inline uint8_t game_scale = 0;
