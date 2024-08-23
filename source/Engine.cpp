@@ -102,7 +102,7 @@ void Engine::Draw()
                         for(Block &block: blocks[Global::selected_sprite]) {
                             block.Draw(window.x - Global::block_grid[Global::selected_sprite].x, window.y - Global::block_grid[Global::selected_sprite].y);
                         }
-                        DrawText(TextFormat("(%.0f, %.0f)", Global::block_grid[Global::selected_sprite].y, Global::block_grid[Global::selected_sprite].y), 10 + window.x, window.height - 30 + window.y, 20, LIGHTGRAY);
+                        DrawText(TextFormat("(%.0f, %.0f)", Global::block_grid[Global::selected_sprite].x, Global::block_grid[Global::selected_sprite].y), 10 + window.x, window.height - 30 + window.y, 20, LIGHTGRAY);
                     }
                 });
             }

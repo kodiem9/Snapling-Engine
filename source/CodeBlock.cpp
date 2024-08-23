@@ -7,7 +7,7 @@ Block::Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, u
     Data();
 }
 
-void Block::Draw(uint16_t window_x, uint16_t window_y)
+void Block::Draw(int16_t window_x, int16_t window_y)
 {
     fixed_x = x + window_x;
     fixed_y = y + window_y;
