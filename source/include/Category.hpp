@@ -5,14 +5,15 @@
 
 class Category
 {
-    private:
+    public:
         Button button;
         const char* title;
 
         uint16_t text_x;
         uint16_t text_y;
         
-    public:
+        bool visible;
+
         Category(const char* title, uint16_t trigger);
         void Draw();
         void Update();

@@ -51,6 +51,8 @@ namespace Global
     inline uint16_t coding_window_width = 0;
     inline uint16_t coding_window_x = 0;
     inline uint16_t coding_panels_width = 0;
+    inline uint16_t assets_window_x = 0;
+    inline uint16_t assets_window_width = 0;
     inline uint16_t selected_panel_block = 0;
     inline uint16_t blocks_amount;
     inline std::vector<Vector2> block_grid;

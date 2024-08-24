@@ -5,8 +5,8 @@
 Engine::Engine()
 {
     Global::LoadTextures();
-    window_scale_mode = 0;
-    saved_window_scale_mode = 0;
+    window_scale_mode = WindowScaleModes::BIGGER_WINDOW_MODE;
+    saved_window_scale_mode = window_scale_mode;
     tween_timer = 0.0f;
     code_panels_mode = true;
 
@@ -22,32 +22,37 @@ Engine::Engine()
 
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
     Global::game_scale = 10;
-    windows.emplace_back(GetScreenWidth() - 610, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, Global::game_scale, WHITE, WINDOW_OUTLINE_COLOR, true);
+    windows.emplace_back(GetScreenWidth() - 610, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, Global::game_scale, WHITE, WINDOW_OUTLINE_COLOR, true, 0);
     Global::game_window_width = windows[WindowId::GAME_WINDOW].width * windows[WindowId::GAME_WINDOW].scale;
     Global::game_window_height = windows[WindowId::GAME_WINDOW].height * windows[WindowId::GAME_WINDOW].scale;
 
-    windows.emplace_back(GetScreenWidth() - 610, 500, 60, 15, WindowId::PROPERTIES_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, false);
+    windows.emplace_back(GetScreenWidth() - 610, 500, 60, 15, WindowId::PROPERTIES_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, false, 0);
 
-    windows.emplace_back(GetScreenWidth() - 610, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR, true);
+    windows.emplace_back(GetScreenWidth() - 610, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR, true, 0);
     sprite_window_height = windows[WindowId::SPRITES_WINDOW].height * windows[WindowId::SPRITES_WINDOW].scale;
 
     Global::coding_window_x = 280;
-    windows.emplace_back(Global::coding_window_x, 40, GetScreenWidth() - Global::game_window_width - (Global::coding_window_x + 20), GetScreenHeight() - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true);
-    Global::coding_window_width = windows[WindowId::CODING_WINDOW].width;
+    Global::coding_window_width = GetScreenWidth() - Global::game_window_width - (Global::coding_window_x + 20);
+    windows.emplace_back(Global::coding_window_x, 40, Global::coding_window_width, GetScreenHeight() - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_CODE);
 
     Global::coding_panels_width = GetScreenWidth() - Global::game_window_width - Global::coding_window_width - 30;
-    windows.emplace_back(10, 40, Global::coding_panels_width, (GetScreenHeight() / 5) * 2 - 80, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, false);
-    windows.emplace_back(10, 40 + (GetScreenHeight() / 5) * 2 - 80, Global::coding_panels_width, (GetScreenHeight() / 5) * 3 - 60, WindowId::BLOCK_PANEL_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, true);
+    windows.emplace_back(10, 40, Global::coding_panels_width, (GetScreenHeight() / 5) * 2 - 80, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, false, WindowCategory::CATEGORY_CODE);
+    windows.emplace_back(10, 40 + (GetScreenHeight() / 5) * 2 - 80, Global::coding_panels_width, (GetScreenHeight() / 5) * 3 - 60, WindowId::BLOCK_PANEL_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_CODE);
+
+    Global::assets_window_x = 10;
+    Global::assets_window_width = GetScreenWidth() - Global::game_window_width - (Global::assets_window_x + 20);
+    windows.emplace_back(Global::assets_window_x, 40, Global::assets_window_width, GetScreenHeight() - 140, WindowId::ASSETS_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_ASSETS);
+    windows[WindowId::ASSETS_WINDOW].visible = false;
 
 
     // Lonely grid...
     grid = new Grid;
 
 
-    // Buttons are random lol.
+    // Buttons are random lol, but also not! Depends. You better be careful with this.
     buttons.emplace_back(GetScreenWidth() - 42, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f, &Global::button_texture);
-    buttons.emplace_back(GetScreenWidth() - 90, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::CHECKBOX, 1, 2.0f, &Global::button_texture, &window_scale_mode, 0);
-    buttons.emplace_back(GetScreenWidth() - 122, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::CHECKBOX, 2, 2.0f, &Global::button_texture, &window_scale_mode, 1);
+    buttons.emplace_back(GetScreenWidth() - 90, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::CHECKBOX, 1, 2.0f, &Global::button_texture, &window_scale_mode, WindowScaleModes::BIGGER_WINDOW_MODE);
+    buttons.emplace_back(GetScreenWidth() - 122, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::CHECKBOX, 2, 2.0f, &Global::button_texture, &window_scale_mode, WindowScaleModes::SMALLER_WINDOW_MODE);
     buttons.emplace_back(GetScreenWidth() - 79, GetScreenHeight() - 159, ButtonTrigger::EMPTY_SPRITE, Button::Type::SINGLE_BUTTON, 5, 3.0f, &Global::button_texture);
     buttons.emplace_back(GetScreenWidth() - 87, GetScreenHeight() - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 4, 4.0f, &Global::button_texture);
     buttons.emplace_back(10, GetScreenHeight() - 92, ButtonTrigger::BLOCK_PANELS, Button::Type::SINGLE_BUTTON, 3, 2.0f, &Global::button_texture);
@@ -289,6 +294,10 @@ void Engine::Commands()
         }
         blocks.shrink_to_fit();
     }
+
+    if(IsKeyPressed(KeyboardKey::KEY_ZERO)) {
+        printf("%i\n", Global::current_category);
+    }
 }
 
 void Engine::ButtonUpdate()
@@ -322,7 +331,7 @@ void Engine::ButtonUpdate()
 
         case ButtonTrigger::EMPTY_SPRITE: {
             Global::entities.emplace_back("Sprite", 0.0f, 0.0f, 90.0f, 100, true, 0);
-            if(window_scale_mode == 1)
+            if(window_scale_mode == WindowScaleModes::SMALLER_WINDOW_MODE)
                 NewSprite(sprites, 1, 10, 3, true);
             else
                 NewSprite(sprites, 1, 20, 5, true);
@@ -337,8 +346,8 @@ void Engine::ButtonUpdate()
         }
         break;
 
-        case ButtonTrigger::CODE_CATEGORY: Global::current_category = 0; break;
-        case ButtonTrigger::ASSETS_CATEGORY: Global::current_category = 1; break;
+        case ButtonTrigger::CODE_CATEGORY: CodeCategoryOffsets(); break;
+        case ButtonTrigger::ASSETS_CATEGORY: AssetsCategoryOffsets(); break;
 
         default: break;
     }
@@ -351,7 +360,7 @@ void Engine::FullscreenOffsets()
 {
     Window &game_window = windows[WindowId::GAME_WINDOW];
 
-    if(window_scale_mode != 2) {
+    if(window_scale_mode != WindowScaleModes::FULLSCREEN_MODE) {
         saved_window_scale_mode = window_scale_mode;
         for(Window &window: windows) {
             switch(window.id)
@@ -371,6 +380,7 @@ void Engine::FullscreenOffsets()
                 case WindowId::CODING_WINDOW: window.visible = false; break;
                 case WindowId::BLOCK_TYPE_WINDOW: window.visible = false; break;
                 case WindowId::BLOCK_PANEL_WINDOW: window.visible = false; break;
+                case WindowId::ASSETS_WINDOW: window.visible = false; break;
 
                 default: break;
             }
@@ -391,18 +401,28 @@ void Engine::FullscreenOffsets()
                 case ButtonTrigger::BLOCK_PANELS: button.visible = false; break;
             }
         }
+
+        for(Category &category: categories) {
+            switch(category.button.trigger)
+            {
+                case ButtonTrigger::CODE_CATEGORY: category.visible = false;
+                case ButtonTrigger::ASSETS_CATEGORY: category.visible = false;
+            }
+        }
+
         new_sprite_popup->visible = false;
-        window_scale_mode = 2;
+        window_scale_mode = WindowScaleModes::FULLSCREEN_MODE;
     }
     else {
         for(Window &window: windows) {
             switch(window.id)
             {
                 case WindowId::GAME_WINDOW: {
-                    if(saved_window_scale_mode == 0)
+                    if(saved_window_scale_mode == WindowScaleModes::BIGGER_WINDOW_MODE)
                         window.scale = 10;
                     else
                         window.scale = 5;
+
                     Global::game_scale = window.scale;
                     
                     window.y = 40;
@@ -415,9 +435,10 @@ void Engine::FullscreenOffsets()
 
                 case WindowId::PROPERTIES_WINDOW: window.visible = true; break;
                 case WindowId::SPRITES_WINDOW: window.visible = true; break;
-                case WindowId::CODING_WINDOW: window.visible = true; break;
-                case WindowId::BLOCK_TYPE_WINDOW: window.visible = true; break;
-                case WindowId::BLOCK_PANEL_WINDOW: window.visible = true; break;
+                case WindowId::CODING_WINDOW: window.visible = (Global::current_category == WindowCategory::CATEGORY_CODE); break;
+                case WindowId::BLOCK_TYPE_WINDOW: window.visible = (Global::current_category == WindowCategory::CATEGORY_CODE); break;
+                case WindowId::BLOCK_PANEL_WINDOW: window.visible = (Global::current_category == WindowCategory::CATEGORY_CODE); break;
+                case WindowId::ASSETS_WINDOW: window.visible = (Global::current_category == WindowCategory::CATEGORY_ASSETS); break;
 
                 default: break;
             }
@@ -437,6 +458,15 @@ void Engine::FullscreenOffsets()
                 case ButtonTrigger::BLOCK_PANELS: button.visible = true; break;
             }
         }
+
+        for(Category &category: categories) {
+            switch(category.button.trigger)
+            {
+                case ButtonTrigger::CODE_CATEGORY: category.visible = true;
+                case ButtonTrigger::ASSETS_CATEGORY: category.visible = true;
+            }
+        }
+
         window_scale_mode = saved_window_scale_mode;
         new_sprite_popup->visible = true;
     }
@@ -445,7 +475,7 @@ void Engine::FullscreenOffsets()
 
 void Engine::BiggerWindowOffsets()
 {
-    if(window_scale_mode == 1) {
+    if(window_scale_mode != WindowScaleModes::BIGGER_WINDOW_MODE) {
         for(Window &window: windows) {
             switch(window.id)
             {
@@ -481,22 +511,28 @@ void Engine::BiggerWindowOffsets()
                 break;
 
                 case WindowId::CODING_WINDOW: {
-                    window.width = GetScreenWidth() - windows[0].width * windows[0].scale - (window.x + 20);
+                    window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
                     Global::coding_window_width = window.width;
+                }
+                break;
+
+                case WindowId::ASSETS_WINDOW: {
+                    window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
+                    Global::assets_window_width = window.width;
                 }
                 break;
 
                 default: break;
             }
         }
-        window_scale_mode = 0;
+        window_scale_mode = WindowScaleModes::BIGGER_WINDOW_MODE;
     }
     Global::button_pressed = 0;
 }
 
 void Engine::SmallerWindowOffsets()
 {
-    if(window_scale_mode == 0) {
+    if(window_scale_mode != WindowScaleModes::SMALLER_WINDOW_MODE) {
         for(Window &window: windows) {
             switch(window.id)
             {
@@ -537,10 +573,16 @@ void Engine::SmallerWindowOffsets()
                 }
                 break;
 
+                case WindowId::ASSETS_WINDOW: {
+                    window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
+                    Global::assets_window_width = window.width;
+                }
+                break;
+
                 default: break;
             }
         }
-        window_scale_mode = 1;
+        window_scale_mode = WindowScaleModes::SMALLER_WINDOW_MODE;
     }
     Global::button_pressed = 0;
 }
@@ -596,10 +638,50 @@ void Engine::SpritesOffsets()
     uint16_t fixed_y_offset;
     Global::sprites_amount = 0;
 
-    if(window_scale_mode == 1)
+    if(window_scale_mode == WindowScaleModes::SMALLER_WINDOW_MODE)
         NewSprite(new_sprites, sprites.size(), 10, 3, false);
     else
         NewSprite(new_sprites, sprites.size(), 20, 5, false);
 
     sprites = new_sprites;
+}
+
+void Engine::CodeCategoryOffsets()
+{
+    if(Global::current_category != WindowCategory::CATEGORY_CODE) {
+        for(Window &window: windows) {
+            switch(window.id)
+            {
+                case WindowId::CODING_WINDOW:       window.visible = true; break;
+                case WindowId::BLOCK_TYPE_WINDOW:   window.visible = code_panels_mode; break;
+                case WindowId::BLOCK_PANEL_WINDOW:  window.visible = code_panels_mode; break;
+
+                case WindowId::ASSETS_WINDOW:       window.visible = false; break;
+                default: break;
+            }
+        }
+        buttons[ButtonTrigger::BLOCK_PANELS-1].visible = true;
+        Global::current_category = WindowCategory::CATEGORY_CODE;
+    }
+    Global::button_pressed = 0;
+}
+
+void Engine::AssetsCategoryOffsets()
+{
+    if(Global::current_category != WindowCategory::CATEGORY_ASSETS) {
+        for(Window &window: windows) {
+            switch(window.id)
+            {
+                case WindowId::CODING_WINDOW:       window.visible = false; break;
+                case WindowId::BLOCK_TYPE_WINDOW:   window.visible = false; break;
+                case WindowId::BLOCK_PANEL_WINDOW:  window.visible = false; break;
+
+                case WindowId::ASSETS_WINDOW:       window.visible = true; break;
+                default: break;
+            }
+        }
+        buttons[ButtonTrigger::BLOCK_PANELS-1].visible = false;
+        Global::current_category = WindowCategory::CATEGORY_ASSETS;
+    }
+    Global::button_pressed = 0;
 }

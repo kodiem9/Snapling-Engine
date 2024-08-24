@@ -1,7 +1,7 @@
 #include "include/Window.hpp"
 
-Window::Window(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t id, Type type, uint8_t scale, Color bg_color, Color outline_color, bool enabled)
-: x(x), y(y), width(width), height(height), id(id), type(type), scale(scale), bg_color(bg_color), outline_color(outline_color), enabled(enabled)
+Window::Window(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t id, Type type, uint8_t scale, Color bg_color, Color outline_color, bool enabled, uint8_t category)
+: x(x), y(y), width(width), height(height), id(id), type(type), scale(scale), bg_color(bg_color), outline_color(outline_color), enabled(enabled), category(category)
 {
     visible = true;
     holding = false;

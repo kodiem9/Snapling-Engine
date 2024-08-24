@@ -31,7 +31,21 @@ enum WindowId
     SPRITES_WINDOW,
     CODING_WINDOW,
     BLOCK_TYPE_WINDOW,
-    BLOCK_PANEL_WINDOW
+    BLOCK_PANEL_WINDOW,
+    ASSETS_WINDOW
+};
+
+enum WindowScaleModes
+{
+    FULLSCREEN_MODE,
+    BIGGER_WINDOW_MODE,
+    SMALLER_WINDOW_MODE
+};
+
+enum WindowCategory
+{
+    CATEGORY_CODE,
+    CATEGORY_ASSETS
 };
 
 #define WINDOW_OUTLINE_COLOR Color{ 195, 204, 217, 255 }
@@ -80,7 +94,6 @@ class Engine
         void SmallerWindowOffsets();
         void BlockPanelsOffsets();
         void SpritesOffsets();
-        void NewCategory(const char* title, uint8_t trigger);
-        void DrawCategory();
-        void UpdateCategory();
+        void CodeCategoryOffsets();
+        void AssetsCategoryOffsets();
 };

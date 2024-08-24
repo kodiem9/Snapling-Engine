@@ -18,16 +18,22 @@ Category::Category(const char* title, uint16_t trigger)
     text_x = button.x + (Global::category_button_texture.width * button.scale) / 2 - MeasureText(title, 15) / 2;
     text_y = (Global::category_button_texture.height * button.scale) / 2;
 
+    visible = true;
+
     Global::category_amount++;
 }
 
 void Category::Draw()
 {
-    button.Draw();
-    DrawText(title, text_x, (Global::current_category == button.value) ? text_y : text_y + 8, 15, (Global::current_category == button.value) ? Color{ 177, 62, 83, 255 } : TEXT_COLOR);
+    if(visible) {
+        button.Draw();
+        DrawText(title, text_x, (Global::current_category == button.value) ? text_y : text_y + 8, 15, (Global::current_category == button.value) ? Color{ 177, 62, 83, 255 } : TEXT_COLOR);
+    }
 }
 
 void Category::Update()
 {
-    button.Update();
+    if(visible) {
+        button.Update();
+    }
 }
