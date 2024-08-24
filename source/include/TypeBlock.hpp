@@ -21,7 +21,7 @@ class TypeBlock
         uint8_t id;
 
     public:
-        TypeBlock(uint16_t x, uint16_t y, Color color, const char* text, uint8_t id);
+        TypeBlock(Color color, const char* text);
         void Draw(uint16_t window_x, uint16_t window_y);
         void Update();
 };

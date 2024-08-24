@@ -2,7 +2,7 @@
 
 
 // PUBLIC
-TypeBlock::TypeBlock(uint16_t x, uint16_t y, Color color, const char* text, uint8_t id) : x(x), y(y), color(color), text(text), id(id)
+TypeBlock::TypeBlock(Color color, const char* text) : color(color), text(text)
 {
     outline = color;
     if(outline.r >= 50) outline.r -= 50;
@@ -11,6 +11,13 @@ TypeBlock::TypeBlock(uint16_t x, uint16_t y, Color color, const char* text, uint
     else                outline.g = 0;
     if(outline.b >= 50) outline.b -= 50;
     else                outline.b = 0;
+
+
+    id = Global::block_type_amount;
+    Global::block_type_amount++;
+
+    x = 30 + (120 * (id % 2));
+    y = 30 + (50 * (id / 2));
 
     Global::block_colors.emplace_back(color);
 }

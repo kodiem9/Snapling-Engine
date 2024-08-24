@@ -7,9 +7,9 @@ PanelBlocks::PanelBlocks(Block *block)
     block_data = block;
     new_dragged_block_id = 0;
 
-    // Amount of types: 2
-    blocks.push_back(std::vector<Block>());
-    blocks.push_back(std::vector<Block>());
+    for(uint8_t i = 0; i < Global::block_type_amount; i++) {
+        blocks.push_back(std::vector<Block>());
+    }
 
     // Type: "testing"  -   0
     blocks[0].emplace_back(10, 10, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing One", 1, 0);
@@ -18,6 +18,10 @@ PanelBlocks::PanelBlocks(Block *block)
     // Type: "Hmmmmm"   -   1
     blocks[1].emplace_back(10, 10, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing Three", 1, 1);
     blocks[1].emplace_back(10, 50, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing Four", 2, 1);
+
+    // Type: "GREEN"   -   2
+    blocks[2].emplace_back(10, 10, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing Five", 1, 2);
+    blocks[2].emplace_back(10, 50, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing Six", 2, 2);
 }
 
 void PanelBlocks::Draw(uint16_t window_x, uint16_t window_y)
