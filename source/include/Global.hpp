@@ -28,10 +28,17 @@ namespace Global
         : name(name), x(x), y(y), direction(direction), size(size), show(show), direction_mode(direction_mode) {}
     };
 
+    struct FTexture
+    {
+        Texture2D texture;
+        uint8_t width;
+        uint8_t height;
+    };
+
     inline std::vector<ObjectData> entities;
 
-    inline Texture2D button_texture;
-    inline Texture2D blocks_texture;
+    inline FTexture button_texture;
+    inline FTexture blocks_texture;
 
     inline std::vector<Color> block_colors;
 
@@ -62,13 +69,18 @@ namespace Global
 
     inline void LoadTextures()
     {
-        button_texture = LoadTexture("assets/images/buttons.png");
-        blocks_texture = LoadTexture("assets/images/blocks.png");
+        button_texture.texture = LoadTexture("assets/images/buttons.png");
+        button_texture.width = 16;
+        button_texture.height = 16;
+
+        blocks_texture.texture = LoadTexture("assets/images/blocks.png");
+        blocks_texture.width = 9;
+        blocks_texture.height = 9;
     }
 
     inline void UnloadTextures()
     {
-        UnloadTexture(button_texture);
-        UnloadTexture(blocks_texture);
+        UnloadTexture(button_texture.texture);
+        UnloadTexture(blocks_texture.texture);
     }
 };

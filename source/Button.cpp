@@ -2,8 +2,8 @@
 
 
 // PUBLIC
-Button::Button(uint16_t x, uint16_t y, uint8_t trigger, Type type, uint8_t frame, float scale, uint8_t *checkbox, uint8_t value)
-: x(x), y(y), trigger(trigger), type(type), frame(frame), scale(scale), checkbox(checkbox), value(value)
+Button::Button(uint16_t x, uint16_t y, uint8_t trigger, Type type, uint8_t frame, float scale, Global::FTexture *texture, uint8_t *checkbox, uint8_t value)
+: x(x), y(y), trigger(trigger), type(type), frame(frame), scale(scale), texture(texture), checkbox(checkbox), value(value)
 {
     selected = false;
     pressed = false;
@@ -15,14 +15,14 @@ void Button::Draw()
 {
     if(visible) {
         Texture();
-        DrawTexturePro(Global::button_texture, spr.source, spr.dest, spr.origin, 0.0f, WHITE);
+        DrawTexturePro(texture->texture, spr.source, spr.dest, spr.origin, 0.0f, WHITE);
     }
 }
 
 void Button::Update()
 {
     if(visible) {
-        if(Global::MouseCollision(x, y, BUTTON_SIZE * scale, BUTTON_SIZE * scale)) {
+        if(Global::MouseCollision(x, y, texture->width * scale, texture->height * scale)) {
             if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
                 pressed = true;
                 selected = true;
@@ -36,7 +36,7 @@ void Button::Update()
                 }
             }
         }
-        
+
         if(type == Type::CHECKBOX) {
             toggled = (*checkbox == value);
         }
@@ -52,6 +52,6 @@ void Button::Texture()
     else if(selected) fixed_frame = 1;
     else fixed_frame = 0;
 
-    spr.source = Rectangle{ (float)BUTTON_SIZE * frame, (float)BUTTON_SIZE * fixed_frame, BUTTON_SIZE, BUTTON_SIZE };
+    spr.source = Rectangle{ (float)texture->width * frame, (float)texture->height * fixed_frame, (float)texture->width, (float)texture->height };
     spr.dest = Rectangle{ (float)x, (float)y, spr.source.width * scale, spr.source.height * scale};
 }

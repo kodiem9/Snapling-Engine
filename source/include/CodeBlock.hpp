@@ -1,8 +1,6 @@
 #pragma once
 #include "Global.hpp"
 
-#define BLOCK_SIZE  9
-
 class Block
 {
     private:

@@ -1,8 +1,6 @@
 #pragma once
 #include "Global.hpp"
 
-constexpr uint8_t BUTTON_SIZE{16};
-
 class Button
 {
     public:
@@ -11,6 +9,8 @@ class Button
             SINGLE_BUTTON,
             CHECKBOX
         };
+
+        Global::FTexture *texture;
 
         Type type;
         float scale;
@@ -28,7 +28,7 @@ class Button
         bool visible;
         bool toggled;
 
-        Button(uint16_t x = 0, uint16_t y = 0, uint8_t trigger = 0, Type type = Type::SINGLE_BUTTON, uint8_t frame = 0, float scale = 1.0f, uint8_t *checkbox = nullptr, uint8_t value = 0);
+        Button(uint16_t x = 0, uint16_t y = 0, uint8_t trigger = 0, Type type = Type::SINGLE_BUTTON, uint8_t frame = 0, float scale = 1.0f, Global::FTexture *texture = NULL, uint8_t *checkbox = nullptr, uint8_t value = 0);
         void Draw();
         void Update();
     
