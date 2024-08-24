@@ -2,8 +2,8 @@
 
 
 // PUBLIC
-Block::Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id, uint8_t block_type)
-: x(x), y(y), scale(scale), type(type), text(text), id(id), block_type(block_type)
+Block::Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id, uint8_t block_type, Color color)
+: x(x), y(y), scale(scale), type(type), text(text), id(id), block_type(block_type), color(color)
 {
     held = false;
     remove = false;
@@ -24,14 +24,21 @@ void Block::Draw(int16_t window_x, int16_t window_y)
             case 2: Texture(7, 2, BLOCK_SIZE, 7 * scale, 0, width); break;
         }
 
-        Color color;
-        if(type == Type::PLACEMENT_BLOCK)
-            color = Color{ 255, 255, 255, 150 };
-        else
-            color = WHITE;
+        Color texture_color;
+        Color text_color;
+        if(type == Type::PLACEMENT_BLOCK) {
+            texture_color = color;
+            texture_color.a -= 100;
+            text_color = WHITE;
+            text_color.a -= 100;
+        }
+        else {
+            texture_color = color;
+            text_color = WHITE;
+        }
         
-        DrawTexturePro(Global::blocks_texture, spr.source, spr.dest, spr.origin, 0.0f, color);
-        DrawText(text.c_str(), fixed_x + (2 * scale + 1), fixed_y + (2 * scale + 1), 5 * (scale - 1), color);
+        DrawTexturePro(Global::blocks_texture, spr.source, spr.dest, spr.origin, 0.0f, texture_color);
+        DrawText(text.c_str(), fixed_x + (2 * scale + 1), fixed_y + (2 * scale + 1), 5 * (scale - 1), WHITE);
     }
 }
 

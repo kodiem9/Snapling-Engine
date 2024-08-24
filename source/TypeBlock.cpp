@@ -5,11 +5,11 @@
 TypeBlock::TypeBlock(uint16_t x, uint16_t y, Color color, const char* text, uint8_t id) : x(x), y(y), color(color), text(text), id(id)
 {
     outline = color;
-    if(outline.r >= 25) outline.r -= 25;
+    if(outline.r >= 50) outline.r -= 50;
     else                outline.r = 0;
-    if(outline.g >= 25) outline.g-= 25;
+    if(outline.g >= 50) outline.g-= 50;
     else                outline.g = 0;
-    if(outline.b >= 25) outline.b -= 25;
+    if(outline.b >= 50) outline.b -= 50;
     else                outline.b = 0;
 }
 

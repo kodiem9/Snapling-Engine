@@ -12,12 +12,12 @@ PanelBlocks::PanelBlocks(Block *block)
     blocks.push_back(std::vector<Block>());
 
     // Type: "testing"  -   0
-    blocks[0].emplace_back(10, 10, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing One", 1, 0);
-    blocks[0].emplace_back(10, 50, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing Two", 2, 0);
+    blocks[0].emplace_back(10, 10, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing One", 1, 0, Color{ 177, 62, 83, 255 });
+    blocks[0].emplace_back(10, 50, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing Two", 2, 0, Color{ 177, 62, 83, 255 });
 
     // Type: "Hmmmmm"   -   1
-    blocks[1].emplace_back(10, 10, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing Three", 1, 1);
-    blocks[1].emplace_back(10, 50, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing Four", 2, 1);
+    blocks[1].emplace_back(10, 10, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing Three", 1, 1, Color{ 177, 62, 83, 255 });
+    blocks[1].emplace_back(10, 50, Global::code_panel_scale, Block::Type::PANEL_BLOCK, "Testing Four", 2, 1, Color{ 177, 62, 83, 255 });
 }
 
 void PanelBlocks::Draw(uint16_t window_x, uint16_t window_y)
@@ -45,6 +45,7 @@ void PanelBlocks::Update()
         block_data->text = blocks[Global::selected_block_type][Global::selected_panel_block-1].text;
         block_data->offset_x = GetMouseX() - (blocks[Global::selected_block_type][Global::selected_panel_block-1].x + window_x);
         block_data->offset_y = GetMouseY() - (blocks[Global::selected_block_type][Global::selected_panel_block-1].y + window_y);
+        block_data->color = blocks[Global::selected_block_type][Global::selected_panel_block-1].color;
         block_data->Data();
     }
 }
