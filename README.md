@@ -17,6 +17,4 @@ And when you're done you can re-enable the gatekeeper:
 After that everything should work again!
 
 # It's still not working? #
-In the future I'll make a dmg file so it's easier and safer to download which (hopefully) won't make the program break! For now the engine doesn't have much, so you're not missing out...
-
-yet... >:)
+In the future I'll make a dmg file so it's easier and safer to download which (hopefully) won't make the program break! For now the engine doesn't have much, so you're not missing out... yet :P
