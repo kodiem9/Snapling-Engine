@@ -38,6 +38,7 @@ namespace Global
     inline std::vector<ObjectData> entities;
 
     inline FTexture button_texture;
+    inline FTexture category_button_texture;
     inline FTexture blocks_texture;
 
     inline std::vector<Color> block_colors;
@@ -59,6 +60,7 @@ namespace Global
     inline uint8_t sprites_amount = 0;
     inline uint8_t selected_sprite = 0;
     inline uint8_t selected_block_type = 0;
+    inline uint8_t current_category = 0;
     inline bool execute_new_block = false;
     inline bool holding_block = false;
 
@@ -73,6 +75,10 @@ namespace Global
         button_texture.width = 16;
         button_texture.height = 16;
 
+        category_button_texture.texture = LoadTexture("assets/images/category_buttons.png");
+        category_button_texture.width = 24;
+        category_button_texture.height = 8;
+
         blocks_texture.texture = LoadTexture("assets/images/blocks.png");
         blocks_texture.width = 9;
         blocks_texture.height = 9;
@@ -82,5 +88,6 @@ namespace Global
     {
         UnloadTexture(button_texture.texture);
         UnloadTexture(blocks_texture.texture);
+        UnloadTexture(category_button_texture.texture);
     }
 };

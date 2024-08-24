@@ -18,7 +18,9 @@ enum ButtonTrigger
     SMALLER_WINDOW,
     NEW_SPRITE,
     EMPTY_SPRITE,
-    BLOCK_PANELS
+    BLOCK_PANELS,
+    CODE_CATEGORY,
+    ASSETS_CATEGORY
 };
 
 enum WindowId
@@ -48,6 +50,10 @@ class Engine
     private:
         std::vector<Window> windows;
         std::vector<Button> buttons;
+
+        std::vector<Button> categories;
+        std::vector<const char*> category_names;
+
         std::vector<Sprite> sprites;
         std::vector<std::vector<Block>> blocks;
         
@@ -65,6 +71,7 @@ class Engine
 
         uint8_t window_scale_mode;
         uint8_t saved_window_scale_mode;
+        uint8_t category_amount;
         bool code_panels_mode;
 
         inline void PopUpUpdate();
@@ -76,4 +83,7 @@ class Engine
         void SmallerWindowOffsets();
         void BlockPanelsOffsets();
         void SpritesOffsets();
+        void NewCategory(const char* title, uint8_t trigger);
+        void DrawCategory();
+        void UpdateCategory();
 };
