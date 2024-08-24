@@ -20,7 +20,3 @@ After that everything should work again!
 In the future I'll make a dmg file so it's easier and safer to download which (hopefully) won't make the program break! For now the engine doesn't have much, so you're not missing out...
 
 yet... >:)
-
-## SAST Tools
-
-[PVS-Studio](https://pvs-studio.com/en/pvs-studio/?utm_source=website&utm_medium=github&utm_campaign=open_source) - static analyzer for C, C++, C#, and Java code.
