@@ -1,7 +1,7 @@
 #pragma once
 #include "Global.hpp"
 
-#define GRID_GAPS   60
+constexpr uint8_t GRID_GAPS{60};
 
 class Grid
 {
