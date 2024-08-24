@@ -11,6 +11,8 @@ TypeBlock::TypeBlock(uint16_t x, uint16_t y, Color color, const char* text, uint
     else                outline.g = 0;
     if(outline.b >= 50) outline.b -= 50;
     else                outline.b = 0;
+
+    Global::block_colors.emplace_back(color);
 }
 
 void TypeBlock::Draw(uint16_t window_x, uint16_t window_y)

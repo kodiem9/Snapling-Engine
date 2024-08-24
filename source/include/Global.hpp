@@ -33,6 +33,8 @@ namespace Global
     inline Texture2D button_texture;
     inline Texture2D blocks_texture;
 
+    inline std::vector<Color> block_colors;
+
     inline float code_panel_scale = 4.0f;
     inline float coding_grid_scale = 3.0f;
 

@@ -15,9 +15,9 @@ Engine::Engine()
     // This isn't a vector of entities. It's more of a template. The entities data is actually inside "Global.hpp".
     // I made this entity class for it to be clean (just like the PopUp class)
     entity = new Entity;
+    block_type_panel = new BlockTypePanel;
     dragged_block = new Block(10, 10, Global::code_panel_scale, Block::Type::PLACEMENT_BLOCK, "Testing");
     panel_blocks = new PanelBlocks(dragged_block);
-    block_type_panel = new BlockTypePanel;
 
 
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
@@ -194,7 +194,7 @@ void Engine::Update()
 
     if(Global::execute_new_block) {
         Global::blocks_amount++;
-        blocks[Global::selected_sprite].emplace_back(dragged_block->x - Global::coding_panels_width + Global::block_grid[Global::selected_sprite].x, dragged_block->y - 40 + Global::block_grid[Global::selected_sprite].y, Global::coding_grid_scale, Block::Type::NORMAL_BLOCK, dragged_block->text, 0, Global::selected_panel_block, dragged_block->color);
+        blocks[Global::selected_sprite].emplace_back(dragged_block->x - Global::coding_panels_width + Global::block_grid[Global::selected_sprite].x, dragged_block->y - 40 + Global::block_grid[Global::selected_sprite].y, Global::coding_grid_scale, Block::Type::NORMAL_BLOCK, dragged_block->text, 0, dragged_block->block_type);
         Global::execute_new_block = false;
     }
 

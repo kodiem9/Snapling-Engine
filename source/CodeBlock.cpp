@@ -2,8 +2,8 @@
 
 
 // PUBLIC
-Block::Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id, uint8_t block_type, Color color)
-: x(x), y(y), scale(scale), type(type), text(text), id(id), block_type(block_type), color(color)
+Block::Block(uint16_t x, uint16_t y, float scale, Type type, std::string text, uint16_t id, uint8_t block_type)
+: x(x), y(y), scale(scale), type(type), text(text), id(id), block_type(block_type)
 {
     held = false;
     remove = false;
@@ -38,7 +38,7 @@ void Block::Draw(int16_t window_x, int16_t window_y)
         }
         
         DrawTexturePro(Global::blocks_texture, spr.source, spr.dest, spr.origin, 0.0f, texture_color);
-        DrawText(text.c_str(), fixed_x + (2 * scale + 1), fixed_y + (2 * scale + 1), 5 * (scale - 1), WHITE);
+        DrawText(text.c_str(), fixed_x + (2 * scale + 1), fixed_y + (2 * scale + 1), 5 * (scale - 1), text_color);
     }
 }
 
@@ -111,6 +111,7 @@ void Block::Update()
 void Block::Data()
 {
     width = MeasureText(text.c_str(), 5 * (scale - 1));
+    color = Global::block_colors[block_type];
 }
 
 
