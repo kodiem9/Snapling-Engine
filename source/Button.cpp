@@ -2,11 +2,13 @@
 
 
 // PUBLIC
-Button::Button(uint16_t x, uint16_t y, uint8_t trigger, Type type, uint8_t frame, float scale) : x(x), y(y), trigger(trigger), type(type), frame(frame), scale(scale)
+Button::Button(uint16_t x, uint16_t y, uint8_t trigger, Type type, uint8_t frame, float scale, uint8_t *checkbox, uint8_t value)
+: x(x), y(y), trigger(trigger), type(type), frame(frame), scale(scale), checkbox(checkbox), value(value)
 {
     selected = false;
     pressed = false;
     visible = true;
+    toggled = false;
 }
 
 void Button::Draw()
@@ -25,6 +27,7 @@ void Button::Update()
                 pressed = true;
                 selected = true;
             }
+
             if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
                 if(pressed) {
                     pressed = false;
@@ -33,6 +36,10 @@ void Button::Update()
                 }
             }
         }
+        
+        if(type == Type::CHECKBOX) {
+            toggled = (*checkbox == value);
+        }
     }
 }
 
@@ -40,6 +47,11 @@ void Button::Update()
 // PRIVATE
 void Button::Texture()
 {
-    spr.source = Rectangle{ (float)BUTTON_SIZE * frame, (float)BUTTON_SIZE * selected, BUTTON_SIZE, BUTTON_SIZE };
+    uint8_t fixed_frame;
+    if(toggled) fixed_frame = 2;
+    else if(selected) fixed_frame = 1;
+    else fixed_frame = 0;
+
+    spr.source = Rectangle{ (float)BUTTON_SIZE * frame, (float)BUTTON_SIZE * fixed_frame, BUTTON_SIZE, BUTTON_SIZE };
     spr.dest = Rectangle{ (float)x, (float)y, spr.source.width * scale, spr.source.height * scale};
 }
