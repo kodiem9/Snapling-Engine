@@ -8,7 +8,6 @@ Engine::Engine()
     window_scale_mode = 0;
     saved_window_scale_mode = 0;
     tween_timer = 0.0f;
-    category_amount = 0;
     code_panels_mode = true;
 
     new_sprite_popup = new PopUp(GetScreenWidth() - 79, GetScreenHeight() - 167, 48, 56, POPUP_COLOR);
