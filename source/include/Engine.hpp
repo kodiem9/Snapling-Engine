@@ -1,6 +1,5 @@
 #pragma once
 #include "Window.hpp"
-#include "Button.hpp"
 #include "PopUp.hpp"
 #include "Sprite.hpp"
 #include "PropertiesBox.hpp"
@@ -10,6 +9,8 @@
 #include "Grid.hpp"
 // BlockTypePanel.hpp HAS BlockType.hpp INSIDE
 #include "BlockTypePanel.hpp"
+// BlockTypePanel.hpp HAS Button.hpp INSIDE
+#include "Category.hpp"
 
 enum ButtonTrigger
 {
@@ -50,10 +51,7 @@ class Engine
     private:
         std::vector<Window> windows;
         std::vector<Button> buttons;
-
-        std::vector<Button> categories;
-        std::vector<const char*> category_names;
-
+        std::vector<Category> categories;
         std::vector<Sprite> sprites;
         std::vector<std::vector<Block>> blocks;
         
@@ -71,7 +69,6 @@ class Engine
 
         uint8_t window_scale_mode;
         uint8_t saved_window_scale_mode;
-        uint8_t category_amount;
         bool code_panels_mode;
 
         inline void PopUpUpdate();

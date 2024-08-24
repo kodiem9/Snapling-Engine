@@ -61,6 +61,7 @@ namespace Global
     inline uint8_t selected_sprite = 0;
     inline uint8_t selected_block_type = 0;
     inline uint8_t current_category = 0;
+    inline uint8_t category_amount = 0;
     inline bool execute_new_block = false;
     inline bool holding_block = false;
 

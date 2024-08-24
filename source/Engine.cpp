@@ -55,8 +55,8 @@ Engine::Engine()
 
 
     // Category buttons (code, assets, sounds, etc.)
-    NewCategory("Code", ButtonTrigger::CODE_CATEGORY);
-    NewCategory("Assets", ButtonTrigger::ASSETS_CATEGORY);
+    categories.emplace_back("Code", ButtonTrigger::CODE_CATEGORY);
+    categories.emplace_back("Assets", ButtonTrigger::ASSETS_CATEGORY);
 }
 
 Engine::~Engine()
@@ -144,7 +144,9 @@ void Engine::Draw()
         dragged_block->Draw(0, 0);
     }
 
-    DrawCategory();
+    for(Category &category: categories) {
+        category.Draw();
+    }
 
     for(Button &button: buttons) {
         button.Draw();
@@ -165,7 +167,9 @@ void Engine::Update()
 
     PopUpUpdate();
 
-    UpdateCategory();
+    for(Category &category: categories) {
+        category.Update();
+    }
 
     for(Button &button: buttons) {
         button.Update();
@@ -599,30 +603,4 @@ void Engine::SpritesOffsets()
         NewSprite(new_sprites, sprites.size(), 20, 5, false);
 
     sprites = new_sprites;
-}
-
-void Engine::NewCategory(const char* title, uint8_t trigger)
-{
-    categories.emplace_back(10 + (Global::category_button_texture.width * 4 * category_amount), 8, trigger, Button::Type::CHECKBOX, 0, 4.0f, &Global::category_button_texture, &Global::current_category, category_amount);
-    category_names.push_back(title);
-    category_amount++;
-}
-
-void Engine::DrawCategory()
-{
-    for(uint8_t i = 0; i < categories.size(); i++) {
-        categories[i].Draw();
-
-        uint16_t text_x = categories[i].x + (Global::category_button_texture.width * categories[i].scale) / 2 - MeasureText(category_names[i], 15) / 2;
-        uint16_t text_y = categories[i].y + (Global::category_button_texture.height * categories[i].scale) / 2;
-        if(Global::current_category == i) text_y -= Global::category_button_texture.height;
-        DrawText(category_names[i], text_x, text_y, 15, (Global::current_category == i) ? Color{ 177, 62, 83, 255 } : TEXT_COLOR);
-    }
-}
-
-void Engine::UpdateCategory()
-{
-    for(uint8_t i = 0; i < categories.size(); i++) {
-        categories[i].Update();
-    }
 }
