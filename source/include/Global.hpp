@@ -46,6 +46,8 @@ namespace Global
     inline float code_panel_scale = 4.0f;
     inline float coding_grid_scale = 3.0f;
 
+    inline uint16_t screen_width;
+    inline uint16_t screen_height;
     inline uint16_t game_window_width = 0;
     inline uint16_t game_window_height = 0;
     inline uint16_t coding_window_width = 0;
@@ -57,7 +59,7 @@ namespace Global
     inline uint16_t blocks_amount;
     inline std::vector<Vector2> block_grid;
 
-    inline uint8_t game_scale = 0;
+    inline uint8_t game_scale = 10;
     inline uint8_t button_pressed = 0;
     inline uint8_t sprites_amount = 0;
     inline uint8_t selected_sprite = 0;

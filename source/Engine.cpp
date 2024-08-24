@@ -5,62 +5,15 @@
 Engine::Engine()
 {
     Global::LoadTextures();
-    window_scale_mode = WindowScaleModes::BIGGER_WINDOW_MODE;
-    saved_window_scale_mode = window_scale_mode;
-    tween_timer = 0.0f;
-    code_panels_mode = true;
 
-    new_sprite_popup = new PopUp(GetScreenWidth() - 79, GetScreenHeight() - 167, 48, 56, POPUP_COLOR);
-    properties_box = new PropertiesBox;
-    // This isn't a vector of entities. It's more of a template. The entities data is actually inside "Global.hpp".
-    // I made this entity class for it to be clean (just like the PopUp class)
-    entity = new Entity;
-    block_type_panel = new BlockTypePanel;
-    dragged_block = new Block(10, 10, Global::code_panel_scale, Block::Type::PLACEMENT_BLOCK, "Testing");
-    panel_blocks = new PanelBlocks(dragged_block);
-
-
-    // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
-    Global::game_scale = 10;
-    windows.emplace_back(GetScreenWidth() - 610, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, Global::game_scale, WHITE, WINDOW_OUTLINE_COLOR, true, 0);
-    Global::game_window_width = windows[WindowId::GAME_WINDOW].width * windows[WindowId::GAME_WINDOW].scale;
-    Global::game_window_height = windows[WindowId::GAME_WINDOW].height * windows[WindowId::GAME_WINDOW].scale;
-
-    windows.emplace_back(GetScreenWidth() - 610, 500, 60, 15, WindowId::PROPERTIES_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, false, 0);
-
-    windows.emplace_back(GetScreenWidth() - 610, 650, 60, (GetScreenHeight() - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR, true, 0);
-    sprite_window_height = windows[WindowId::SPRITES_WINDOW].height * windows[WindowId::SPRITES_WINDOW].scale;
-
-    Global::coding_window_x = 280;
-    Global::coding_window_width = GetScreenWidth() - Global::game_window_width - (Global::coding_window_x + 20);
-    windows.emplace_back(Global::coding_window_x, 40, Global::coding_window_width, GetScreenHeight() - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_CODE);
-
-    Global::coding_panels_width = GetScreenWidth() - Global::game_window_width - Global::coding_window_width - 30;
-    windows.emplace_back(10, 40, Global::coding_panels_width, (GetScreenHeight() / 5) * 2 - 80, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, false, WindowCategory::CATEGORY_CODE);
-    windows.emplace_back(10, 40 + (GetScreenHeight() / 5) * 2 - 80, Global::coding_panels_width, (GetScreenHeight() / 5) * 3 - 60, WindowId::BLOCK_PANEL_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_CODE);
-
-    Global::assets_window_x = 10;
-    Global::assets_window_width = GetScreenWidth() - Global::game_window_width - (Global::assets_window_x + 20);
-    windows.emplace_back(Global::assets_window_x, 40, Global::assets_window_width, GetScreenHeight() - 140, WindowId::ASSETS_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_ASSETS);
-    windows[WindowId::ASSETS_WINDOW].visible = false;
-
+    InitData();
+    InitWindows();
 
     // Lonely grid...
     grid = new Grid;
 
-
-    // Buttons are random lol, but also not! Depends. You better be careful with this.
-    buttons.emplace_back(GetScreenWidth() - 42, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f, &Global::button_texture);
-    buttons.emplace_back(GetScreenWidth() - 90, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::CHECKBOX, 1, 2.0f, &Global::button_texture, &window_scale_mode, WindowScaleModes::BIGGER_WINDOW_MODE);
-    buttons.emplace_back(GetScreenWidth() - 122, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::CHECKBOX, 2, 2.0f, &Global::button_texture, &window_scale_mode, WindowScaleModes::SMALLER_WINDOW_MODE);
-    buttons.emplace_back(GetScreenWidth() - 79, GetScreenHeight() - 159, ButtonTrigger::EMPTY_SPRITE, Button::Type::SINGLE_BUTTON, 5, 3.0f, &Global::button_texture);
-    buttons.emplace_back(GetScreenWidth() - 87, GetScreenHeight() - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 4, 4.0f, &Global::button_texture);
-    buttons.emplace_back(10, GetScreenHeight() - 92, ButtonTrigger::BLOCK_PANELS, Button::Type::SINGLE_BUTTON, 3, 2.0f, &Global::button_texture);
-
-
-    // Category buttons (code, assets, sounds, etc.)
-    categories.emplace_back("Code", ButtonTrigger::CODE_CATEGORY);
-    categories.emplace_back("Assets", ButtonTrigger::ASSETS_CATEGORY);
+    InitButtons();
+    InitCategories();
 }
 
 Engine::~Engine()
@@ -226,6 +179,70 @@ void Engine::Update()
 
 
 // PRIVATE
+inline void Engine::InitData()
+{
+    Global::screen_width = GetScreenWidth();
+    Global::screen_height = GetScreenHeight();
+
+    window_scale_mode = WindowScaleModes::BIGGER_WINDOW_MODE;
+    saved_window_scale_mode = window_scale_mode;
+    tween_timer = 0.0f;
+    code_panels_mode = true;
+
+    new_sprite_popup = new PopUp(Global::screen_width - 79, Global::screen_height - 167, 48, 56, POPUP_COLOR);
+    properties_box = new PropertiesBox;
+    // This isn't a vector of entities. It's more of a template. The entities data is actually inside "Global.hpp".
+    // I made this entity class for it to be clean (just like the PopUp class)
+    entity = new Entity;
+    block_type_panel = new BlockTypePanel;
+    dragged_block = new Block(10, 10, Global::code_panel_scale, Block::Type::PLACEMENT_BLOCK, "Testing");
+    panel_blocks = new PanelBlocks(dragged_block);
+}
+
+inline void Engine::InitWindows()
+{
+    // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
+    windows.emplace_back(Global::screen_width - 610, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, Global::game_scale, WHITE, WINDOW_OUTLINE_COLOR, true, 0);
+    Global::game_window_width = windows[WindowId::GAME_WINDOW].width * windows[WindowId::GAME_WINDOW].scale;
+    Global::game_window_height = windows[WindowId::GAME_WINDOW].height * windows[WindowId::GAME_WINDOW].scale;
+
+    windows.emplace_back(Global::screen_width - 610, 500, 60, 15, WindowId::PROPERTIES_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, false, 0);
+
+    windows.emplace_back(Global::screen_width - 610, 650, 60, (Global::screen_height - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR, true, 0);
+    sprite_window_height = windows[WindowId::SPRITES_WINDOW].height * windows[WindowId::SPRITES_WINDOW].scale;
+
+    Global::coding_window_x = 280;
+    Global::coding_window_width = Global::screen_width - Global::game_window_width - (Global::coding_window_x + 20);
+    windows.emplace_back(Global::coding_window_x, 40, Global::coding_window_width, Global::screen_height - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_CODE);
+
+    Global::coding_panels_width = Global::screen_width - Global::game_window_width - Global::coding_window_width - 30;
+    windows.emplace_back(10, 40, Global::coding_panels_width, (Global::screen_height / 5) * 2 - 80, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, false, WindowCategory::CATEGORY_CODE);
+    windows.emplace_back(10, 40 + (Global::screen_height / 5) * 2 - 80, Global::coding_panels_width, (Global::screen_height / 5) * 3 - 60, WindowId::BLOCK_PANEL_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_CODE);
+
+    Global::assets_window_x = 10;
+    Global::assets_window_width = Global::screen_width - Global::game_window_width - (Global::assets_window_x + 20);
+    windows.emplace_back(Global::assets_window_x, 40, Global::assets_window_width, Global::screen_height - 140, WindowId::ASSETS_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_ASSETS);
+    windows[WindowId::ASSETS_WINDOW].visible = false;
+}
+
+inline void Engine::InitButtons()
+{
+    // Buttons are random lol, but also not! Depends. You better be careful with this.
+    buttons.emplace_back(Global::screen_width - 42, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f, &Global::button_texture);
+    buttons.emplace_back(Global::screen_width - 90, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::CHECKBOX, 1, 2.0f, &Global::button_texture, &window_scale_mode, WindowScaleModes::BIGGER_WINDOW_MODE);
+    buttons.emplace_back(Global::screen_width - 122, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::CHECKBOX, 2, 2.0f, &Global::button_texture, &window_scale_mode, WindowScaleModes::SMALLER_WINDOW_MODE);
+    buttons.emplace_back(Global::screen_width - 79, Global::screen_height - 159, ButtonTrigger::EMPTY_SPRITE, Button::Type::SINGLE_BUTTON, 5, 3.0f, &Global::button_texture);
+    buttons.emplace_back(Global::screen_width - 87, Global::screen_height - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 4, 4.0f, &Global::button_texture);
+    buttons.emplace_back(10, Global::screen_height - 92, ButtonTrigger::BLOCK_PANELS, Button::Type::SINGLE_BUTTON, 3, 2.0f, &Global::button_texture);
+}
+
+inline void Engine::InitCategories()
+{
+    // Category buttons (code, assets, sounds, etc.)
+    categories.emplace_back("Code", ButtonTrigger::CODE_CATEGORY);
+    categories.emplace_back("Assets", ButtonTrigger::ASSETS_CATEGORY);
+}
+
 inline void Engine::NewSprite(std::vector<Sprite> &sprites, uint16_t loop, uint8_t offset, uint8_t row, bool upd_curr_spr)
 {
     uint16_t fixed_x_offset = 0;
@@ -248,7 +265,7 @@ inline void Engine::PopUpUpdate()
 {
     if(tween_timer > 0.0f) {
         if(new_sprite_popup->enabled) {
-            new_sprite_popup->Scroll(new_sprite_popup->y, GetScreenHeight() - 371, 6);
+            new_sprite_popup->Scroll(new_sprite_popup->y, Global::screen_height - 371, 6);
             new_sprite_popup->Scroll(new_sprite_popup->height, 200, 6);
 
             // Button offsets on pop up
@@ -257,7 +274,7 @@ inline void Engine::PopUpUpdate()
                 switch(button.trigger)
                 {
                     case ButtonTrigger::EMPTY_SPRITE: {
-                        button.y += ((GetScreenHeight() - 239) - button.y) / 7;
+                        button.y += ((Global::screen_height - 239) - button.y) / 7;
                     }
                     break;
 
@@ -266,7 +283,7 @@ inline void Engine::PopUpUpdate()
             }
         }
         else {
-            new_sprite_popup->Scroll(new_sprite_popup->y, GetScreenHeight() - 167, 6);
+            new_sprite_popup->Scroll(new_sprite_popup->y, Global::screen_height - 167, 6);
             new_sprite_popup->Scroll(new_sprite_popup->height, 56, 6);
 
             // Button offsets on pop up
@@ -275,7 +292,7 @@ inline void Engine::PopUpUpdate()
                 switch(button.trigger)
                 {
                     case ButtonTrigger::EMPTY_SPRITE: {
-                        button.y += ((GetScreenHeight() - 159) - button.y) / 7;
+                        button.y += ((Global::screen_height - 159) - button.y) / 7;
                     }
                     break;
 
@@ -368,8 +385,8 @@ void Engine::FullscreenOffsets()
                 case WindowId::GAME_WINDOW: {
                     window.scale = 17;
                     Global::game_scale = window.scale;
-                    window.y = (GetScreenHeight() - window.height * window.scale) / 2 - 28;
-                    window.x = (GetScreenWidth() - window.width * window.scale) / 2;
+                    window.y = (Global::screen_height - window.height * window.scale) / 2 - 28;
+                    window.x = (Global::screen_width - window.width * window.scale) / 2;
                     Global::game_window_width = window.width * window.scale;
                     Global::game_window_height = window.height * window.scale;
                 }
@@ -426,7 +443,7 @@ void Engine::FullscreenOffsets()
                     Global::game_scale = window.scale;
                     
                     window.y = 40;
-                    window.x = (GetScreenWidth() - (window.width * window.scale) - 10);
+                    window.x = (Global::screen_width - (window.width * window.scale) - 10);
 
                     Global::game_window_width = window.width * window.scale;
                     Global::game_window_height = window.height * window.scale;
@@ -447,7 +464,7 @@ void Engine::FullscreenOffsets()
             switch(button.trigger)
             {
                 case ButtonTrigger::FULLSCREEN: {
-                    button.x = GetScreenWidth() - 42;
+                    button.x = Global::screen_width - 42;
                 }
                 break;
 
@@ -503,7 +520,7 @@ void Engine::BiggerWindowOffsets()
                     window.x -= window.width * window.scale;
                     window.y += 300; // difference between big and small game window PLUS half the height * scale of properties window 
                     window.scale = 10;
-                    window.height = (GetScreenHeight() - window.y) / 10 - 10; // some weird math idk why this works
+                    window.height = (Global::screen_height - window.y) / 10 - 10; // some weird math idk why this works
 
                     window.UpdateCursor(old_y, old_height);
                     sprite_window_height = window.height * window.scale;
@@ -511,13 +528,13 @@ void Engine::BiggerWindowOffsets()
                 break;
 
                 case WindowId::CODING_WINDOW: {
-                    window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
+                    window.width = Global::screen_width - Global::game_window_width - (window.x + 20);
                     Global::coding_window_width = window.width;
                 }
                 break;
 
                 case WindowId::ASSETS_WINDOW: {
-                    window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
+                    window.width = Global::screen_width - Global::game_window_width - (window.x + 20);
                     Global::assets_window_width = window.width;
                 }
                 break;
@@ -560,7 +577,7 @@ void Engine::SmallerWindowOffsets()
                     window.scale = 5;
                     window.x += window.width * window.scale;
                     window.y -= 300; // difference between big and small game window PLUS half the height * scale of properties window 
-                    window.height = (GetScreenHeight() - window.y) / 5 - 20; // some weird math idk why this works
+                    window.height = (Global::screen_height - window.y) / 5 - 20; // some weird math idk why this works
 
                     window.UpdateCursor(old_y, old_height);
                     sprite_window_height = window.height * window.scale;
@@ -568,13 +585,13 @@ void Engine::SmallerWindowOffsets()
                 break;
 
                 case WindowId::CODING_WINDOW: {
-                    window.width = GetScreenWidth() - windows[0].width * windows[0].scale - (window.x + 20);
+                    window.width = Global::screen_width - windows[0].width * windows[0].scale - (window.x + 20);
                     Global::coding_window_width = window.width;
                 }
                 break;
 
                 case WindowId::ASSETS_WINDOW: {
-                    window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
+                    window.width = Global::screen_width - Global::game_window_width - (window.x + 20);
                     Global::assets_window_width = window.width;
                 }
                 break;
@@ -596,7 +613,7 @@ void Engine::BlockPanelsOffsets()
             {
                 case WindowId::CODING_WINDOW: {
                     window.x = 280;
-                    window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
+                    window.width = Global::screen_width - Global::game_window_width - (window.x + 20);
                     Global::coding_window_width = window.width;
                     Global::coding_window_x = window.x;
                 }
@@ -615,7 +632,7 @@ void Engine::BlockPanelsOffsets()
             {
                 case WindowId::CODING_WINDOW: {
                     window.x = 10;
-                    window.width = GetScreenWidth() - Global::game_window_width - (window.x + 20);
+                    window.width = Global::screen_width - Global::game_window_width - (window.x + 20);
                     Global::coding_window_width = window.width;
                     Global::coding_window_x = window.x;
                 }

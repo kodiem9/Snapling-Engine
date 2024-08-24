@@ -85,8 +85,15 @@ class Engine
         uint8_t saved_window_scale_mode;
         bool code_panels_mode;
 
+        
+        inline void InitData();
+        inline void InitWindows();
+        inline void InitButtons();
+        inline void InitCategories();
+
         inline void PopUpUpdate();
         inline void NewSprite(std::vector<Sprite> &sprites, uint16_t loop, uint8_t offset, uint8_t row, bool upd_curr_spr);
+
         void Commands();
         void ButtonUpdate();
         void FullscreenOffsets();
