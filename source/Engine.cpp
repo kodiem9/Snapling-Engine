@@ -176,7 +176,7 @@ void Engine::Update()
         dragged_block->Update();
     }
 
-    if(Global::selected_sprite) {
+    if(Global::sprites_amount > 0) {
         for(Costume &costume: costumes[Global::selected_sprite]) {
             costume.Update();
         }
@@ -291,20 +291,11 @@ inline void Engine::SpriteData()
 {
     blocks.push_back(std::vector<Block>());
     Global::block_grid.push_back(Vector2{ 0, 0 });
-    NewCostume();
-}
 
-inline void Engine::NewCostume()
-{
     costumes.push_back(std::vector<Costume>());
-
-    uint16_t size = 100;
-    uint16_t x = Global::costumes_window_width / 2 - size / 2;
-    uint16_t y = 20 + (Global::selected_sprite * 100);
-
-    costumes[costumes.size()-1].emplace_back(x, y, size);
-
-    Global::costumes_amount.push_back(1);
+    costumes[costumes.size()-1].emplace_back(0);
+    costumes[costumes.size()-1].emplace_back(1);
+    Global::selected_costumes.push_back(0);
 }
 
 inline void Engine::PopUpUpdate()

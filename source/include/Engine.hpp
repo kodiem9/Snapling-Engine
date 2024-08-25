@@ -100,7 +100,6 @@ class Engine
         inline void PopUpUpdate();
         inline void NewSprite(std::vector<Sprite> &sprites, uint16_t loop, uint8_t offset, uint8_t row, bool upd_curr_spr);
         inline void SpriteData();
-        inline void NewCostume();
 
         void Commands();
         void ButtonUpdate();
