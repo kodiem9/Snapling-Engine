@@ -21,7 +21,8 @@ enum ButtonTrigger
     EMPTY_SPRITE,
     BLOCK_PANELS,
     CODE_CATEGORY,
-    ASSETS_CATEGORY
+    ASSETS_CATEGORY,
+    COSTUMES_PANEL
 };
 
 enum WindowId
@@ -32,7 +33,8 @@ enum WindowId
     CODING_WINDOW,
     BLOCK_TYPE_WINDOW,
     BLOCK_PANEL_WINDOW,
-    ASSETS_WINDOW
+    ASSETS_WINDOW,
+    COSTUMES_WINDOW
 };
 
 enum WindowScaleModes
@@ -48,11 +50,12 @@ enum WindowCategory
     CATEGORY_ASSETS
 };
 
-#define WINDOW_OUTLINE_COLOR Color{ 195, 204, 217, 255 }
+#define WINDOW_OUTLINE_COLOR    Color{ 195, 204, 217, 255 }
 #define WINDOWS_UNIQUE_BG_COLOR Color{ 231, 240, 252, 255 }
 #define WINDOW_CODE_PANEL_COLOR Color{ 249, 249, 249, 255 }
+#define WINDOW_COSTUMES_COLOR   Color{ 217, 227, 242, 255 }
 
-#define POPUP_COLOR Color{ 177, 62, 83, 180 }
+#define POPUP_COLOR             Color{ 177, 62, 83, 180 }
 
 class Engine
 {
@@ -84,6 +87,7 @@ class Engine
         uint8_t window_scale_mode;
         uint8_t saved_window_scale_mode;
         bool code_panels_mode;
+        bool costumes_panel_mode;
 
         
         inline void InitData();
@@ -101,6 +105,7 @@ class Engine
         void SmallerWindowOffsets();
         void BlockPanelsOffsets();
         void SpritesOffsets();
+        void CostumesOffsets();
         void CodeCategoryOffsets();
         void AssetsCategoryOffsets();
 };

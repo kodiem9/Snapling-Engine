@@ -190,6 +190,7 @@ inline void Engine::InitData()
     saved_window_scale_mode = window_scale_mode;
     tween_timer = 0.0f;
     code_panels_mode = true;
+    costumes_panel_mode = true;
 
     new_sprite_popup = new PopUp(Global::screen_width - 79, Global::screen_height - 167, 48, 56, POPUP_COLOR);
     properties_box = new PropertiesBox;
@@ -224,9 +225,12 @@ inline void Engine::InitWindows()
 
 
     // * ASSETS WINDOWS STUFF * //
-    Global::assets_window_x = 10;
+    Global::assets_window_x = 200;
     Global::assets_window_width = Global::screen_width - Global::game_window_width - (Global::assets_window_x + 20);
     windows.emplace_back(Global::assets_window_x, 40, Global::assets_window_width, Global::screen_height - 140, WindowId::ASSETS_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_ASSETS);
+
+    Global::costumes_window_width = Global::screen_width - Global::game_window_width - Global::coding_window_width - 110;
+    windows.emplace_back(10, 40, Global::costumes_window_width, Global::screen_height - 140, WindowId::COSTUMES_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_COSTUMES_COLOR, WINDOW_OUTLINE_COLOR, false, WindowCategory::CATEGORY_ASSETS);
 }
 
 inline void Engine::InitButtons()
@@ -235,9 +239,10 @@ inline void Engine::InitButtons()
     buttons.emplace_back(Global::screen_width - 42, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f, &Global::button_texture);
     buttons.emplace_back(Global::screen_width - 90, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::CHECKBOX, 1, 2.0f, &Global::button_texture, &window_scale_mode, WindowScaleModes::BIGGER_WINDOW_MODE);
     buttons.emplace_back(Global::screen_width - 122, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::CHECKBOX, 2, 2.0f, &Global::button_texture, &window_scale_mode, WindowScaleModes::SMALLER_WINDOW_MODE);
-    buttons.emplace_back(Global::screen_width - 79, Global::screen_height - 159, ButtonTrigger::EMPTY_SPRITE, Button::Type::SINGLE_BUTTON, 5, 3.0f, &Global::button_texture);
-    buttons.emplace_back(Global::screen_width - 87, Global::screen_height - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 4, 4.0f, &Global::button_texture);
+    buttons.emplace_back(Global::screen_width - 79, Global::screen_height - 159, ButtonTrigger::EMPTY_SPRITE, Button::Type::SINGLE_BUTTON, 6, 3.0f, &Global::button_texture);
+    buttons.emplace_back(Global::screen_width - 87, Global::screen_height - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 5, 4.0f, &Global::button_texture);
     buttons.emplace_back(10, Global::screen_height - 92, ButtonTrigger::BLOCK_PANELS, Button::Type::SINGLE_BUTTON, 3, 2.0f, &Global::button_texture);
+    buttons.emplace_back(10, Global::screen_height - 92, ButtonTrigger::COSTUMES_PANEL, Button::Type::SINGLE_BUTTON, 4, 2.0f, &Global::button_texture);
 }
 
 inline void Engine::InitCategories()
@@ -365,6 +370,7 @@ void Engine::ButtonUpdate()
 
         case ButtonTrigger::CODE_CATEGORY: CodeCategoryOffsets(); break;
         case ButtonTrigger::ASSETS_CATEGORY: AssetsCategoryOffsets(); break;
+        case ButtonTrigger::COSTUMES_PANEL: CostumesOffsets(); break;
 
         default: break;
     }
@@ -398,6 +404,7 @@ void Engine::FullscreenOffsets()
                 case WindowId::BLOCK_TYPE_WINDOW: window.visible = false; break;
                 case WindowId::BLOCK_PANEL_WINDOW: window.visible = false; break;
                 case WindowId::ASSETS_WINDOW: window.visible = false; break;
+                case WindowId::COSTUMES_WINDOW: window.visible = false; break;
 
                 default: break;
             }
@@ -456,6 +463,7 @@ void Engine::FullscreenOffsets()
                 case WindowId::BLOCK_TYPE_WINDOW: window.visible = (Global::current_category == WindowCategory::CATEGORY_CODE); break;
                 case WindowId::BLOCK_PANEL_WINDOW: window.visible = (Global::current_category == WindowCategory::CATEGORY_CODE); break;
                 case WindowId::ASSETS_WINDOW: window.visible = (Global::current_category == WindowCategory::CATEGORY_ASSETS); break;
+                case WindowId::COSTUMES_WINDOW: window.visible = (Global::current_category == WindowCategory::CATEGORY_ASSETS); break;
 
                 default: break;
             }
@@ -619,8 +627,8 @@ void Engine::BlockPanelsOffsets()
                 }
                 break;
 
-                case WindowId::BLOCK_TYPE_WINDOW: window.visible = true;
-                case WindowId::BLOCK_PANEL_WINDOW: window.visible = true;
+                case WindowId::BLOCK_TYPE_WINDOW: window.visible = true; break;
+                case WindowId::BLOCK_PANEL_WINDOW: window.visible = true; break;
                 
                 default: break;
             }
@@ -638,8 +646,8 @@ void Engine::BlockPanelsOffsets()
                 }
                 break;
 
-                case WindowId::BLOCK_TYPE_WINDOW: window.visible = false;
-                case WindowId::BLOCK_PANEL_WINDOW: window.visible = false;
+                case WindowId::BLOCK_TYPE_WINDOW: window.visible = false; break;
+                case WindowId::BLOCK_PANEL_WINDOW: window.visible = false; break;
 
                 default: break;
             }
@@ -663,6 +671,44 @@ void Engine::SpritesOffsets()
     sprites = new_sprites;
 }
 
+void Engine::CostumesOffsets()
+{
+    costumes_panel_mode = !costumes_panel_mode;
+    if(costumes_panel_mode) {
+        for(Window &window: windows) {
+            switch(window.id)
+            {
+                case WindowId::ASSETS_WINDOW: {
+                    window.x = 200;
+                    window.width = Global::screen_width - Global::game_window_width - (window.x + 20);
+                }
+                break;
+
+                case WindowId::COSTUMES_WINDOW: window.visible = true; break;
+
+                default: break;
+            }
+        }
+    }
+    else {
+        for(Window &window: windows) {
+            switch(window.id)
+            {
+                case WindowId::ASSETS_WINDOW: {
+                    window.x = 10;
+                    window.width = Global::screen_width - Global::game_window_width - (window.x + 20);
+                }
+                break;
+
+                case WindowId::COSTUMES_WINDOW: window.visible = false; break;
+
+                default: break;
+            }
+        }
+    }
+    Global::button_pressed = 0;
+}
+
 void Engine::CodeCategoryOffsets()
 {
     if(Global::current_category != WindowCategory::CATEGORY_CODE) {
@@ -674,10 +720,19 @@ void Engine::CodeCategoryOffsets()
                 case WindowId::BLOCK_PANEL_WINDOW:  window.visible = code_panels_mode; break;
 
                 case WindowId::ASSETS_WINDOW:       window.visible = false; break;
+                case WindowId::COSTUMES_WINDOW:     window.visible = false; break;
                 default: break;
             }
         }
-        buttons[ButtonTrigger::BLOCK_PANELS-1].visible = true;
+        
+        for(Button &button: buttons) {
+            switch(button.trigger)
+            {
+                case ButtonTrigger::BLOCK_PANELS: button.visible = true; break;
+                case ButtonTrigger::COSTUMES_PANEL: button.visible = false; break;
+            }
+        }
+
         Global::current_category = WindowCategory::CATEGORY_CODE;
     }
     Global::button_pressed = 0;
@@ -694,10 +749,19 @@ void Engine::AssetsCategoryOffsets()
                 case WindowId::BLOCK_PANEL_WINDOW:  window.visible = false; break;
 
                 case WindowId::ASSETS_WINDOW:       window.visible = true; break;
+                case WindowId::COSTUMES_WINDOW:     window.visible = true; break;
                 default: break;
             }
         }
-        buttons[ButtonTrigger::BLOCK_PANELS-1].visible = false;
+
+        for(Button &button: buttons) {
+            switch(button.trigger)
+            {
+                case ButtonTrigger::BLOCK_PANELS: button.visible = false; break;
+                case ButtonTrigger::COSTUMES_PANEL: button.visible = true; break;
+            }
+        }
+
         Global::current_category = WindowCategory::CATEGORY_ASSETS;
     }
     Global::button_pressed = 0;
