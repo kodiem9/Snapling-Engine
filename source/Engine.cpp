@@ -14,6 +14,8 @@ Engine::Engine()
 
     InitButtons();
     InitCategories();
+
+    CodeCategoryOffsets();
 }
 
 Engine::~Engine()
@@ -202,6 +204,7 @@ inline void Engine::InitData()
 inline void Engine::InitWindows()
 {
     // The windows enum is IN ORDER! So GAME_WINDOW is 0, first index in the vector is the game window, etc.
+    // * CODE WINDOWS STUFF * //
     windows.emplace_back(Global::screen_width - 610, 40, 60, 45, WindowId::GAME_WINDOW, Window::Type::NORMAL_WINDOW, Global::game_scale, WHITE, WINDOW_OUTLINE_COLOR, true, 0);
     Global::game_window_width = windows[WindowId::GAME_WINDOW].width * windows[WindowId::GAME_WINDOW].scale;
     Global::game_window_height = windows[WindowId::GAME_WINDOW].height * windows[WindowId::GAME_WINDOW].scale;
@@ -219,10 +222,11 @@ inline void Engine::InitWindows()
     windows.emplace_back(10, 40, Global::coding_panels_width, (Global::screen_height / 5) * 2 - 80, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, false, WindowCategory::CATEGORY_CODE);
     windows.emplace_back(10, 40 + (Global::screen_height / 5) * 2 - 80, Global::coding_panels_width, (Global::screen_height / 5) * 3 - 60, WindowId::BLOCK_PANEL_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_CODE);
 
+
+    // * ASSETS WINDOWS STUFF * //
     Global::assets_window_x = 10;
     Global::assets_window_width = Global::screen_width - Global::game_window_width - (Global::assets_window_x + 20);
     windows.emplace_back(Global::assets_window_x, 40, Global::assets_window_width, Global::screen_height - 140, WindowId::ASSETS_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_ASSETS);
-    windows[WindowId::ASSETS_WINDOW].visible = false;
 }
 
 inline void Engine::InitButtons()
@@ -310,10 +314,6 @@ void Engine::Commands()
             block.shrink_to_fit();
         }
         blocks.shrink_to_fit();
-    }
-
-    if(IsKeyPressed(KeyboardKey::KEY_ZERO)) {
-        printf("%i\n", Global::current_category);
     }
 }
 
