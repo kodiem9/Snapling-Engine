@@ -42,7 +42,7 @@ namespace Global
     inline FTexture blocks_texture;
 
     inline std::vector<Color> block_colors;
-    inline std::vector<Vector2> block_grid;
+    inline std::vector<Vector2> block_grid_position;
     inline std::vector<uint8_t> selected_costumes;
 
     inline float code_panel_scale = 4.0f;

@@ -10,34 +10,34 @@ Grid::Grid()
 void Grid::Draw(uint16_t window_x, uint16_t window_y)
 {
     for(Dot &dot: dots) {
-        DrawCircle(dot.x + window_x - Global::block_grid[Global::selected_sprite].x, dot.y + window_y - Global::block_grid[Global::selected_sprite].y, 2, LIGHTGRAY);
+        DrawCircle(dot.x + window_x - Global::block_grid_position[Global::selected_sprite].x, dot.y + window_y - Global::block_grid_position[Global::selected_sprite].y, 2, LIGHTGRAY);
     }
 }
 
 void Grid::Update()
 {
-    if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
-        offset_x = GetMouseX() + Global::block_grid[Global::selected_sprite].x;
-        offset_y = GetMouseY() + Global::block_grid[Global::selected_sprite].y;
-        held = true;
+    if(Global::MouseCollision(Global::coding_window_x, 40, Global::coding_window_width, GetScreenHeight() - 140) && !Global::holding_block) {
+        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
+            offset_x = GetMouseX() + Global::block_grid_position[Global::selected_sprite].x;
+            offset_y = GetMouseY() + Global::block_grid_position[Global::selected_sprite].y;
+            held = true;
+        }
+
+        if(held) {
+            Global::block_grid_position[Global::selected_sprite].x = std::max(0, offset_x - GetMouseX());
+            Global::block_grid_position[Global::selected_sprite].y = std::max(0, offset_y - GetMouseY());
+        }
     }
 
     if(IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT) && held) {
         held = false;
     }
 
-    if(held) {
-        if(Global::MouseCollision(Global::coding_window_x, 40, Global::coding_window_width, GetScreenHeight() - 140) && !Global::holding_block) {
-            Global::block_grid[Global::selected_sprite].x = std::max(0, offset_x - GetMouseX());
-            Global::block_grid[Global::selected_sprite].y = std::max(0, offset_y - GetMouseY());
-        }
-    }
-
     for(Dot &dot: dots) {
-        if(dot.x - Global::block_grid[Global::selected_sprite].x < 0)       dot.x += move_x;
-        if(dot.x - Global::block_grid[Global::selected_sprite].x > move_x)  dot.x -= move_x;
-        if(dot.y - Global::block_grid[Global::selected_sprite].y < 0)       dot.y += move_y;
-        if(dot.y - Global::block_grid[Global::selected_sprite].y > move_y)  dot.y -= move_y;
+        if(dot.x - Global::block_grid_position[Global::selected_sprite].x < 0)       dot.x += move_x;
+        if(dot.x - Global::block_grid_position[Global::selected_sprite].x > move_x)  dot.x -= move_x;
+        if(dot.y - Global::block_grid_position[Global::selected_sprite].y < 0)       dot.y += move_y;
+        if(dot.y - Global::block_grid_position[Global::selected_sprite].y > move_y)  dot.y -= move_y;
     }
 }
 

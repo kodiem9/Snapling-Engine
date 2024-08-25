@@ -65,9 +65,9 @@ void Block::Update()
                 y = GetMouseY() - offset_y;
 
                 if(x < 0) x = 0;
-                if(x > (Global::coding_window_width - Global::blocks_texture.width * scale) + Global::block_grid[Global::selected_sprite].x) x = (Global::coding_window_width - Global::blocks_texture.height * scale) + Global::block_grid[Global::selected_sprite].x;
+                if(x > (Global::coding_window_width - Global::blocks_texture.width * scale) + Global::block_grid_position[Global::selected_sprite].x) x = (Global::coding_window_width - Global::blocks_texture.height * scale) + Global::block_grid_position[Global::selected_sprite].x;
                 if(y < 0) y = 0;
-                if(y > (GetScreenHeight() - 140 - Global::blocks_texture.width * scale) + Global::block_grid[Global::selected_sprite].y) y = (GetScreenHeight() - 140 - Global::blocks_texture.height * scale) + Global::block_grid[Global::selected_sprite].y;
+                if(y > (GetScreenHeight() - 140 - Global::blocks_texture.width * scale) + Global::block_grid_position[Global::selected_sprite].y) y = (GetScreenHeight() - 140 - Global::blocks_texture.height * scale) + Global::block_grid_position[Global::selected_sprite].y;
             }
 
 

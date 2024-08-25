@@ -67,9 +67,9 @@ void Engine::Draw()
                     if(Global::sprites_amount > 0) {
                         grid->Draw(window.x, window.y);
                         for(Block &block: blocks[Global::selected_sprite]) {
-                            block.Draw(window.x - Global::block_grid[Global::selected_sprite].x, window.y - Global::block_grid[Global::selected_sprite].y);
+                            block.Draw(window.x - Global::block_grid_position[Global::selected_sprite].x, window.y - Global::block_grid_position[Global::selected_sprite].y);
                         }
-                        DrawText(TextFormat("(%.0f, %.0f)", Global::block_grid[Global::selected_sprite].x, Global::block_grid[Global::selected_sprite].y), 10 + window.x, window.height - 30 + window.y, 20, LIGHTGRAY);
+                        DrawText(TextFormat("(%.0f, %.0f)", Global::block_grid_position[Global::selected_sprite].x, Global::block_grid_position[Global::selected_sprite].y), 10 + window.x, window.height - 30 + window.y, 20, LIGHTGRAY);
                     }
                 });
             }
@@ -184,7 +184,7 @@ void Engine::Update()
 
     if(Global::execute_new_block) {
         Global::blocks_amount++;
-        blocks[Global::selected_sprite].emplace_back(dragged_block->x - Global::coding_panels_width + Global::block_grid[Global::selected_sprite].x, dragged_block->y - 40 + Global::block_grid[Global::selected_sprite].y, Global::coding_grid_scale, Block::Type::NORMAL_BLOCK, dragged_block->text, 0, dragged_block->block_type);
+        blocks[Global::selected_sprite].emplace_back(dragged_block->x - Global::coding_panels_width + Global::block_grid_position[Global::selected_sprite].x, dragged_block->y - 40 + Global::block_grid_position[Global::selected_sprite].y, Global::coding_grid_scale, Block::Type::NORMAL_BLOCK, dragged_block->text, 0, dragged_block->block_type);
         Global::execute_new_block = false;
     }
 
@@ -290,7 +290,7 @@ inline void Engine::NewSprite(std::vector<Sprite> &sprites, uint16_t loop, uint8
 inline void Engine::SpriteData()
 {
     blocks.push_back(std::vector<Block>());
-    Global::block_grid.push_back(Vector2{ 0, 0 });
+    Global::block_grid_position.push_back(Vector2{ 0, 0 });
 
     costumes.push_back(std::vector<Costume>());
     costumes[costumes.size()-1].emplace_back(0);
