@@ -93,6 +93,17 @@ void Engine::Draw()
             }
             break;
 
+            case WindowId::COSTUMES_WINDOW: {
+                window.Draw([&]() {
+                    if(Global::sprites_amount > 0) {
+                        for(Costume &costume: costumes[Global::selected_sprite]) {
+                            costume.Draw(window.x, window.y);
+                        }
+                    }
+                });
+            }
+            break;
+
             default: window.Draw([&](){}); break;
         }
     }
@@ -165,6 +176,12 @@ void Engine::Update()
         dragged_block->Update();
     }
 
+    if(Global::selected_sprite) {
+        for(Costume &costume: costumes[Global::selected_sprite]) {
+            costume.Update();
+        }
+    }
+
     if(Global::execute_new_block) {
         Global::blocks_amount++;
         blocks[Global::selected_sprite].emplace_back(dragged_block->x - Global::coding_panels_width + Global::block_grid[Global::selected_sprite].x, dragged_block->y - 40 + Global::block_grid[Global::selected_sprite].y, Global::coding_grid_scale, Block::Type::NORMAL_BLOCK, dragged_block->text, 0, dragged_block->block_type);
@@ -230,7 +247,7 @@ inline void Engine::InitWindows()
     windows.emplace_back(Global::assets_window_x, 40, Global::assets_window_width, Global::screen_height - 140, WindowId::ASSETS_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_ASSETS);
 
     Global::costumes_window_width = Global::screen_width - Global::game_window_width - Global::coding_window_width - 110;
-    windows.emplace_back(10, 40, Global::costumes_window_width, Global::screen_height - 140, WindowId::COSTUMES_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_COSTUMES_COLOR, WINDOW_OUTLINE_COLOR, false, WindowCategory::CATEGORY_ASSETS);
+    windows.emplace_back(10, 40, Global::costumes_window_width, Global::screen_height - 140, WindowId::COSTUMES_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_COSTUMES_COLOR, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_ASSETS);
 }
 
 inline void Engine::InitButtons()
@@ -256,18 +273,38 @@ inline void Engine::NewSprite(std::vector<Sprite> &sprites, uint16_t loop, uint8
 {
     uint16_t fixed_x_offset = 0;
     uint16_t fixed_y_offset = 0;
-    windows[2].wheel_length = 0;
+    windows[WindowId::SPRITES_WINDOW].wheel_length = 0;
+
     for(uint16_t i = 0; i < loop; i++) {
         fixed_x_offset = (Global::sprites_amount % row) * 100;
         fixed_y_offset = (Global::sprites_amount / row) * 100;
         sprites.emplace_back(offset + fixed_x_offset, 20 + fixed_y_offset, 80, 80, Global::sprites_amount, upd_curr_spr);
         Global::sprites_amount++;
     }
+
     if(100 + fixed_y_offset > sprite_window_height) {
-        windows[2].wheel_length = 120 + fixed_y_offset - sprite_window_height;
+        windows[WindowId::SPRITES_WINDOW].wheel_length = 120 + fixed_y_offset - sprite_window_height;
     }
+}
+
+inline void Engine::SpriteData()
+{
     blocks.push_back(std::vector<Block>());
     Global::block_grid.push_back(Vector2{ 0, 0 });
+    NewCostume();
+}
+
+inline void Engine::NewCostume()
+{
+    costumes.push_back(std::vector<Costume>());
+
+    uint16_t size = 100;
+    uint16_t x = Global::costumes_window_width / 2 - size / 2;
+    uint16_t y = 20 + (Global::selected_sprite * 100);
+
+    costumes[costumes.size()-1].emplace_back(x, y, size);
+
+    Global::costumes_amount.push_back(1);
 }
 
 inline void Engine::PopUpUpdate()
@@ -353,6 +390,7 @@ void Engine::ButtonUpdate()
 
         case ButtonTrigger::EMPTY_SPRITE: {
             Global::entities.emplace_back("Sprite", 0.0f, 0.0f, 90.0f, 100, true, 0);
+            SpriteData();
             if(window_scale_mode == WindowScaleModes::SMALLER_WINDOW_MODE)
                 NewSprite(sprites, 1, 10, 3, true);
             else

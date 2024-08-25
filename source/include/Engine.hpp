@@ -11,6 +11,7 @@
 #include "BlockTypePanel.hpp"
 // BlockTypePanel.hpp HAS Button.hpp INSIDE
 #include "Category.hpp"
+#include "Costume.hpp"
 
 enum ButtonTrigger
 {
@@ -71,6 +72,7 @@ class Engine
         std::vector<Category> categories;
         std::vector<Sprite> sprites;
         std::vector<std::vector<Block>> blocks;
+        std::vector<std::vector<Costume>> costumes;
         
         PopUp *new_sprite_popup;
         PropertiesBox *properties_box;
@@ -97,6 +99,8 @@ class Engine
 
         inline void PopUpUpdate();
         inline void NewSprite(std::vector<Sprite> &sprites, uint16_t loop, uint8_t offset, uint8_t row, bool upd_curr_spr);
+        inline void SpriteData();
+        inline void NewCostume();
 
         void Commands();
         void ButtonUpdate();

@@ -42,6 +42,8 @@ namespace Global
     inline FTexture blocks_texture;
 
     inline std::vector<Color> block_colors;
+    inline std::vector<Vector2> block_grid;
+    inline std::vector<uint8_t> costumes_amount;
 
     inline float code_panel_scale = 4.0f;
     inline float coding_grid_scale = 3.0f;
@@ -58,7 +60,6 @@ namespace Global
     inline uint16_t costumes_window_width = 0;
     inline uint16_t selected_panel_block = 0;
     inline uint16_t blocks_amount;
-    inline std::vector<Vector2> block_grid;
 
     inline uint8_t game_scale = 10;
     inline uint8_t button_pressed = 0;
