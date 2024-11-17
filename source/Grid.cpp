@@ -43,8 +43,8 @@ void Grid::Update()
 
 void Grid::Data()
 {
-    uint16_t x;
-    uint16_t y;
+    uint16_t x = 0;
+    uint16_t y = 0;
 
     for(x = 0; x < (Global::coding_window_width / GRID_GAPS) + 1; x++) {
         for(y = 0; y < ((GetScreenHeight() - 140) / GRID_GAPS) + 1; y++) {
