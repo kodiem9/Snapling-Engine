@@ -1,4 +1,5 @@
 #include <Grid.hpp>
+#include <stdio.h>
 
 
 // PUBLIC
@@ -9,7 +10,7 @@ Grid::Grid()
 
 void Grid::Draw(uint16_t window_x, uint16_t window_y)
 {
-    for(Dot &dot: dots) {
+    for(Dot const &dot: dots) {
         DrawCircle(dot.x + window_x - Global::block_grid_position[Global::selected_sprite].x, dot.y + window_y - Global::block_grid_position[Global::selected_sprite].y, 2, LIGHTGRAY);
     }
 }
@@ -34,10 +35,10 @@ void Grid::Update()
     }
 
     for(Dot &dot: dots) {
-        if(dot.x - Global::block_grid_position[Global::selected_sprite].x < 0)       dot.x += move_x;
-        if(dot.x - Global::block_grid_position[Global::selected_sprite].x > move_x)  dot.x -= move_x;
-        if(dot.y - Global::block_grid_position[Global::selected_sprite].y < 0)       dot.y += move_y;
-        if(dot.y - Global::block_grid_position[Global::selected_sprite].y > move_y)  dot.y -= move_y;
+        if(dot.x - Global::block_grid_position[Global::selected_sprite].x < 0)      dot.x += move_x;
+        if(dot.x - Global::block_grid_position[Global::selected_sprite].x > move_x) dot.x -= move_x;
+        if(dot.y - Global::block_grid_position[Global::selected_sprite].y < 0)      dot.y += move_y;
+        if(dot.y - Global::block_grid_position[Global::selected_sprite].y > move_y) dot.y -= move_y;
     }
 }
 
@@ -48,7 +49,7 @@ void Grid::Data()
 
     for(x = 0; x < (Global::coding_window_width / GRID_GAPS) + 1; x++) {
         for(y = 0; y < ((GetScreenHeight() - 140) / GRID_GAPS) + 1; y++) {
-            dots.emplace_back(x * 60 + 10, y * 60 + 10);
+            dots.emplace_back((x * 60) + 10, (y * 60) + 10);
         }
     }
 

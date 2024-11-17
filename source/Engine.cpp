@@ -9,9 +9,8 @@ Engine::Engine()
     InitData();
     InitWindows();
 
-    // Lonely grid...
     grid = new Grid;
-
+    
     InitButtons();
     InitCategories();
 
@@ -188,9 +187,9 @@ void Engine::Update()
         Global::execute_new_block = false;
     }
 
-    if(tween_timer > 0.0f) {
+    if(tween_timer > 0.0F) {
         tween_timer -= GetFrameTime();
-        if(tween_timer < 0.0f) tween_timer = 0.0f;
+        tween_timer = std::max(tween_timer, 0.0f);
     }
 
     Commands();
@@ -205,7 +204,7 @@ inline void Engine::InitData()
 
     window_scale_mode = WindowScaleModes::BIGGER_WINDOW_MODE;
     saved_window_scale_mode = window_scale_mode;
-    tween_timer = 0.0f;
+    tween_timer = 0.0F;
     code_panels_mode = true;
     costumes_panel_mode = true;
 
@@ -229,7 +228,7 @@ inline void Engine::InitWindows()
 
     windows.emplace_back(Global::screen_width - 610, 500, 60, 15, WindowId::PROPERTIES_WINDOW, Window::Type::NORMAL_WINDOW, 10, WHITE, WINDOW_OUTLINE_COLOR, false, 0);
 
-    windows.emplace_back(Global::screen_width - 610, 650, 60, (Global::screen_height - 650) / 10 - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR, true, 0);
+    windows.emplace_back(Global::screen_width - 610, 650, 60, ((Global::screen_height - 650) / 10) - 10, WindowId::SPRITES_WINDOW, Window::Type::SCROLL_WINDOW, 10, WINDOWS_UNIQUE_BG_COLOR, WINDOW_OUTLINE_COLOR, true, 0);
     sprite_window_height = windows[WindowId::SPRITES_WINDOW].height * windows[WindowId::SPRITES_WINDOW].scale;
 
     Global::coding_window_x = 280;
@@ -237,8 +236,8 @@ inline void Engine::InitWindows()
     windows.emplace_back(Global::coding_window_x, 40, Global::coding_window_width, Global::screen_height - 140, WindowId::CODING_WINDOW, Window::Type::NORMAL_WINDOW, 1, WHITE, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_CODE);
 
     Global::coding_panels_width = Global::screen_width - Global::game_window_width - Global::coding_window_width - 30;
-    windows.emplace_back(10, 40, Global::coding_panels_width, (Global::screen_height / 5) * 2 - 80, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, false, WindowCategory::CATEGORY_CODE);
-    windows.emplace_back(10, 40 + (Global::screen_height / 5) * 2 - 80, Global::coding_panels_width, (Global::screen_height / 5) * 3 - 60, WindowId::BLOCK_PANEL_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_CODE);
+    windows.emplace_back(10, 40, Global::coding_panels_width, ((Global::screen_height / 5) * 2) - 80, WindowId::BLOCK_TYPE_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, false, WindowCategory::CATEGORY_CODE);
+    windows.emplace_back(10, 40 + ((Global::screen_height / 5) * 2) - 80, Global::coding_panels_width, ((Global::screen_height / 5) * 3) - 60, WindowId::BLOCK_PANEL_WINDOW, Window::Type::NORMAL_WINDOW, 1, WINDOW_CODE_PANEL_COLOR, WINDOW_OUTLINE_COLOR, true, WindowCategory::CATEGORY_CODE);
 
 
     // * ASSETS WINDOWS STUFF * //
@@ -253,13 +252,13 @@ inline void Engine::InitWindows()
 inline void Engine::InitButtons()
 {
     // Buttons are random lol, but also not! Depends. You better be careful with this.
-    buttons.emplace_back(Global::screen_width - 42, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0f, &Global::button_texture);
-    buttons.emplace_back(Global::screen_width - 90, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::CHECKBOX, 1, 2.0f, &Global::button_texture, &window_scale_mode, WindowScaleModes::BIGGER_WINDOW_MODE);
-    buttons.emplace_back(Global::screen_width - 122, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::CHECKBOX, 2, 2.0f, &Global::button_texture, &window_scale_mode, WindowScaleModes::SMALLER_WINDOW_MODE);
-    buttons.emplace_back(Global::screen_width - 79, Global::screen_height - 159, ButtonTrigger::EMPTY_SPRITE, Button::Type::SINGLE_BUTTON, 6, 3.0f, &Global::button_texture);
-    buttons.emplace_back(Global::screen_width - 87, Global::screen_height - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 5, 4.0f, &Global::button_texture);
-    buttons.emplace_back(10, Global::screen_height - 92, ButtonTrigger::BLOCK_PANELS, Button::Type::SINGLE_BUTTON, 3, 2.0f, &Global::button_texture);
-    buttons.emplace_back(10, Global::screen_height - 92, ButtonTrigger::COSTUMES_PANEL, Button::Type::SINGLE_BUTTON, 4, 2.0f, &Global::button_texture);
+    buttons.emplace_back(Global::screen_width - 42, 4, ButtonTrigger::FULLSCREEN, Button::Type::SINGLE_BUTTON, 0, 2.0F, &Global::button_texture);
+    buttons.emplace_back(Global::screen_width - 90, 4, ButtonTrigger::BIGGER_WINDOW, Button::Type::CHECKBOX, 1, 2.0F, &Global::button_texture, &window_scale_mode, WindowScaleModes::BIGGER_WINDOW_MODE);
+    buttons.emplace_back(Global::screen_width - 122, 4, ButtonTrigger::SMALLER_WINDOW, Button::Type::CHECKBOX, 2, 2.0F, &Global::button_texture, &window_scale_mode, WindowScaleModes::SMALLER_WINDOW_MODE);
+    buttons.emplace_back(Global::screen_width - 79, Global::screen_height - 159, ButtonTrigger::EMPTY_SPRITE, Button::Type::SINGLE_BUTTON, 6, 3.0F, &Global::button_texture);
+    buttons.emplace_back(Global::screen_width - 87, Global::screen_height - 175, ButtonTrigger::NEW_SPRITE, Button::Type::SINGLE_BUTTON, 5, 4.0F, &Global::button_texture);
+    buttons.emplace_back(10, Global::screen_height - 92, ButtonTrigger::BLOCK_PANELS, Button::Type::SINGLE_BUTTON, 3, 2.0F, &Global::button_texture);
+    buttons.emplace_back(10, Global::screen_height - 92, ButtonTrigger::COSTUMES_PANEL, Button::Type::SINGLE_BUTTON, 4, 2.0F, &Global::button_texture);
 }
 
 inline void Engine::InitCategories()
@@ -289,10 +288,10 @@ inline void Engine::NewSprite(std::vector<Sprite> &sprites, uint16_t loop, uint8
 
 inline void Engine::SpriteData()
 {
-    blocks.push_back(std::vector<Block>());
+    blocks.emplace_back();
     Global::block_grid_position.push_back(Vector2{ 0, 0 });
 
-    costumes.push_back(std::vector<Costume>());
+    costumes.emplace_back();
     costumes[costumes.size()-1].emplace_back(0);
     costumes[costumes.size()-1].emplace_back(1);
     Global::selected_costumes.push_back(0);
@@ -300,7 +299,7 @@ inline void Engine::SpriteData()
 
 inline void Engine::PopUpUpdate()
 {
-    if(tween_timer > 0.0f) {
+    if(tween_timer > 0.0F) {
         if(new_sprite_popup->enabled) {
             new_sprite_popup->Scroll(new_sprite_popup->y, Global::screen_height - 371, 6);
             new_sprite_popup->Scroll(new_sprite_popup->height, 200, 6);
@@ -373,19 +372,20 @@ void Engine::ButtonUpdate()
         break;
 
         case ButtonTrigger::NEW_SPRITE: {
-            tween_timer = 1.0f;
+            tween_timer = 1.0F;
             new_sprite_popup->enabled = !new_sprite_popup->enabled;
             Global::button_pressed = 0;
         }
         break;
 
         case ButtonTrigger::EMPTY_SPRITE: {
-            Global::entities.emplace_back("Sprite", 0.0f, 0.0f, 90.0f, 100, true, 0);
+            Global::entities.emplace_back("Sprite", 0.0F, 0.0F, 90.0F, 100, true, 0);
             SpriteData();
-            if(window_scale_mode == WindowScaleModes::SMALLER_WINDOW_MODE)
+            if(window_scale_mode == WindowScaleModes::SMALLER_WINDOW_MODE) {
                 NewSprite(sprites, 1, 10, 3, true);
-            else
+            } else {
                 NewSprite(sprites, 1, 20, 5, true);
+}
 
             Global::button_pressed = 0;
         }
@@ -410,7 +410,7 @@ void Engine::ButtonUpdate()
 // All of this is just a bunch of offsets. You should probably not touch this ngl.
 void Engine::FullscreenOffsets()
 {
-    Window &game_window = windows[WindowId::GAME_WINDOW];
+    Window  const&game_window = windows[WindowId::GAME_WINDOW];
 
     if(window_scale_mode != WindowScaleModes::FULLSCREEN_MODE) {
         saved_window_scale_mode = window_scale_mode;
@@ -471,10 +471,11 @@ void Engine::FullscreenOffsets()
             switch(window.id)
             {
                 case WindowId::GAME_WINDOW: {
-                    if(saved_window_scale_mode == WindowScaleModes::BIGGER_WINDOW_MODE)
+                    if(saved_window_scale_mode == WindowScaleModes::BIGGER_WINDOW_MODE) {
                         window.scale = 10;
-                    else
+                    } else {
                         window.scale = 5;
+}
 
                     Global::game_scale = window.scale;
                     
@@ -551,8 +552,8 @@ void Engine::BiggerWindowOffsets()
                 break;
 
                 case WindowId::SPRITES_WINDOW: {
-                    uint16_t old_y = window.y;
-                    uint16_t old_height = window.height * window.scale;
+                    uint16_t const old_y = window.y;
+                    uint16_t const old_height = window.height * window.scale;
                     
                     window.x -= window.width * window.scale;
                     window.y += 300; // difference between big and small game window PLUS half the height * scale of properties window 
@@ -608,8 +609,8 @@ void Engine::SmallerWindowOffsets()
                 break;
 
                 case WindowId::SPRITES_WINDOW: {
-                    uint16_t old_y = window.y;
-                    uint16_t old_height = window.height * window.scale;
+                    uint16_t const old_y = window.y;
+                    uint16_t const old_height = window.height * window.scale;
 
                     window.scale = 5;
                     window.x += window.width * window.scale;
@@ -688,14 +689,15 @@ void Engine::BlockPanelsOffsets()
 void Engine::SpritesOffsets()
 {
     std::vector<Sprite> new_sprites;
-    uint16_t fixed_x_offset;
-    uint16_t fixed_y_offset;
+    uint16_t fixed_x_offset = 0;
+    uint16_t fixed_y_offset = 0;
     Global::sprites_amount = 0;
 
-    if(window_scale_mode == WindowScaleModes::SMALLER_WINDOW_MODE)
+    if(window_scale_mode == WindowScaleModes::SMALLER_WINDOW_MODE) {
         NewSprite(new_sprites, sprites.size(), 10, 3, false);
-    else
+    } else {
         NewSprite(new_sprites, sprites.size(), 20, 5, false);
+}
 
     sprites = new_sprites;
 }

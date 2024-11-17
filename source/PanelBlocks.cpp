@@ -2,13 +2,10 @@
 
 
 // PUBLIC
-PanelBlocks::PanelBlocks(Block *block)
+PanelBlocks::PanelBlocks(Block *block) : block_data(block), new_dragged_block_id(0)
 {
-    block_data = block;
-    new_dragged_block_id = 0;
-
     for(uint8_t i = 0; i < Global::block_type_amount; i++) {
-        blocks.push_back(std::vector<Block>());
+        blocks.emplace_back();
     }
 
     // Type: "testing"  -   0

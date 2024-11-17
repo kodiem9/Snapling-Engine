@@ -3,19 +3,14 @@
 
 // PUBLIC
 Button::Button(uint16_t x, uint16_t y, uint8_t trigger, Type type, uint8_t frame, float scale, Global::FTexture *texture, uint8_t *checkbox, uint8_t value)
-: x(x), y(y), trigger(trigger), type(type), frame(frame), scale(scale), texture(texture), checkbox(checkbox), value(value)
-{
-    selected = false;
-    pressed = false;
-    visible = true;
-    toggled = false;
-}
+: x(x), y(y), trigger(trigger), type(type), frame(frame), scale(scale), texture(texture), checkbox(checkbox), value(value), selected(false), pressed(false), visible(true), toggled(false)
+{}
 
 void Button::Draw()
 {
     if(visible) {
         Texture();
-        DrawTexturePro(texture->texture, spr.source, spr.dest, spr.origin, 0.0f, WHITE);
+        DrawTexturePro(texture->texture, spr.source, spr.dest, spr.origin, 0.0F, WHITE);
     }
 }
 
@@ -47,11 +42,12 @@ void Button::Update()
 // PRIVATE
 void Button::Texture()
 {
-    uint8_t fixed_frame;
-    if(toggled) fixed_frame = 2;
-    else if(selected) fixed_frame = 1;
-    else fixed_frame = 0;
+    uint8_t fixed_frame = 0;
+    if(toggled) { fixed_frame = 2;
+    } else if(selected) { fixed_frame = 1;
+    } else { fixed_frame = 0;
+}
 
-    spr.source = Rectangle{ (float)texture->width * frame, (float)texture->height * fixed_frame, (float)texture->width, (float)texture->height };
-    spr.dest = Rectangle{ (float)x, (float)y, spr.source.width * scale, spr.source.height * scale};
+    spr.source = Rectangle{ static_cast<float>(texture->width) * frame, static_cast<float>(texture->height) * fixed_frame, static_cast<float>(texture->width), static_cast<float>(texture->height) };
+    spr.dest = Rectangle{ static_cast<float>(x), static_cast<float>(y), spr.source.width * scale, spr.source.height * scale};
 }

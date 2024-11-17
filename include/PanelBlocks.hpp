@@ -7,8 +7,8 @@ class PanelBlocks
         std::vector<std::vector<Block>> blocks;
 
         uint16_t new_dragged_block_id;
-        uint16_t window_x;
-        uint16_t window_y;
+        uint16_t window_x{};
+        uint16_t window_y{};
         
         void Data();
 

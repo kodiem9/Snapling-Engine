@@ -11,17 +11,17 @@ class TypeBlock
         const char* text;
 
         Color color;
-        Color outline;
+        Color outline{};
 
         uint16_t x;
         uint16_t y;
-        uint16_t fixed_x;
-        uint16_t fixed_y;
+        uint16_t fixed_x{};
+        uint16_t fixed_y{};
 
         uint8_t id;
 
     public:
         TypeBlock(Color color, const char* text);
         void Draw(uint16_t window_x, uint16_t window_y);
-        void Update();
+        void Update() const;
 };

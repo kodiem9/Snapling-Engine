@@ -74,22 +74,22 @@ class Engine
         std::vector<std::vector<Block>> blocks;
         std::vector<std::vector<Costume>> costumes;
         
-        PopUp *new_sprite_popup;
-        PropertiesBox *properties_box;
-        PanelBlocks *panel_blocks;
-        Entity *entity;
-        Block *dragged_block;
+        PopUp *new_sprite_popup{};
+        PropertiesBox *properties_box{};
+        PanelBlocks *panel_blocks{};
+        Entity *entity{};
+        Block *dragged_block{};
         Grid *grid;
-        BlockTypePanel *block_type_panel;
+        BlockTypePanel *block_type_panel{};
 
-        float tween_timer;
+        float tween_timer{};
 
-        uint16_t sprite_window_height;
+        uint16_t sprite_window_height{};
 
-        uint8_t window_scale_mode;
-        uint8_t saved_window_scale_mode;
-        bool code_panels_mode;
-        bool costumes_panel_mode;
+        uint8_t window_scale_mode{};
+        uint8_t saved_window_scale_mode{};
+        bool code_panels_mode{};
+        bool costumes_panel_mode{};
 
         
         inline void InitData();

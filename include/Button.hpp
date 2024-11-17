@@ -33,7 +33,7 @@ class Button
         void Update();
     
     private:
-        Global::Spritesheet spr;
+        Global::Spritesheet spr{};
 
         void Texture();
 };

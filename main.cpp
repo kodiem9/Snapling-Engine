@@ -3,7 +3,7 @@
 #define BACKGROUND_COLOR Color{ 229, 240, 255, 255 }
 constexpr uint16_t BUILD_NUMBER = 1636;
 
-int main()
+auto main() -> int
 {
     InitWindow(0, 0, TextFormat("Snapling - build %i", BUILD_NUMBER));
     SetTargetFPS(60);

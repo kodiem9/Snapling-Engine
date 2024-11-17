@@ -12,13 +12,13 @@ class PropertiesBox
         TypeBox *x_pos_box;
         TypeBox *y_pos_box;
 
-        Vector2 sprite_name_text_offset;
-        Vector2 x_pos_text_offset;
-        Vector2 y_pos_text_offset;
+        Vector2 sprite_name_text_offset{};
+        Vector2 x_pos_text_offset{};
+        Vector2 y_pos_text_offset{};
 
         uint8_t new_id;
 
-        void Data(TypeBox *type_box, uint16_t x, uint16_t y, uint16_t width, uint16_t height, TypeBox::Type);
+        static void Data(TypeBox *type_box, uint16_t x, uint16_t y, uint16_t width, uint16_t height, TypeBox::Type);
         std::string CustomFloatToString(const float f);
 
     public:

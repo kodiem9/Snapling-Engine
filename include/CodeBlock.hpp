@@ -4,7 +4,7 @@
 class Block
 {
     private:
-        Global::Spritesheet spr;
+        Global::Spritesheet spr{};
 
         void Texture(float _x, float _width, float _height, float _offset_x, float _offset_width, float _offset_width_x);
 
@@ -18,18 +18,18 @@ class Block
 
         std::string text;
 
-        Color color;
+        Color color{};
 
         Type type;
         float scale;
 
         int16_t x;
         int16_t y;
-        int16_t fixed_x;
-        int16_t fixed_y;
-        int16_t offset_x;
-        int16_t offset_y;
-        uint16_t width;
+        int16_t fixed_x{};
+        int16_t fixed_y{};
+        int16_t offset_x{};
+        int16_t offset_y{};
+        uint16_t width{};
         uint16_t id;
 
         uint8_t block_type;

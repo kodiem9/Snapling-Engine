@@ -2,14 +2,8 @@
 
 
 // PUBLIC
-PropertiesBox::PropertiesBox()
+PropertiesBox::PropertiesBox() : new_id(255), sprite_name_box(new TypeBox), x_pos_box(new TypeBox), y_pos_box(new TypeBox)
 {
-    new_id = 255;
-
-    sprite_name_box = new TypeBox;
-    x_pos_box = new TypeBox;
-    y_pos_box = new TypeBox;
-
     Reset(1);
 }
 
@@ -55,7 +49,7 @@ void PropertiesBox::Update()
 
 void PropertiesBox::Reset(uint8_t mode)
 {
-    if(mode) {
+    if(mode != 0u) {
         Data(sprite_name_box, 90, 20, 120, 30, TypeBox::Type::STRING);
         sprite_name_text_offset.x = 15;
         sprite_name_text_offset.y = 25;

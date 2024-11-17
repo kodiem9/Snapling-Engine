@@ -1,11 +1,7 @@
 #include <TypeBox.hpp>
 
-TypeBox::TypeBox()
-{
-    selected = false;
-    period = false;
-    negative = false;
-}
+TypeBox::TypeBox() : selected(false), period(false), negative(false)
+{}
 
 TypeBox::~TypeBox()
 {
@@ -20,7 +16,7 @@ void TypeBox::Draw(uint16_t window_x, uint16_t window_y)
     }
 
     DrawRectangle(fixed_x, fixed_y, width, height, WHITE);
-    DrawRectangleLinesEx(Rectangle{ (float)fixed_x, (float)fixed_y, (float)width, (float)height }, 2, (selected) ? TYPEBOX_OUTLINE_COLOR_TRUE : TYPEBOX_OUTLINE_COLOR_FALSE);
+    DrawRectangleLinesEx(Rectangle{ static_cast<float>(fixed_x), static_cast<float>(fixed_y), static_cast<float>(width), static_cast<float>(height) }, 2, (selected) ? TYPEBOX_OUTLINE_COLOR_TRUE : TYPEBOX_OUTLINE_COLOR_FALSE);
 
     DrawText(value->c_str(), x + window_x + 5, y + window_y + 8, 15, TEXT_COLOR);
 }
@@ -28,10 +24,12 @@ void TypeBox::Draw(uint16_t window_x, uint16_t window_y)
 void TypeBox::Update()
 {
     if(Global::MouseCollision(fixed_x, fixed_y, width, height)) {
-        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) selected = true;
+        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) { selected = true;
+}
     }
     else {
-        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) selected = false;
+        if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) { selected = false;
+}
     }
     
     if(selected) {
@@ -39,7 +37,8 @@ void TypeBox::Update()
         if(key != 0) {
             if(MeasureText(value->c_str(), 15) + 15 < width) {
                 if(type == Type::NUMBER) {
-                    if(isdigit(key) == false && key != '-') return;
+                    if(!static_cast<bool>(isdigit(key)) && key != '-') { return;
+}
                     if(value->size() == 1 && value->at(0) == '0' && key != '-') {
                         value->pop_back();
                     }
@@ -54,10 +53,11 @@ void TypeBox::Update()
             if(key == '-') {
                 negative = !negative;
                 if(negative) {
-                    if(value->at(0) != '0')
+                    if(value->at(0) != '0') {
                         value->insert(value->begin(), '-');
-                    else
+                    } else {
                         negative = false;
+}
                 }
                 else {
                     value->erase(value->begin());
@@ -74,7 +74,7 @@ void TypeBox::Update()
                 value->pop_back();
             }
 
-            if(value->size() == 0) {
+            if(value->empty()) {
                 value->push_back('0');
             }
         }

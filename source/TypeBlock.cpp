@@ -2,15 +2,17 @@
 
 
 // PUBLIC
-TypeBlock::TypeBlock(Color color, const char* text) : color(color), text(text)
+TypeBlock::TypeBlock(Color color, const char* text) : color(color), outline(color), text(text)
 {
-    outline = color;
-    if(outline.r >= 50) outline.r -= 50;
-    else                outline.r = 0;
-    if(outline.g >= 50) outline.g-= 50;
-    else                outline.g = 0;
-    if(outline.b >= 50) outline.b -= 50;
-    else                outline.b = 0;
+    if(outline.r >= 50) { outline.r -= 50;
+    } else {                outline.r = 0;
+}
+    if(outline.g >= 50) { outline.g-= 50;
+    } else {                outline.g = 0;
+}
+    if(outline.b >= 50) { outline.b -= 50;
+    } else {                outline.b = 0;
+}
 
 
     id = Global::block_type_amount;
@@ -32,12 +34,12 @@ void TypeBlock::Draw(uint16_t window_x, uint16_t window_y)
     if(Global::selected_block_type == id) {
         DrawRectangle(fixed_x - 20, fixed_y - 20, 110, 40, LIGHTGRAY);
     }
-    DrawCircle(fixed_x, fixed_y, 12.0f, outline);
-    DrawCircle(fixed_x, fixed_y, 10.0f, color);
+    DrawCircle(fixed_x, fixed_y, 12.0F, outline);
+    DrawCircle(fixed_x, fixed_y, 10.0F, color);
     DrawText(text, fixed_x + 20, fixed_y - 7, 15, TEXT_COLOR);
 }
 
-void TypeBlock::Update()
+void TypeBlock::Update() const
 {
     if(Global::MouseCollision(fixed_x - 20, fixed_y - 20, 110, 40)) {
         if(IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {

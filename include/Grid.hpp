@@ -16,12 +16,12 @@ class Grid
 
         std::vector<Dot> dots;
 
-        uint16_t offset_x;
-        uint16_t offset_y;
-        uint16_t move_x;
-        uint16_t move_y;
+        uint16_t offset_x{};
+        uint16_t offset_y{};
+        uint16_t move_x{};
+        uint16_t move_y{};
 
-        bool held;
+        bool held{};
 
     public:
         Grid();

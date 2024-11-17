@@ -21,7 +21,7 @@ class Window
         uint16_t width;
         uint16_t height;
         uint16_t wheel_length;
-        int16_t wheel_power;
+        int16_t wheel_power{};
 
         uint8_t id;
         uint8_t scale;
@@ -32,7 +32,7 @@ class Window
         bool enabled;
 
         Window(uint16_t x = 0, uint16_t y = 0, uint16_t width = 0, uint16_t height = 0, uint8_t id = 0, Type type = Type::NORMAL_WINDOW, uint8_t scale = 1, Color bg_color = WHITE, Color outline_color = BLACK, bool enabled = true, uint8_t category = 0);
-        void Draw(const std::function<void()>& Render);
+        void Draw(const std::function<void()>& Render) const;
         void Update();
         void UpdateCursor(uint16_t old_y, uint16_t old_height);
 };
