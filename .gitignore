@@ -34,4 +34,4 @@
 # Other
 game
 .DS_Store
-raylib
+build

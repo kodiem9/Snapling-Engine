@@ -1,4 +1,4 @@
-#include "include/PropertiesBox.hpp"
+#include <PropertiesBox.hpp>
 
 
 // PUBLIC

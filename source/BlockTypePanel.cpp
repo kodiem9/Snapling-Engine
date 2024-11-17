@@ -1,5 +1,4 @@
-#include "include/BlockTypePanel.hpp"
-
+#include <BlockTypePanel.hpp>
 
 // PUBLIC
 BlockTypePanel::BlockTypePanel()

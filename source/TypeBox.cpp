@@ -1,4 +1,4 @@
-#include "include/TypeBox.hpp"
+#include <TypeBox.hpp>
 
 TypeBox::TypeBox()
 {

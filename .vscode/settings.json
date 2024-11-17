@@ -1,6 +1,5 @@
 {
     "files.exclude": {
-        "raylib": true,
         "game": true,
         "LICENSE": true,
         ".gitignore": true,
@@ -62,6 +61,7 @@
         "filesystem": "cpp",
         "functional": "cpp",
         "*.m": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "deque": "cpp"
     }
 }

@@ -1,4 +1,4 @@
-#include "include/Sprite.hpp"
+#include <Sprite.hpp>
 
 Sprite::Sprite(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t id, bool upd_curr_spr) : x(x), y(y), width(width), height(height), id(id)
 {

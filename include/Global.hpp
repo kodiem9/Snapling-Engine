@@ -1,5 +1,5 @@
 #pragma once
-#include "common/PCH.hpp"
+#include <PCH.hpp>
 
 namespace Global
 {
@@ -79,15 +79,15 @@ namespace Global
 
     inline void LoadTextures()
     {
-        button_texture.texture = LoadTexture("assets/images/buttons.png");
+        button_texture.texture = LoadTexture("../assets/images/buttons.png");
         button_texture.width = 16;
         button_texture.height = 16;
 
-        category_button_texture.texture = LoadTexture("assets/images/category_buttons.png");
+        category_button_texture.texture = LoadTexture("../assets/images/category_buttons.png");
         category_button_texture.width = 24;
         category_button_texture.height = 8;
 
-        blocks_texture.texture = LoadTexture("assets/images/blocks.png");
+        blocks_texture.texture = LoadTexture("../assets/images/blocks.png");
         blocks_texture.width = 9;
         blocks_texture.height = 9;
     }
